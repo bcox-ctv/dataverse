@@ -1,0 +1,290 @@
+{
+    "@odata.context": "https://gamap-dev.crm9.dynamics.com/api/data/v9.1/$metadata#EntityDefinitions(LogicalName)",
+    "value": [
+        {
+            "@odata.context": "https://gamap-dev.crm9.dynamics.com/api/data/v9.1/$metadata#EntityDefinitions(LogicalName)/$entity",
+            "MetadataId": "2cb18baf-5415-f011-998a-001dd80a67ab",
+            "LogicalName": "dchct_case"
+        },
+        {
+            "@odata.context": "https://gamap-dev.crm9.dynamics.com/api/data/v9.1/$metadata#EntityDefinitions(LogicalName)/$entity",
+            "MetadataId": "b3d9bc8b-e816-f011-998a-001dd80a67ab",
+            "LogicalName": "dchct_email"
+        },
+        {
+            "@odata.context": "https://gamap-dev.crm9.dynamics.com/api/data/v9.1/$metadata#EntityDefinitions(LogicalName)/$entity",
+            "MetadataId": "57216066-eb16-f011-998a-001dd80a67ab",
+            "LogicalName": "dchct_contactphone"
+        },
+        {
+            "@odata.context": "https://gamap-dev.crm9.dynamics.com/api/data/v9.1/$metadata#EntityDefinitions(LogicalName)/$entity",
+            "MetadataId": "af6de5b4-6b19-f011-998a-001dd80a67ab",
+            "LogicalName": "dchct_assessments"
+        },
+        {
+            "@odata.context": "https://gamap-dev.crm9.dynamics.com/api/data/v9.1/$metadata#EntityDefinitions(LogicalName)/$entity",
+            "MetadataId": "5fbc7984-fd19-f011-998a-001dd80a67ab",
+            "LogicalName": "dchct_linkedproviders"
+        },
+        {
+            "@odata.context": "https://gamap-dev.crm9.dynamics.com/api/data/v9.1/$metadata#EntityDefinitions(LogicalName)/$entity",
+            "MetadataId": "39f1d040-c21b-f011-998a-001dd80a67ab",
+            "LogicalName": "dchct_supervisor"
+        },
+        {
+            "@odata.context": "https://gamap-dev.crm9.dynamics.com/api/data/v9.1/$metadata#EntityDefinitions(LogicalName)/$entity",
+            "MetadataId": "80ddefa9-ba1e-f011-998a-001dd80a67ab",
+            "LogicalName": "dchct_servicecode"
+        },
+        {
+            "@odata.context": "https://gamap-dev.crm9.dynamics.com/api/data/v9.1/$metadata#EntityDefinitions(LogicalName)/$entity",
+            "MetadataId": "7d5914ae-c01e-f011-998a-001dd80a67ab",
+            "LogicalName": "dchct_locassessmentsmonthlycontact"
+        },
+        {
+            "@odata.context": "https://gamap-dev.crm9.dynamics.com/api/data/v9.1/$metadata#EntityDefinitions(LogicalName)/$entity",
+            "MetadataId": "75e6bd83-f31e-f011-998a-001dd80a67ab",
+            "LogicalName": "dchct_locassessmentsadhtasklist"
+        },
+        {
+            "@odata.context": "https://gamap-dev.crm9.dynamics.com/api/data/v9.1/$metadata#EntityDefinitions(LogicalName)/$entity",
+            "MetadataId": "58a36264-4520-f011-998a-001dd80a67ab",
+            "LogicalName": "dchct_locassessmentscdpsseval"
+        },
+        {
+            "@odata.context": "https://gamap-dev.crm9.dynamics.com/api/data/v9.1/$metadata#EntityDefinitions(LogicalName)/$entity",
+            "MetadataId": "ee485c8c-4920-f011-998a-001dd80a67ab",
+            "LogicalName": "dchct_locassessmentscdpsstasklist"
+        },
+        {
+            "@odata.context": "https://gamap-dev.crm9.dynamics.com/api/data/v9.1/$metadata#EntityDefinitions(LogicalName)/$entity",
+            "MetadataId": "e29b5934-5a20-f011-998a-001dd80a67ab",
+            "LogicalName": "dchct_locassessmentscarecoordinatortasklist"
+        },
+        {
+            "@odata.context": "https://gamap-dev.crm9.dynamics.com/api/data/v9.1/$metadata#EntityDefinitions(LogicalName)/$entity",
+            "MetadataId": "d73ee2fb-3524-f011-998a-001dd80a67ab",
+            "LogicalName": "dchct_intakeassessmentsnsi"
+        },
+        {
+            "@odata.context": "https://gamap-dev.crm9.dynamics.com/api/data/v9.1/$metadata#EntityDefinitions(LogicalName)/$entity",
+            "MetadataId": "78e45d5e-f22b-4e20-813f-6cd2a3777968",
+            "LogicalName": "task"
+        },
+        {
+            "@odata.context": "https://gamap-dev.crm9.dynamics.com/api/data/v9.1/$metadata#EntityDefinitions(LogicalName)/$entity",
+            "MetadataId": "07c45507-3d24-f011-998a-001dd80a67ab",
+            "LogicalName": "dchct_intakeassessmentsdonr"
+        },
+        {
+            "@odata.context": "https://gamap-dev.crm9.dynamics.com/api/data/v9.1/$metadata#EntityDefinitions(LogicalName)/$entity",
+            "MetadataId": "a8a15686-fc24-f011-998a-001dd80a67ab",
+            "LogicalName": "dchct_intakeassessmentsfoodsecurityassessment"
+        },
+        {
+            "@odata.context": "https://gamap-dev.crm9.dynamics.com/api/data/v9.1/$metadata#EntityDefinitions(LogicalName)/$entity",
+            "MetadataId": "e2660cf0-ed25-f011-998a-001dd80a67ab",
+            "LogicalName": "dchct_attachments"
+        },
+        {
+            "@odata.context": "https://gamap-dev.crm9.dynamics.com/api/data/v9.1/$metadata#EntityDefinitions(LogicalName)/$entity",
+            "MetadataId": "ee0d7c6c-fb25-f011-998a-001dd80a67ab",
+            "LogicalName": "dchct_caseconferenceattendees"
+        },
+        {
+            "@odata.context": "https://gamap-dev.crm9.dynamics.com/api/data/v9.1/$metadata#EntityDefinitions(LogicalName)/$entity",
+            "MetadataId": "f51cf246-e2ba-4e33-a22f-87e6edccf3ab",
+            "LogicalName": "customeraddress"
+        },
+        {
+            "@odata.context": "https://gamap-dev.crm9.dynamics.com/api/data/v9.1/$metadata#EntityDefinitions(LogicalName)/$entity",
+            "MetadataId": "608861bc-50a4-4c5f-a02c-21fe1943e2cf",
+            "LogicalName": "contact"
+        },
+        {
+            "@odata.context": "https://gamap-dev.crm9.dynamics.com/api/data/v9.1/$metadata#EntityDefinitions(LogicalName)/$entity",
+            "MetadataId": "70816501-edb9-4740-a16c-6a5efbc05d84",
+            "LogicalName": "account"
+        },
+        {
+            "@odata.context": "https://gamap-dev.crm9.dynamics.com/api/data/v9.1/$metadata#EntityDefinitions(LogicalName)/$entity",
+            "MetadataId": "80abe1a7-8626-f011-8c4e-001dd80b121d",
+            "LogicalName": "dchct_locassessmentshdmeval"
+        },
+        {
+            "@odata.context": "https://gamap-dev.crm9.dynamics.com/api/data/v9.1/$metadata#EntityDefinitions(LogicalName)/$entity",
+            "MetadataId": "e7cddb6c-8b26-f011-8c4e-001dd80b121d",
+            "LogicalName": "dchct_locassessmentshdmtasklist"
+        },
+        {
+            "@odata.context": "https://gamap-dev.crm9.dynamics.com/api/data/v9.1/$metadata#EntityDefinitions(LogicalName)/$entity",
+            "MetadataId": "44d1827a-5b19-f011-998a-001dd80b121d",
+            "LogicalName": "dchct_contact_contact_relatedcontact"
+        },
+        {
+            "@odata.context": "https://gamap-dev.crm9.dynamics.com/api/data/v9.1/$metadata#EntityDefinitions(LogicalName)/$entity",
+            "MetadataId": "d10022eb-6c19-f011-998a-001dd80b121d",
+            "LogicalName": "dchct_assessmentadheval"
+        },
+        {
+            "@odata.context": "https://gamap-dev.crm9.dynamics.com/api/data/v9.1/$metadata#EntityDefinitions(LogicalName)/$entity",
+            "MetadataId": "d858a537-081a-f011-998a-001dd80b121d",
+            "LogicalName": "dchct_notes"
+        },
+        {
+            "@odata.context": "https://gamap-dev.crm9.dynamics.com/api/data/v9.1/$metadata#EntityDefinitions(LogicalName)/$entity",
+            "MetadataId": "61a827b0-0d1a-f011-998a-001dd80b121d",
+            "LogicalName": "dchct_noterecipient"
+        },
+        {
+            "@odata.context": "https://gamap-dev.crm9.dynamics.com/api/data/v9.1/$metadata#EntityDefinitions(LogicalName)/$entity",
+            "MetadataId": "668635c8-231a-f011-998a-001dd80b121d",
+            "LogicalName": "dchct_locassessmentscareplanreview"
+        },
+        {
+            "@odata.context": "https://gamap-dev.crm9.dynamics.com/api/data/v9.1/$metadata#EntityDefinitions(LogicalName)/$entity",
+            "MetadataId": "85bce076-cc1a-f011-998a-001dd80b121d",
+            "LogicalName": "dchct_workerprovider"
+        },
+        {
+            "@odata.context": "https://gamap-dev.crm9.dynamics.com/api/data/v9.1/$metadata#EntityDefinitions(LogicalName)/$entity",
+            "MetadataId": "bb46e599-dd1a-f011-998a-001dd80b121d",
+            "LogicalName": "dchct_careplanreviewcollaboratorcontact"
+        },
+        {
+            "@odata.context": "https://gamap-dev.crm9.dynamics.com/api/data/v9.1/$metadata#EntityDefinitions(LogicalName)/$entity",
+            "MetadataId": "b6ecfbdf-e51a-f011-998a-001dd80b121d",
+            "LogicalName": "dchct_relatedcontact"
+        },
+        {
+            "@odata.context": "https://gamap-dev.crm9.dynamics.com/api/data/v9.1/$metadata#EntityDefinitions(LogicalName)/$entity",
+            "MetadataId": "6c345255-5f1c-f011-998a-001dd80b121d",
+            "LogicalName": "dchct_experience"
+        },
+        {
+            "@odata.context": "https://gamap-dev.crm9.dynamics.com/api/data/v9.1/$metadata#EntityDefinitions(LogicalName)/$entity",
+            "MetadataId": "87b40ea5-671c-f011-998a-001dd80b121d",
+            "LogicalName": "dchct_credential"
+        },
+        {
+            "@odata.context": "https://gamap-dev.crm9.dynamics.com/api/data/v9.1/$metadata#EntityDefinitions(LogicalName)/$entity",
+            "MetadataId": "824d04fb-cd1e-f011-998a-001dd80b121d",
+            "LogicalName": "dchct_locassessmentsmodifiedreassessment"
+        },
+        {
+            "@odata.context": "https://gamap-dev.crm9.dynamics.com/api/data/v9.1/$metadata#EntityDefinitions(LogicalName)/$entity",
+            "MetadataId": "10332517-f21e-f011-998a-001dd80b121d",
+            "LogicalName": "dchct_modifiedassessmentservices"
+        },
+        {
+            "@odata.context": "https://gamap-dev.crm9.dynamics.com/api/data/v9.1/$metadata#EntityDefinitions(LogicalName)/$entity",
+            "MetadataId": "7e28181b-981f-f011-998a-001dd80b121d",
+            "LogicalName": "dchct_locassessmentalseval"
+        },
+        {
+            "@odata.context": "https://gamap-dev.crm9.dynamics.com/api/data/v9.1/$metadata#EntityDefinitions(LogicalName)/$entity",
+            "MetadataId": "bf27800b-9f1f-f011-998a-001dd80b121d",
+            "LogicalName": "dchct_locassessmentsalstasklist"
+        },
+        {
+            "@odata.context": "https://gamap-dev.crm9.dynamics.com/api/data/v9.1/$metadata#EntityDefinitions(LogicalName)/$entity",
+            "MetadataId": "4923099f-ba1f-f011-998a-001dd80b121d",
+            "LogicalName": "dchct_accountaddress"
+        },
+        {
+            "@odata.context": "https://gamap-dev.crm9.dynamics.com/api/data/v9.1/$metadata#EntityDefinitions(LogicalName)/$entity",
+            "MetadataId": "29f8482c-c01f-f011-998a-001dd80b121d",
+            "LogicalName": "dchct_accountphone"
+        },
+        {
+            "@odata.context": "https://gamap-dev.crm9.dynamics.com/api/data/v9.1/$metadata#EntityDefinitions(LogicalName)/$entity",
+            "MetadataId": "05f7ddde-7e20-f011-998a-001dd80b121d",
+            "LogicalName": "dchct_locassessmentsclientreferralevaluationhdm"
+        },
+        {
+            "@odata.context": "https://gamap-dev.crm9.dynamics.com/api/data/v9.1/$metadata#EntityDefinitions(LogicalName)/$entity",
+            "MetadataId": "39edca25-1321-f011-998a-001dd80b121d",
+            "LogicalName": "dchct_locassessmentsclientcaregivertasklist"
+        },
+        {
+            "@odata.context": "https://gamap-dev.crm9.dynamics.com/api/data/v9.1/$metadata#EntityDefinitions(LogicalName)/$entity",
+            "MetadataId": "8a1721a8-ed21-f011-998a-001dd80b121d",
+            "LogicalName": "dchct_locassessmentsinterraimdshc"
+        },
+        {
+            "@odata.context": "https://gamap-dev.crm9.dynamics.com/api/data/v9.1/$metadata#EntityDefinitions(LogicalName)/$entity",
+            "MetadataId": "f14df9c0-f325-f011-998a-001dd80b121d",
+            "LogicalName": "dchct_referralandsupporttracking"
+        },
+        {
+            "@odata.context": "https://gamap-dev.crm9.dynamics.com/api/data/v9.1/$metadata#EntityDefinitions(LogicalName)/$entity",
+            "MetadataId": "a71d47d8-f525-f011-998a-001dd80b121d",
+            "LogicalName": "dchct_criticalincident"
+        },
+        {
+            "@odata.context": "https://gamap-dev.crm9.dynamics.com/api/data/v9.1/$metadata#EntityDefinitions(LogicalName)/$entity",
+            "MetadataId": "a929be97-fd16-f011-998a-001dd80db495",
+            "LogicalName": "dchct_contactname"
+        },
+        {
+            "@odata.context": "https://gamap-dev.crm9.dynamics.com/api/data/v9.1/$metadata#EntityDefinitions(LogicalName)/$entity",
+            "MetadataId": "14409a4e-0917-f011-998a-001dd80db495",
+            "LogicalName": "dchct_provider"
+        },
+        {
+            "@odata.context": "https://gamap-dev.crm9.dynamics.com/api/data/v9.1/$metadata#EntityDefinitions(LogicalName)/$entity",
+            "MetadataId": "60696d5d-4d78-4712-b4e0-6cbef3df4906",
+            "LogicalName": "systemuser"
+        },
+        {
+            "@odata.context": "https://gamap-dev.crm9.dynamics.com/api/data/v9.1/$metadata#EntityDefinitions(LogicalName)/$entity",
+            "MetadataId": "fc500766-1317-f011-998a-001dd80db495",
+            "LogicalName": "dchct_contact_related_contact"
+        },
+        {
+            "@odata.context": "https://gamap-dev.crm9.dynamics.com/api/data/v9.1/$metadata#EntityDefinitions(LogicalName)/$entity",
+            "MetadataId": "c6eb54b1-1617-f011-998a-001dd80db495",
+            "LogicalName": "dchct_contact_contact"
+        },
+        {
+            "@odata.context": "https://gamap-dev.crm9.dynamics.com/api/data/v9.1/$metadata#EntityDefinitions(LogicalName)/$entity",
+            "MetadataId": "00caf6f7-1a1a-f011-998a-001dd80db495",
+            "LogicalName": "dchct_medicationcase"
+        },
+        {
+            "@odata.context": "https://gamap-dev.crm9.dynamics.com/api/data/v9.1/$metadata#EntityDefinitions(LogicalName)/$entity",
+            "MetadataId": "5b337e2e-1b1a-f011-998a-001dd80db495",
+            "LogicalName": "dchct_medication"
+        },
+        {
+            "@odata.context": "https://gamap-dev.crm9.dynamics.com/api/data/v9.1/$metadata#EntityDefinitions(LogicalName)/$entity",
+            "MetadataId": "0196ecac-841c-f011-998a-001dd80db495",
+            "LogicalName": "dchct_position"
+        },
+        {
+            "@odata.context": "https://gamap-dev.crm9.dynamics.com/api/data/v9.1/$metadata#EntityDefinitions(LogicalName)/$entity",
+            "MetadataId": "3492b5b0-c91e-f011-998a-001dd80db495",
+            "LogicalName": "dchct_service"
+        },
+        {
+            "@odata.context": "https://gamap-dev.crm9.dynamics.com/api/data/v9.1/$metadata#EntityDefinitions(LogicalName)/$entity",
+            "MetadataId": "4deb552c-6520-f011-998a-001dd80db495",
+            "LogicalName": "dchct_locassessmentscaseconference"
+        },
+        {
+            "@odata.context": "https://gamap-dev.crm9.dynamics.com/api/data/v9.1/$metadata#EntityDefinitions(LogicalName)/$entity",
+            "MetadataId": "e170307e-4621-f011-998a-001dd80db495",
+            "LogicalName": "dchct_locassessmentscomplaintassessment"
+        },
+        {
+            "@odata.context": "https://gamap-dev.crm9.dynamics.com/api/data/v9.1/$metadata#EntityDefinitions(LogicalName)/$entity",
+            "MetadataId": "60b1f3c2-2f25-f011-998a-001dd80db495",
+            "LogicalName": "dchct_locassessmentserseval"
+        },
+        {
+            "@odata.context": "https://gamap-dev.crm9.dynamics.com/api/data/v9.1/$metadata#EntityDefinitions(LogicalName)/$entity",
+            "MetadataId": "fb8a0746-e325-f011-998a-001dd80db495",
+            "LogicalName": "dchct_levelofcareloc"
+        }
+    ]
+}
