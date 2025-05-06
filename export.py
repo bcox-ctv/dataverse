@@ -97,8 +97,7 @@ def export_dataverse_schema(dataverse_url, access_token, output_file):
         # Fetch solution components to filter entities by solution
         solution_name = "EDWP_POC"
         solution_components_action = f"solutions?$filter=uniquename eq '{solution_name}'"
-        solution_response = fetch_data(f"{endpoint}/{solution_components_action}", headers)
-        solution_data = solution_response
+        solution_data = fetch_data(f"{endpoint}/{solution_components_action}", headers)
 
         # Extract logical names of entities in the solution
         # Fetch solution components separately using the correct endpoint
@@ -107,8 +106,7 @@ def export_dataverse_schema(dataverse_url, access_token, output_file):
             raise Exception(f"Solution '{solution_name}' not found.")
 
         solution_components_action = f"solutioncomponents?$filter=_solutionid_value eq {solution_id} and componenttype eq 1"
-        solution_components_response = fetch_data(f"{endpoint}/{solution_components_action}", headers)
-        solution_components_data = solution_components_response
+        solution_components_data = fetch_data(f"{endpoint}/{solution_components_action}", headers)
 
         # Extract logical names of entities in the solution
         solution_entity_logical_names = [
@@ -144,9 +142,9 @@ def export_dataverse_schema(dataverse_url, access_token, output_file):
         # Save the DataFrame and table fields to an Excel file
         excel_file = "logical_names.xlsx"
         # Check if the file already exists
-        if os.path.exists(excel_file):
-            print(f"File {excel_file} already exists. Please delete it or choose a different name.")
-            return
+        # if os.path.exists(excel_file):
+        #     print(f"File {excel_file} already exists. Please delete it or choose a different name.")
+        #     return
 
         with pd.ExcelWriter(excel_file, engine="xlsxwriter") as writer:
             # Write logical names to the first sheet
