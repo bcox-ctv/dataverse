@@ -271,17 +271,17 @@ def export_dataverse_schema(dataverse_url, access_token, output_file, solution_j
                 combined_df.columns = combined_headers
 
                 # Write the combined DataFrame to Excel
-                combined_df.to_excel(writer, sheet_name=logical_name[:31], index=True, startrow=1)
+                combined_df.to_excel(writer, sheet_name=logical_name[:31], index=True, startrow=0)
 
                 # Merge headers for each group
                 worksheet = writer.sheets[logical_name[:31]]
-                source_end_col = len(source_group.columns) - 1
-                transformation_end_col = source_end_col + len(transformation_group.columns)
-                target_end_col = transformation_end_col + len(target_group.columns)
+                # source_end_col = len(source_group.columns) - 1
+                # transformation_end_col = source_end_col + len(transformation_group.columns)
+                # target_end_col = transformation_end_col + len(target_group.columns)
 
-                worksheet.merge_range(0, 0, 0, source_end_col, "Source", writer.book.add_format({'align': 'center', 'bold': True}))
-                worksheet.merge_range(0, source_end_col + 1, 0, transformation_end_col, "Transformation", writer.book.add_format({'align': 'center', 'bold': True}))
-                worksheet.merge_range(0, transformation_end_col + 1, 0, target_end_col, "Target", writer.book.add_format({'align': 'center', 'bold': True}))
+                # worksheet.merge_range(0, 0, 0, source_end_col, "Source", writer.book.add_format({'align': 'center', 'bold': True}))
+                # worksheet.merge_range(0, source_end_col + 1, 0, transformation_end_col, "Transformation", writer.book.add_format({'align': 'center', 'bold': True}))
+                # worksheet.merge_range(0, transformation_end_col + 1, 0, target_end_col, "Target", writer.book.add_format({'align': 'center', 'bold': True}))
 
             workbook = writer.book
             worksheet = writer.sheets["Logical Names"]
