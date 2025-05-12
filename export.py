@@ -3,6 +3,61 @@ from msal import ConfidentialClientApplication
 import os
 import pandas as pd
 from definitions import definitions_dict  # Import the dictionary from definitions.py
+import xml.etree.ElementTree as ET
+import json
+
+
+def xml_to_dict(element):
+    """Recursively convert an XML element and its children into a dictionary."""
+    result = {}
+    for child in element:
+        child_dict = {}
+        # If the child has attributes, add them as the first key-value pair
+        if child.attrib:
+            for attr_name, attr_value in child.attrib.items():
+                child_dict[attr_name] = attr_value
+
+        # If the child has children, recurse
+        if len(child):
+            child_dict.update(xml_to_dict(child))
+        else:
+            # If the child has no children, use its text content
+            child_dict = child.text or ""
+
+        # Add the child to the result dictionary
+        if child.tag in result:
+            if isinstance(result[child.tag], list):
+                result[child.tag].append(child_dict)
+            else:
+                result[child.tag] = [result[child.tag], child_dict]
+        else:
+            result[child.tag] = child_dict
+    return result
+
+def convert_xml_to_json(xml_file, json_file):
+    """Convert an XML file to a JSON file."""
+    try:
+        tree = ET.parse(xml_file)
+        root = tree.getroot()
+        data_dict = {root.tag: xml_to_dict(root)}
+        entities_dict = {}
+        for entity, attributes in data_dict[root.tag].items():
+            if isinstance(attributes, dict):
+                entities_dict[entity] = attributes
+        entities_dict = entities_dict.get("Entities").get("Entity", {})
+
+        for entity in entities_dict:
+            if "EntityInfo" in entity and "entity" in entity["EntityInfo"] and 'attributes' in entity["EntityInfo"]["entity"]  and 'attribute' in entity["EntityInfo"]["entity"]['attributes']:
+                entity["attributes"] = entity["EntityInfo"]["entity"]['attributes'].pop("attribute")
+            for key in list(entity.keys()):
+                if key not in ("Name", "attributes"):
+                    del entity[key]
+        entities_dict = [entity for entity in entities_dict if len(entity.keys()) >= 2]
+        return entities_dict
+    
+    except Exception as e:
+        print(f"Error: {e}")
+        return {}
 
 def get_access_token(client_id, tenant_id, client_secret, scope):
     """
@@ -59,10 +114,12 @@ def process_fields(fields, definitions_dict):
     """
     filtered_fields = [
         {
+            "MetadataId": field.get("MetadataId"),  # Added MetadataId as the first column
             "ColumnNumber": field.get("ColumnNumber"),
             "PrimaryId": field.get("IsPrimaryId", "") if field.get("IsPrimaryId", False) else "",
             "FieldName": field.get("SchemaName"),  # Changed LogicalName to FieldName and used SchemaName
             "AttributeType": field.get("AttributeType"),
+            "DatabaseLength": field.get("MaxLength", ""),  # Added DatabaseLength field
             "Definition": field.get("DisplayName", {}).get("UserLocalizedLabel", {}).get("Label", "") if field.get("DisplayName", {}).get("UserLocalizedLabel") else "",
             "LinkedTable": ", ".join(field.get("Targets", []))  # Convert list of targets to comma-delimited string
         }
@@ -79,7 +136,7 @@ def process_fields(fields, definitions_dict):
     return filtered_fields
 
 
-def export_dataverse_schema(dataverse_url, access_token, output_file):
+def export_dataverse_schema(dataverse_url, access_token, output_file, solution_json):
     """
     Exports the metadata schema of a Dataverse instance.
 
@@ -105,7 +162,7 @@ def export_dataverse_schema(dataverse_url, access_token, output_file):
         if not solution_id:
             raise Exception(f"Solution '{solution_name}' not found.")
 
-        solution_components_action = f"solutioncomponents?$filter=_solutionid_value eq {solution_id} and componenttype eq 1"
+        solution_components_action = f"solutioncomponents?$filter=_solutionid_value eq {solution_id}" # and componenttype eq 1"
         solution_components_data = fetch_data(f"{endpoint}/{solution_components_action}", headers)
 
         # Extract logical names of entities in the solution
@@ -129,8 +186,19 @@ def export_dataverse_schema(dataverse_url, access_token, output_file):
             # Fetch all fields (attributes) for the entity
             fields_action = f"EntityDefinitions(LogicalName='{logical_name}')/Attributes"
             fields_response = fetch_data(f"{endpoint}/{fields_action}", headers)
-            table_fields[logical_name] = process_fields(fields_response.get("value", []), definitions_dict)
 
+
+
+            table_fields[logical_name] = process_fields(fields_response.get("value", []), definitions_dict)
+            # Filter fields based on solution_json
+            for entity in solution_json:
+                if entity.get("Name", "").lower() == logical_name.lower():
+                    solution_attributes = {attr["PhysicalName"] for attr in entity.get("attributes", [])}
+                    table_fields[logical_name] = [
+                        field for field in table_fields[logical_name]
+                        if field.get("FieldName") in solution_attributes
+                    ]
+                    break
         # Initialize schema as a dictionary
         schema = {"value": filtered_entities}
 
@@ -140,13 +208,14 @@ def export_dataverse_schema(dataverse_url, access_token, output_file):
         df = pd.DataFrame(logical_names, columns=["Logical Names"])
         
         # Save the DataFrame and table fields to an Excel file
-        excel_file = "logical_names.xlsx"
         # Check if the file already exists
-        # if os.path.exists(excel_file):
-        #     print(f"File {excel_file} already exists. Please delete it or choose a different name.")
+        # if os.path.exists(output_file):
+        #     print(f"File {output_file} already exists. Please delete it or choose a different name.")
         #     return
 
-        with pd.ExcelWriter(excel_file, engine="xlsxwriter") as writer:
+
+        # Save the first Excel file
+        with pd.ExcelWriter(output_file, engine="xlsxwriter") as writer:
             # Write logical names to the first sheet
             df.to_excel(writer, sheet_name="Logical Names", index=False)
             
@@ -165,7 +234,65 @@ def export_dataverse_schema(dataverse_url, access_token, output_file):
             sheet_order = ["Logical Names"] + sorted(name[:31] for name in table_fields.keys())
             workbook.worksheets_objs.sort(key=lambda ws: sheet_order.index(ws.name))
 
-        print(f"Logical Names and table fields saved to {excel_file}")
+        print(f"Logical Names and table fields saved to {output_file}")
+
+        # Save the second Excel file
+        source_to_target_file = "source_to_target_mapping.xlsx"
+        with pd.ExcelWriter(source_to_target_file, engine="xlsxwriter") as writer:
+            # Write logical names to the first sheet
+            df.to_excel(writer, sheet_name="Logical Names", index=False)
+            
+            # Write each table's fields to a separate sheet
+            for logical_name, fields in table_fields.items():
+            # Combine DataFrame creation and sorting
+            # Group all remaining fields under "target"
+                grouped_fields = [{"Target": {key: field[key] for key in field if key not in ["MetadataId", "Definition"]}} for field in fields]
+                fields_df = pd.json_normalize(grouped_fields).sort_values(by="Target.ColumnNumber", na_position="last")
+                # Create new DataFrames for the additional groups with only headers
+                source_group = pd.DataFrame(columns=["Table Name", "Column Name", "Data Type", "Length"])
+                transformation_group = pd.DataFrame(columns=["Transformation Rule", "Note"])
+                target_group = pd.DataFrame(columns=[col.split(".")[-1] for col in fields_df.columns])
+
+                # Write the combined DataFrame to Excel
+                # Populate the Target group with data from fields_df
+                target_group = fields_df.copy()
+                target_group.columns = [col.split(".")[-1] for col in target_group.columns]
+
+                # Combine all groups into a single DataFrame with multi-level headers
+                combined_headers = pd.MultiIndex.from_tuples(
+                    [("Source", col) for col in source_group.columns] +
+                    [("Transformation", col) for col in transformation_group.columns] +
+                    [("Target", col) for col in target_group.columns]
+                )
+                combined_df = pd.concat(
+                    [source_group, transformation_group, target_group],
+                    axis=1
+                )
+                combined_df.columns = combined_headers
+
+                # Write the combined DataFrame to Excel
+                combined_df.to_excel(writer, sheet_name=logical_name[:31], index=True, startrow=1)
+
+                # Merge headers for each group
+                worksheet = writer.sheets[logical_name[:31]]
+                source_end_col = len(source_group.columns) - 1
+                transformation_end_col = source_end_col + len(transformation_group.columns)
+                target_end_col = transformation_end_col + len(target_group.columns)
+
+                worksheet.merge_range(0, 0, 0, source_end_col, "Source", writer.book.add_format({'align': 'center', 'bold': True}))
+                worksheet.merge_range(0, source_end_col + 1, 0, transformation_end_col, "Transformation", writer.book.add_format({'align': 'center', 'bold': True}))
+                worksheet.merge_range(0, transformation_end_col + 1, 0, target_end_col, "Target", writer.book.add_format({'align': 'center', 'bold': True}))
+
+            workbook = writer.book
+            worksheet = writer.sheets["Logical Names"]
+            for row_num, logical_name in enumerate(logical_names, start=1):
+                worksheet.write_url(f"A{row_num + 1}", f"internal:'{logical_name[:31]}'!A1", string=logical_name)
+
+            # Simplify sheet_order creation...  
+            sheet_order = ["Logical Names"] + sorted(name[:31] for name in table_fields.keys())
+            workbook.worksheets_objs.sort(key=lambda ws: sheet_order.index(ws.name))
+
+        print(f"Logical Names and table fields saved to {source_to_target_file}")
         
     except requests.exceptions.RequestException as e:
         print(f"Error fetching schema: {e}")
@@ -196,14 +323,17 @@ def get_env_variable(var_name):
 if __name__ == "__main__":
     dataverse_url = "https://gamap-dev.crm9.dynamics.com"
     scope = f"{dataverse_url}/.default"
-    output_file = "dataverse_schema.json"
+    output_file = "data_dictionary.xlsx"
 
     client_id = get_env_variable("client_id")
     client_secret = get_env_variable("client_secret")
     tenant_id = get_env_variable("tenant_id")
-    
+    xml_file = "/Users/briancox/Downloads/customizations.xml"  # Path to your XML file
+    json_file = "/Users/briancox/Downloads/customizations.json"  # Path to save the JSON file
     try:
         access_token = get_access_token(client_id, tenant_id, client_secret, scope)
-        export_dataverse_schema(dataverse_url, access_token, output_file)
+        solution_json = convert_xml_to_json(xml_file, json_file)
+
+        export_dataverse_schema(dataverse_url, access_token, output_file, solution_json)
     except Exception as e:
         print(f"Error: {e}")
