@@ -27,4 +27,5 @@
         * Dataverse Search Role
         * Environment Maker (to pull solution info)
     9. Select Create.
-3. 
+3. Export the solution from dataverse
+    
