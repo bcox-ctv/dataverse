@@ -34,7 +34,7 @@ def xml_to_dict(element):
             result[child.tag] = child_dict
     return result
 
-def convert_xml_to_json(xml_file, json_file):
+def convert_xml_to_json(xml_file):
     """Convert an XML file to a JSON file."""
     try:
         tree = ET.parse(xml_file)
@@ -209,9 +209,9 @@ def export_dataverse_schema(dataverse_url, access_token, output_file, solution_j
         
         # Save the DataFrame and table fields to an Excel file
         # Check if the file already exists
-        # if os.path.exists(output_file):
-        #     print(f"File {output_file} already exists. Please delete it or choose a different name.")
-        #     return
+        if os.path.exists(output_file):
+            print(f"File {output_file} already exists. Please delete it or choose a different name.")
+            return
 
 
         # Save the first Excel file
@@ -238,6 +238,10 @@ def export_dataverse_schema(dataverse_url, access_token, output_file, solution_j
 
         # Save the second Excel file
         source_to_target_file = "source_to_target_mapping.xlsx"
+        if os.path.exists(source_to_target_file):
+            print(f"File {source_to_target_file} already exists. Please delete it or choose a different name.")
+            return
+
         with pd.ExcelWriter(source_to_target_file, engine="xlsxwriter") as writer:
             # Write logical names to the first sheet
             df.to_excel(writer, sheet_name="Logical Names", index=False)
@@ -275,13 +279,7 @@ def export_dataverse_schema(dataverse_url, access_token, output_file, solution_j
 
                 # Merge headers for each group
                 worksheet = writer.sheets[logical_name[:31]]
-                # source_end_col = len(source_group.columns) - 1
-                # transformation_end_col = source_end_col + len(transformation_group.columns)
-                # target_end_col = transformation_end_col + len(target_group.columns)
 
-                # worksheet.merge_range(0, 0, 0, source_end_col, "Source", writer.book.add_format({'align': 'center', 'bold': True}))
-                # worksheet.merge_range(0, source_end_col + 1, 0, transformation_end_col, "Transformation", writer.book.add_format({'align': 'center', 'bold': True}))
-                # worksheet.merge_range(0, transformation_end_col + 1, 0, target_end_col, "Target", writer.book.add_format({'align': 'center', 'bold': True}))
 
             workbook = writer.book
             worksheet = writer.sheets["Logical Names"]
@@ -329,10 +327,10 @@ if __name__ == "__main__":
     client_secret = get_env_variable("client_secret")
     tenant_id = get_env_variable("tenant_id")
     xml_file = "/Users/briancox/Downloads/customizations.xml"  # Path to your XML file
-    json_file = "/Users/briancox/Downloads/customizations.json"  # Path to save the JSON file
+
     try:
         access_token = get_access_token(client_id, tenant_id, client_secret, scope)
-        solution_json = convert_xml_to_json(xml_file, json_file)
+        solution_json = convert_xml_to_json(xml_file)
 
         export_dataverse_schema(dataverse_url, access_token, output_file, solution_json)
     except Exception as e:
