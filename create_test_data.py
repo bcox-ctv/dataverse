@@ -5,6 +5,7 @@ from datetime import datetime
 from tables.vendor_data import create_sample_vendors
 from tables.address_data import create_sample_addresses
 from tables.demographics_data import create_sample_demographics
+from tables.contact_data import create_sample_contacts
 
 def load_settings():
     """Load database settings from settings.yaml"""
@@ -70,8 +71,16 @@ def main():
                 total_addresses += addr_count
             print(f"Created {total_addresses} address records")
             
-            # Create demographics records
-            num_demographics = create_sample_demographics(conn, 200)  # Create 200 demographic records
+            # Create contact records first
+            num_contacts = create_sample_contacts(conn, 200)  # Create 200 contact records
+            print(f"Created {num_contacts} contact records")
+            
+            # Get contact IDs for demographics
+            cursor.execute("SELECT ContactID FROM Contacts")
+            contact_ids = [row[0] for row in cursor.fetchall()]
+            
+            # Create demographics records with contact IDs
+            num_demographics = create_sample_demographics(conn, contact_ids)  # Create demographics for each contact
             print(f"Created {num_demographics} demographic records")
             
             conn.commit()

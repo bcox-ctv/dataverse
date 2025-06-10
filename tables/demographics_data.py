@@ -5,8 +5,8 @@ from faker import Faker
 # Initialize Faker with consistent seed for reproducibility
 fake = Faker()
 
-def create_sample_demographics(conn, num_records=100):
-    """Create sample demographic records"""
+def create_sample_demographics(conn, contact_ids):
+    """Create sample demographic records for given contacts"""
     cursor = conn.cursor()
     
     # Lists for generating realistic demographic data
@@ -20,13 +20,16 @@ def create_sample_demographics(conn, num_records=100):
     
     # Using a default UserStamp of 1 (assuming this is a valid admin user ID)
     default_user_stamp = 1
-    
-    for _ in range(num_records):
-        # Generate Medicare ID in format "1AB2-CD3-EF45"
-        medicare_id = f"{fake.random_int(1000, 9999)}-{fake.random_letter()}{fake.random_letter()}{fake.random_digit()}-{fake.random_letter()}{fake.random_letter()}{fake.random_digit()}{fake.random_digit()}"[:25]
+    demographics_created = 0
+
+    # Create sample records for each contact
+    for contact_id in contact_ids:
+        case_no = f'CASE{fake.unique.random_number(digits=8):08d}'  # Unique 8-digit case number
+        medicare_id = f'MED{fake.unique.random_number(digits=10):010d}'  # 10-digit Medicare ID
         
         cursor.execute('''
-            INSERT INTO DEMOGRAPHICS (
+            INSERT INTO Demographics (
+                caseno,
                 MedicareID,
                 LivesAlone,
                 MEDICAIDENROLLED,
@@ -34,10 +37,12 @@ def create_sample_demographics(conn, num_records=100):
                 MEMBERID,
                 Rural,
                 Poverty,
+                ContactID,
                 UserStamp,
                 DateTimeStamp
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', (
+            case_no,
             medicare_id,
             random.choice(lives_alone_options),
             random.choice([0, 1]),  # MEDICAIDENROLLED as bit
@@ -45,9 +50,11 @@ def create_sample_demographics(conn, num_records=100):
             fake.random_int(min=1000, max=9999),  # MEMBERID
             random.choice(rural_options),
             random.choice(poverty_options),
+            contact_id,  # Link to the contact
             default_user_stamp,
             current_timestamp
         ))
+        demographics_created += cursor.rowcount
     
     conn.commit()
-    return cursor.rowcount  # Return number of demographic records created
+    return demographics_created  # Return number of demographic records created
