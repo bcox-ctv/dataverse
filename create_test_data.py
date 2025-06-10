@@ -98,8 +98,9 @@ def create_sample_vendors(conn, num_vendors=50):
                 ACTIVE,
                 SAMEMAILTOAS,
                 UserStamp,
-                DateTimeStamp
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                DateTimeStamp,
+                AllowAuthOverlap
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', (
             vendor_no,
             random.choice([0, 1]),
@@ -116,7 +117,8 @@ def create_sample_vendors(conn, num_vendors=50):
             1 if active else 0,
             None,
             default_user_stamp,    # Required: UserStamp
-            current_timestamp      # Required: DateTimeStamp
+            current_timestamp,     # Required: DateTimeStamp
+            0                     # Required: AllowAuthOverlap
         ))
     
     conn.commit()
