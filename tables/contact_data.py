@@ -53,7 +53,7 @@ def create_sample_contacts(conn, num_contacts=100, default_user_stamp=1):
         interpreter_needed = preferred_language != 'English'
 
         cursor.execute('''
-            INSERT INTO Contacts (
+            INSERT INTO Contact (
                 TITLE,
                 FIRSTNAME,
                 MIDDLENAME,
