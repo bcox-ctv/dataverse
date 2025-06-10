@@ -123,12 +123,56 @@ def create_sample_vendors(conn, num_vendors=50):
     
     conn.commit()
 
+def create_sample_addresses(conn, vendor_id, default_user_stamp):
+    """Create sample address records for a vendor"""
+    cursor = conn.cursor()
+    
+    # Get current timestamp
+    current_timestamp = datetime.now()
+    
+    # Create a primary address for each vendor
+    street = fake.street_address()
+    street2 = fake.secondary_address() if random.random() < 0.3 else None  # 30% chance of having a second address line
+    
+    cursor.execute('''
+        INSERT INTO HISAddress (
+            AddressType,
+            AddressCategory,
+            [Primary],
+            Street,
+            Street2,
+            City,
+            State,
+            ZipCode,
+            DateTimeStamp,
+            UserStamp
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    ''', (
+        'Business',  # AddressType
+        'Physical',  # AddressCategory
+        1,          # Primary
+        street,
+        street2,
+        fake.city(),
+        fake.state(),
+        fake.zipcode(),
+        current_timestamp,
+        default_user_stamp
+    ))
+
 def main():
     conn = create_connection()
     if conn is not None:
         create_sample_vendors(conn)
+        # For each vendor, create sample addresses
+        cursor = conn.cursor()
+        cursor.execute("SELECT VendorID FROM Vendors")
+        vendor_ids = [row[0] for row in cursor.fetchall()]
+        
+        for vendor_id in vendor_ids:
+            create_sample_addresses(conn, vendor_id, 1)  # 1 is the default UserStamp used
         conn.close()
-        print("Sample vendor data created successfully")
+        print("Sample vendor and address data created successfully")
     else:
         print("Error! Cannot create the database connection.")
 
