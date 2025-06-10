@@ -70,16 +70,19 @@ def create_sample_vendors(conn, num_vendors=50):
     for _ in range(num_vendors):
         # Generate realistic company and contact information
         company_base = fake.company()
-        company_name = f"{company_base} {random.choice(healthcare_words)} {random.choice(company_types)}"
-        contact_name = fake.name()
-        vendor_no = f'V{fake.unique.random_number(digits=5):05d}'
-        tax_id = f'{fake.random_int(min=10, max=99)}-{fake.random_int(min=1000000, max=9999999)}'
+        company_name = f"{company_base} {random.choice(healthcare_words)} {random.choice(company_types)}"[:75]  # MAILTONAME: VARCHAR(75)
+        contact_name = fake.name()[:50]  # MAILTOCONTACT: VARCHAR(50)
+        vendor_no = f'V{fake.unique.random_number(digits=5):05d}'[:50]  # VendorNO: VARCHAR(50)
+        tax_id = f'{fake.random_int(min=10, max=99)}-{fake.random_int(min=1000000, max=9999999)}'[:15]  # TAXID: VARCHAR(15)
         
         # Generate realistic dates within last 5 years
         contract_date = fake.date_between(start_date='-5y', end_date='today')
         
         # 75% chance of being active
         active = random.choices([True, False], weights=[75, 25])[0]
+        
+        # Create contract number with correct length
+        contract_num = f'CNT{fake.unique.random_number(digits=5):05d}'[:15]  # CONTRACT: VARCHAR(15)
         
         cursor.execute('''
             INSERT INTO Vendors (
@@ -121,28 +124,28 @@ def create_sample_vendors(conn, num_vendors=50):
             contact_name,
             1 if active else 0,    # CURRVCONTRACT
             contract_date,
-            f'CNT{fake.unique.random_number(digits=5):05d}',
+            contract_num,          # CONTRACT: VARCHAR(15)
             random.choice([0, 1]),  # FOSTERPARENT
-            f'SEC{fake.unique.random_number(digits=5):05d}',
-            fake.paragraph(nb_sentences=2),  # NOTES
-            company_name,
-            contact_name,
+            f'SEC{fake.unique.random_number(digits=5):05d}'[:15],  # SECID: VARCHAR(15)
+            fake.paragraph(nb_sentences=1)[:175],  # NOTES: VARCHAR(175)
+            company_name,          # MAILTONAME: VARCHAR(75)
+            contact_name,          # MAILTOCONTACT: VARCHAR(50)
             1 if active else 0,    # ACTIVE
             None,                  # SAMEMAILTOAS
             default_user_stamp,
             current_timestamp,
             0,                     # AllowAuthOverlap
-            fake.email(),          # Email
-            fake.city(),           # County (using city as a substitute)
-            company_name[:50],     # ShortName (truncated company name)
-            'Healthcare',          # ProviderType
+            fake.email()[:50],     # Email: VARCHAR(50)
+            fake.city()[:100],     # County: VARCHAR(100)
+            company_name[:75],     # ShortName: VARCHAR(75)
+            'Healthcare Provider'[:100],  # ProviderType: VARCHAR(100)
             0,                     # External
             0,                     # Exclude
             1,                     # IsAgency
-            f'{fake.random_int(min=1000000000, max=9999999999)}',  # NPI (10 digits)
+            str(fake.random_int(min=1000000000, max=9999999999))[:10],  # NPI: VARCHAR(10)
             random.choice([0, 1]), # MEDICAIDAPP
             random.choice([0, 1]), # InRotation
-            fake.random_int(min=1000, max=9999),  # EXTENSION
+            str(fake.random_int(min=1000, max=9999))[:9],  # EXTENSION: VARCHAR(9)
             fake.random_int(min=1, max=100),      # NUMLICENSEDFOR
             0                      # AllowEnrollOverlap
         ))
@@ -156,9 +159,12 @@ def create_sample_addresses(conn, vendor_id, default_user_stamp):
     # Get current timestamp
     current_timestamp = datetime.now()
     
-    # Create a primary address for each vendor
-    street = fake.street_address()
-    street2 = fake.secondary_address() if random.random() < 0.3 else None  # 30% chance of having a second address line
+    # Create a primary address for each vendor (enforce field lengths)
+    street = fake.street_address()[:100]  # Street: VARCHAR(100)
+    street2 = fake.secondary_address()[:100] if random.random() < 0.3 else None  # Street2: VARCHAR(100)
+    city = fake.city()[:30]  # City: VARCHAR(30)
+    state = fake.state()[:100]  # State: VARCHAR(100)
+    zipcode = fake.zipcode()[:10]  # ZipCode: VARCHAR(10)
     
     cursor.execute('''
         INSERT INTO HISAddress (
@@ -185,9 +191,9 @@ def create_sample_addresses(conn, vendor_id, default_user_stamp):
         1,            # Primary
         street,
         street2,
-        fake.city(),
-        fake.state(),
-        fake.zipcode(),
+        city,
+        state,
+        zipcode,
         current_timestamp,
         default_user_stamp,
         1,            # Active (1 = true)
