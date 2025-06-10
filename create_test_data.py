@@ -2,9 +2,9 @@ import pyodbc
 import os
 import yaml
 from datetime import datetime
-from vendor_data import create_sample_vendors
-from address_data import create_sample_addresses
-from demographics_data import create_sample_demographics
+from tables.vendor_data import create_sample_vendors
+from tables.address_data import create_sample_addresses
+from tables.demographics_data import create_sample_demographics
 
 def load_settings():
     """Load database settings from settings.yaml"""
