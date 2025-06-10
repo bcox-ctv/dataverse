@@ -145,19 +145,29 @@ def create_sample_addresses(conn, vendor_id, default_user_stamp):
             State,
             ZipCode,
             DateTimeStamp,
-            UserStamp
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            UserStamp,
+            Active,
+            ChapterName,
+            ChapterEntityID,
+            PageName,
+            PageEntityID
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     ''', (
-        'Business',  # AddressType
-        'Physical',  # AddressCategory
-        1,          # Primary
+        'Business',    # AddressType
+        'Physical',    # AddressCategory
+        1,            # Primary
         street,
         street2,
         fake.city(),
         fake.state(),
         fake.zipcode(),
         current_timestamp,
-        default_user_stamp
+        default_user_stamp,
+        1,            # Active (1 = true)
+        'Vendors',    # ChapterName
+        vendor_id,    # ChapterEntityID references the Vendor
+        'Address',    # PageName
+        vendor_id     # PageEntityID references the same Vendor
     ))
 
 def main():

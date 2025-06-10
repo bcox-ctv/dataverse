@@ -81,7 +81,6 @@ def extract_tables_with_titles(pdf_path):
     return tables
 
 def parse_table_to_sql(table_name, df):
-
     #  SQL reserved words to Escape
     sql_reserved_words = {'order', 'group', 'limit', 'select', 'where', 'from', 'table', \
                             'index', 'primary', 'key', 'update', 'delete', 'insert', 'values', \
@@ -122,29 +121,33 @@ def parse_table_to_sql(table_name, df):
     # Drop the first column (assumed to be an index or irrelevant)
     # df = df.iloc[:, 1:]
 
+    identity_col = -1
+    fk_constraint = ""
     for i, row in df.iterrows():
+        
+        identity = ""
+        if i == 0 and "Identity" in [col.replace('\n', '') for col in df.columns]:
+            identity_col = next((i for i, col in enumerate(df.columns) if col.replace('\n', '').lower().startswith("ident")), -1)
+        if identity_col != -1:
+            identity = "IDENTITY(1,1)" if identity_col != -1 and str(row[identity_col]).strip() != "" else ""
         if len(row) == 9:
             field = str(row[1]).replace('\n', ' ').strip().replace(' ', '')
             dtype = str(row[2]).replace('\n', ' ').strip().replace(' ', '').upper() if len(row) > 2 else ""
             length = str(row[4]).strip().upper() if len(row) > 4 else ""
             nullable = str(row[5]).strip().upper() if len(row) > 5 else "YES"
+            # identity = "IDENTITY(1,1)" if len(row) > identity_col and str(row[identity_col]).strip().upper() != "" else ""
         elif len(row) >6 or df.columns[0] == "Key":
             field = str(row[1]).replace('\n', ' ').strip().replace(' ', '')
             dtype = str(row[2]).replace('\n', ' ').strip().replace(' ', '').upper() if len(row) > 2 else ""
             length = str(row[3]).strip() if len(row) > 3 else ""
             nullable = str(row[4]).strip().upper() if len(row) > 4 else "YES"
+            # identity = "IDENTITY(1,1)" if len(row) > identity_col and str(row[identity_col]).strip().upper() != "" else ""
         else:
             field = str(row[0]).replace('\n', ' ').strip().replace(' ', '')
             dtype = str(row[1]).replace('\n', ' ').strip().replace(' ', '').upper() if len(row) > 1 else ""
             length = str(row[2]).strip().upper() if len(row) > 2 else ""
             nullable = str(row[3]).strip().upper() if len(row) > 3 else "YES"
 
-        if field.lower() in sql_reserved_words:
-            field = f'[{field}]'
-        
-        if table_name.lower() in sql_reserved_words:
-            table_name = f'[{table_name}]'
-        
         # Remove leading digits and underscore after them
         field = re.sub(r'^\d+_?', '', field) \
             .replace('-', '').replace('_', '').replace('/', '').replace(' ', '')
@@ -153,12 +156,14 @@ def parse_table_to_sql(table_name, df):
                 sql_type = "VARCHAR(MAX)"
             else:
                 sql_type = f"VARCHAR({length})" if length else "VARCHAR(MAX)"
-        elif "INT" in dtype or "[DBO.[D_ID" in dtype or "[DBO.[D_I" in dtype:
+        elif "INT" in dtype or "D_ID" in dtype or "[DBO.[D_ID" in dtype or "[DBO.[D_I" in dtype:
             sql_type = "INT"
         elif "DATE" in dtype:
             sql_type = "DATETIME"  # or DATE if you only need date
-        elif "DECIMAL" in dtype or "NUMERIC" in dtype or "[DBO.[DOLLARAMOUN" in dtype:
-            sql_type = f"DECIMAL(18,2)"  # Add proper precision/scale
+        elif "DECIMAL" in dtype  or "[DBO.[DOLLARAMOUN" in dtype:
+            sql_type = f"DECIMAL(18,2)"
+        elif "NUMERIC" in dtype:
+            sql_type = dtype
         elif "DBO.[D_LOOKUP" in dtype:
             sql_type = f"VARCHAR({length})" if length else "VARCHAR(MAX)"
         elif "BIT" in dtype or "BOOLEAN" in dtype:
@@ -171,9 +176,22 @@ def parse_table_to_sql(table_name, df):
                 sql_type = f"VARCHAR({length})" if length else "VARCHAR(MAX)"
 
         null_str = "NOT NULL" if (nullable == "NOT NULL" or nullable == "NOT\nNULL") else "NULL"
-        
-        columns.append(f"    {field} {sql_type} {null_str}".strip())
 
+
+        if identity != "":
+            fk_constraint = (f"    Constraint PK_{field}_{table_name} PRIMARY KEY CLUSTERED ({field})".strip())
+
+        if field.lower() in sql_reserved_words:
+            field = f'[{field}]'
+        
+        columns.append(f"    {field} {sql_type} {identity} {null_str}".strip())
+
+
+    if table_name.lower() in sql_reserved_words:
+        table_name = f'[{table_name}]'
+        
+    if fk_constraint != "":
+            columns.append(fk_constraint)
     if columns:
         sql = f"CREATE TABLE {table_name} (\n" + ",\n".join(columns) + "\n);"
         sql_lines.append(sql)
@@ -181,13 +199,27 @@ def parse_table_to_sql(table_name, df):
 
 tables = extract_tables_with_titles(pdf_path)
 
-all_sql = []
-for table_name, df in tables:
-    sql_stmts = parse_table_to_sql(table_name, df)
-    all_sql.extend(sql_stmts)
+table_creates = []
+foreign_keys = []
 
-# Write SQL statements to a file
+for table_name, df in tables:
+    if not table_name.startswith("RSAExportSubmissions"):
+        sql_stmts = parse_table_to_sql(table_name, df)
+        # Separate foreign key constraints from table creates
+        for stmt in sql_stmts:
+            if stmt.startswith('ALTER TABLE'):
+                foreign_keys.append(stmt)
+            else:
+                table_creates.append(stmt)
+
+# Write SQL statements to a file with foreign keys at the end
 output_path = "db_create.sql"
 with open(output_path, "w") as f:
-    for stmt in all_sql:
+    # First write all table creates
+    for stmt in table_creates:
+        f.write(stmt + "\n\n")
+    
+    # Then write all foreign key constraints
+    f.write("\n-- Adding Foreign Key Constraints\n\n")
+    for stmt in foreign_keys:
         f.write(stmt + "\n\n")
