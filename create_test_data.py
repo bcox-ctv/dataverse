@@ -104,7 +104,7 @@ def create_sample_vendors(conn, num_vendors=50):
                 County,
                 ShortName,
                 ProviderType,
-                External,
+                [External],
                 Exclude,
                 IsAgency,
                 NPI,
