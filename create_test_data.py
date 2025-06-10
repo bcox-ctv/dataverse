@@ -99,26 +99,52 @@ def create_sample_vendors(conn, num_vendors=50):
                 SAMEMAILTOAS,
                 UserStamp,
                 DateTimeStamp,
-                AllowAuthOverlap
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                AllowAuthOverlap,
+                Email,
+                County,
+                ShortName,
+                ProviderType,
+                External,
+                Exclude,
+                IsAgency,
+                NPI,
+                MEDICAIDAPP,
+                InRotation,
+                EXTENSION,
+                NUMLICENSEDFOR,
+                AllowEnrollOverlap
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', (
             vendor_no,
-            random.choice([0, 1]),
+            random.choice([0, 1]),  # VPUBLIC
             tax_id,
             contact_name,
-            1 if active else 0,
+            1 if active else 0,    # CURRVCONTRACT
             contract_date,
             f'CNT{fake.unique.random_number(digits=5):05d}',
-            random.choice([0, 1]),
+            random.choice([0, 1]),  # FOSTERPARENT
             f'SEC{fake.unique.random_number(digits=5):05d}',
-            fake.paragraph(nb_sentences=2),  # Generate realistic notes
+            fake.paragraph(nb_sentences=2),  # NOTES
             company_name,
             contact_name,
-            1 if active else 0,
-            None,
-            default_user_stamp,    # Required: UserStamp
-            current_timestamp,     # Required: DateTimeStamp
-            0                     # Required: AllowAuthOverlap
+            1 if active else 0,    # ACTIVE
+            None,                  # SAMEMAILTOAS
+            default_user_stamp,
+            current_timestamp,
+            0,                     # AllowAuthOverlap
+            fake.email(),          # Email
+            fake.city(),           # County (using city as a substitute)
+            company_name[:50],     # ShortName (truncated company name)
+            'Healthcare',          # ProviderType
+            0,                     # External
+            0,                     # Exclude
+            1,                     # IsAgency
+            f'{fake.random_int(min=1000000000, max=9999999999)}',  # NPI (10 digits)
+            random.choice([0, 1]), # MEDICAIDAPP
+            random.choice([0, 1]), # InRotation
+            fake.random_int(min=1000, max=9999),  # EXTENSION
+            fake.random_int(min=1, max=100),      # NUMLICENSEDFOR
+            0                      # AllowEnrollOverlap
         ))
     
     conn.commit()
@@ -150,8 +176,9 @@ def create_sample_addresses(conn, vendor_id, default_user_stamp):
             ChapterName,
             ChapterEntityID,
             PageName,
-            PageEntityID
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            PageEntityID,
+            Country
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     ''', (
         'Business',    # AddressType
         'Physical',    # AddressCategory
@@ -167,7 +194,8 @@ def create_sample_addresses(conn, vendor_id, default_user_stamp):
         'Vendors',    # ChapterName
         vendor_id,    # ChapterEntityID references the Vendor
         'Address',    # PageName
-        vendor_id     # PageEntityID references the same Vendor
+        vendor_id,    # PageEntityID references the same Vendor
+        'United States'  # Country
     ))
 
 def main():
@@ -181,6 +209,7 @@ def main():
         
         for vendor_id in vendor_ids:
             create_sample_addresses(conn, vendor_id, 1)  # 1 is the default UserStamp used
+        conn.commit()
         conn.close()
         print("Sample vendor and address data created successfully")
     else:
