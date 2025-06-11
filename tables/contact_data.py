@@ -88,9 +88,8 @@ def create_sample_contacts(conn, num_contacts=100, default_user_stamp=1):
                 DISTRICT,
                 DateTimeStamp,
                 UserStamp,
-                Confidential,
-                GenericCheckbox1
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                Confidential
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', (
             random.choice(TITLES),
             fake.first_name()[:50],
@@ -124,8 +123,7 @@ def create_sample_contacts(conn, num_contacts=100, default_user_stamp=1):
             fake.random_int(min=1, max=10),  # District number
             current_timestamp,
             default_user_stamp,
-            0,  # Confidential (always 0)
-            0   # GenericCheckbox1 (default 0)
+            0   # Confidential (always 0)
         ))
         contacts_created += cursor.rowcount
 

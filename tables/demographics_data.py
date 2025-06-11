@@ -39,8 +39,9 @@ def create_sample_demographics(conn, contact_ids):
                 Poverty,
                 ContactID,
                 UserStamp,
-                DateTimeStamp
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                DateTimeStamp,
+                GenericCheckbox1
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', (
             case_no,
             medicare_id,
@@ -52,7 +53,8 @@ def create_sample_demographics(conn, contact_ids):
             random.choice(poverty_options),
             contact_id,  # Link to the contact
             default_user_stamp,
-            current_timestamp
+            current_timestamp,
+            0  # GenericCheckbox1 default value
         ))
         demographics_created += cursor.rowcount
     
