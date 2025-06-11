@@ -9,6 +9,7 @@ from tables.contact_data import create_sample_contacts
 from tables.contact_identifier_data import create_sample_contact_identifiers
 from tables.user_data import create_sample_users
 from tables.worker_data import create_sample_workers
+from tables.hispeople_data import create_sample_hispeople
 
 def load_settings():
     """Load database settings from settings.yaml"""
@@ -84,7 +85,10 @@ def main():
             print("\nPopulating Workers table...")
             num_workers = create_sample_workers(conn, 50)  # Create 50 worker records
             print(f"✓ Created {num_workers} worker records")
-            
+
+            print("\nPopulating HISPeople table...")
+            num_hispeople = create_sample_hispeople(conn, 50)  # Create 50 HISPeople records
+            print(f"✓ Created {num_hispeople} HISPeople records")
             
             print("\nPopulating Demographics table...")
             # Get contact IDs for demographics
