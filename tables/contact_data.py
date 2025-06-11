@@ -40,10 +40,13 @@ def create_sample_contacts(conn, num_contacts=100, default_user_stamp=1):
         state = fake.state()[:2]
         zipcode = fake.zipcode()[:10]
         
-        # Generate phone numbers with extensions
-        work_phone = fake.phone_number()[:20]
-        cell_phone = fake.phone_number()[:20]
-        message_phone = fake.phone_number()[:20] if random.random() < 0.5 else None
+        # Generate clean phone numbers (no extensions)
+        def clean_phone():
+            return fake.numerify('##########')  # Generate 10 digit phone number
+            
+        work_phone = clean_phone()
+        cell_phone = clean_phone()
+        message_phone = clean_phone() if random.random() < 0.5 else None  # 50% chance of having message phone
         extension = str(fake.random_int(min=100, max=9999)) if random.random() < 0.3 else None
 
         # Language preferences
@@ -93,7 +96,7 @@ def create_sample_contacts(conn, num_contacts=100, default_user_stamp=1):
             fake.last_name()[:50],
             dob,
             fake.email()[:100],
-            fake.phone_number()[:20],
+            clean_phone(),  # Clean 10-digit phone number
             street,
             street2,
             city,
