@@ -41,7 +41,15 @@ def create_sample_workers(conn, num_workers=50, default_user_stamp=1):
     workers_created = 0
     current_timestamp = datetime.now()
     
+    # Get existing contact IDs from Contact table
+    cursor.execute("SELECT ContactID FROM Contact")
+    contact_ids = [row[0] for row in cursor.fetchall()]
+    if not contact_ids:
+        raise ValueError("No contacts found in Contact table. Please create contacts first.")
+        
     for _ in range(num_workers):
+        # Get a random contact ID
+        contact_id = random.choice(contact_ids)
         # Generate start date within last 10 years
         start_date = fake.date_time_between(start_date='-10y', end_date='now')
         
@@ -82,8 +90,9 @@ def create_sample_workers(conn, num_workers=50, default_user_stamp=1):
                 LICENSE,
                 GENERICTEXT1,
                 GENERICTEXT2,
-                UserStamp
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                UserStamp,
+                CONTACTID
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', (
             start_date,
             end_date,
@@ -98,7 +107,8 @@ def create_sample_workers(conn, num_workers=50, default_user_stamp=1):
             license_type,
             generic_text1,
             generic_text2,
-            default_user_stamp  # UserStamp is NOT NULL
+            default_user_stamp,  # UserStamp is NOT NULL
+            contact_id  # CONTACTID from Contact table
         ))
         workers_created += cursor.rowcount
 
