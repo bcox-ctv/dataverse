@@ -38,7 +38,6 @@ def create_sample_contacts(conn, num_contacts=100, default_user_stamp=1):
         street2 = fake.secondary_address()[:100] if random.random() < 0.3 else None
         city = fake.city()[:50]
         state = fake.state()[:2]
-        county = fake.city()[:50]  # Using city as county for demonstration
         zipcode = fake.zipcode()[:10]
         
         # Generate phone numbers with extensions
@@ -65,7 +64,6 @@ def create_sample_contacts(conn, num_contacts=100, default_user_stamp=1):
                 STREET2,
                 CITY,
                 STATE,
-                County,
                 COUNTRY,
                 ZIPCODE,
                 WORKPHONE,
@@ -85,11 +83,10 @@ def create_sample_contacts(conn, num_contacts=100, default_user_stamp=1):
                 SALUTATION,
                 Suffix,
                 DISTRICT,
-                RESCOUNTY,
                 DateTimeStamp,
                 UserStamp,
                 Active
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', (
             random.choice(TITLES),
             fake.first_name()[:50],
@@ -102,7 +99,6 @@ def create_sample_contacts(conn, num_contacts=100, default_user_stamp=1):
             street2,
             city,
             state,
-            county,
             'United States',
             zipcode,
             work_phone,
@@ -122,7 +118,6 @@ def create_sample_contacts(conn, num_contacts=100, default_user_stamp=1):
             random.choice(SALUTATIONS),
             random.choice(SUFFIXES) if random.random() < 0.2 else None,  # 20% chance of suffix
             fake.random_int(min=1, max=10),  # District number
-            county,  # Using same county as residence
             current_timestamp,
             default_user_stamp,
             1  # Active status

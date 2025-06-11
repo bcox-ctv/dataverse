@@ -56,11 +56,11 @@ def main():
     conn = create_connection()
     if conn is not None:
         try:
-            # Create vendors
+            print("\nPopulating Vendors table...")
             num_vendors = create_sample_vendors(conn)
-            print(f"Created {num_vendors} vendor records")
+            print(f"✓ Created {num_vendors} vendor records")
             
-            # Create addresses for each vendor
+            print("\nPopulating HISAddress table with vendor addresses...")
             cursor = conn.cursor()
             cursor.execute("SELECT VendorID FROM Vendors")
             vendor_ids = [row[0] for row in cursor.fetchall()]
@@ -69,19 +69,20 @@ def main():
             for vendor_id in vendor_ids:
                 addr_count = create_sample_addresses(conn, vendor_id, 1)  # 1 is the default UserStamp
                 total_addresses += addr_count
-            print(f"Created {total_addresses} address records")
+            print(f"✓ Created {total_addresses} address records")
             
-            # Create contact records first
+            print("\nPopulating Contact table...")
             num_contacts = create_sample_contacts(conn, 200)  # Create 200 contact records
-            print(f"Created {num_contacts} contact records")
+            print(f"✓ Created {num_contacts} contact records")
             
+            print("\nPopulating Demographics table...")
             # Get contact IDs for demographics
             cursor.execute("SELECT ContactID FROM Contacts")
             contact_ids = [row[0] for row in cursor.fetchall()]
             
             # Create demographics records with contact IDs
             num_demographics = create_sample_demographics(conn, contact_ids)  # Create demographics for each contact
-            print(f"Created {num_demographics} demographic records")
+            print(f"✓ Created {num_demographics} demographic records")
             
             conn.commit()
             print("All sample data created successfully")
