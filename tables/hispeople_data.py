@@ -29,6 +29,7 @@ def create_sample_hispeople(conn, num_records=50, default_user_stamp=1):
     # - Userstamp (NOT NULL)
     # - DateTimeStamp (NOT NULL)
     # - ContactID (Foreign key)
+    # - ReadOnly (NOT NULL)
 
     count = 0
     for _ in range(num_records):
@@ -39,8 +40,8 @@ def create_sample_hispeople(conn, num_records=50, default_user_stamp=1):
 
         insert_sql = """
         INSERT INTO HISPeople (
-            ContactID, CreatedBy, CreatedOn, Userstamp, DateTimeStamp
-        ) VALUES (?, ?, ?, ?, GETDATE())
+            ContactID, CreatedBy, CreatedOn, Userstamp, DateTimeStamp, ReadOnly
+        ) VALUES (?, ?, ?, ?, GETDATE(), 0)
         """
 
         try:
