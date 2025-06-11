@@ -22,6 +22,14 @@ def create_sample_hispeople(conn, num_records=50, default_user_stamp=1):
     if not contact_ids:
         print("No Contact records found. Please create Contact records first.")
         return 0
+        
+    # Get existing user IDs
+    cursor.execute("SELECT USERID FROM Users")
+    user_ids = [row[0] for row in cursor.fetchall()]
+    
+    if not user_ids:
+        print("No User records found. Please create User records first.")
+        return 0
 
     # Required fields based on SQL schema:
     # - CreatedBy (NOT NULL)
@@ -34,14 +42,15 @@ def create_sample_hispeople(conn, num_records=50, default_user_stamp=1):
     count = 0
     for _ in range(num_records):
         contact_id = random.choice(contact_ids)
+        user_id = random.choice(user_ids)
         
         # Generate random dates within a reasonable range
         created_on = datetime.now() - timedelta(days=random.randint(0, 365))
 
         insert_sql = """
         INSERT INTO HISPeople (
-            ContactID, CreatedBy, CreatedOn, Userstamp, DateTimeStamp, ReadOnly, Confidential
-        ) VALUES (?, ?, ?, ?, GETDATE(), 0, 0)
+            ContactID, CreatedBy, CreatedOn, Userstamp, DateTimeStamp, ReadOnly, Confidential, UserID
+        ) VALUES (?, ?, ?, ?, GETDATE(), 0, 0, ?)
         """
 
         try:
@@ -49,7 +58,8 @@ def create_sample_hispeople(conn, num_records=50, default_user_stamp=1):
                 contact_id,
                 default_user_stamp,
                 created_on,
-                default_user_stamp
+                default_user_stamp,
+                user_id
             ))
             count += 1
         except Exception as e:
