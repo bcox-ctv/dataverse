@@ -87,8 +87,9 @@ def create_sample_contacts(conn, num_contacts=100, default_user_stamp=1):
                 Suffix,
                 DISTRICT,
                 DateTimeStamp,
-                UserStamp
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                UserStamp,
+                Confidential
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', (
             random.choice(TITLES),
             fake.first_name()[:50],
@@ -121,7 +122,8 @@ def create_sample_contacts(conn, num_contacts=100, default_user_stamp=1):
             random.choice(SUFFIXES) if random.random() < 0.2 else None,  # 20% chance of suffix
             fake.random_int(min=1, max=10),  # District number
             current_timestamp,
-            default_user_stamp
+            default_user_stamp,
+            0  # Confidential (always 0)
         ))
         contacts_created += cursor.rowcount
 
