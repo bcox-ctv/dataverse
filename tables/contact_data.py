@@ -126,5 +126,7 @@ def create_sample_contacts(conn, num_contacts=100, default_user_stamp=1):
             0   # Confidential (always 0)
         ))
         contacts_created += cursor.rowcount
-
+    
+    conn.commit()
+    
     return contacts_created

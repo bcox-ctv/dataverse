@@ -62,11 +62,6 @@ def main():
             print("\nPopulating Users table...")
             num_users = create_sample_users(conn, 10)  # Create 10 users
             print(f"✓ Created {num_users} user records")
-
-            print("\nPopulating Workers table...")
-            num_workers = create_sample_workers(conn, 50)  # Create 50 worker records
-            print(f"✓ Created {num_workers} worker records")
-            
             print("\nPopulating Vendors table...")
             num_vendors = create_sample_vendors(conn)
             print(f"✓ Created {num_vendors} vendor records")
@@ -85,6 +80,11 @@ def main():
             print("\nPopulating Contact table...")
             num_contacts = create_sample_contacts(conn, 200)  # Create 200 contact records
             print(f"✓ Created {num_contacts} contact records")
+
+            print("\nPopulating Workers table...")
+            num_workers = create_sample_workers(conn, 50)  # Create 50 worker records
+            print(f"✓ Created {num_workers} worker records")
+            
             
             print("\nPopulating Demographics table...")
             # Get contact IDs for demographics
