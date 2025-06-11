@@ -7,6 +7,7 @@ from tables.address_data import create_sample_addresses
 from tables.demographics_data import create_sample_demographics
 from tables.contact_data import create_sample_contacts
 from tables.contact_identifier_data import create_sample_contact_identifiers
+from tables.user_data import create_sample_users
 
 def load_settings():
     """Load database settings from settings.yaml"""
@@ -57,6 +58,10 @@ def main():
     conn = create_connection()
     if conn is not None:
         try:
+            print("\nPopulating Users table...")
+            num_users = create_sample_users(conn, 10)  # Create 10 users
+            print(f"✓ Created {num_users} user records")
+            
             print("\nPopulating Vendors table...")
             num_vendors = create_sample_vendors(conn)
             print(f"✓ Created {num_vendors} vendor records")

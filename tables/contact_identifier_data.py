@@ -52,6 +52,13 @@ def create_sample_contact_identifiers(conn, contact_ids, num_identifiers=None):
         num_identifiers = len(contact_ids)
         
     cursor = conn.cursor()
+    
+    # Get actual user IDs from Users table
+    cursor.execute("SELECT USERID FROM Users")
+    user_ids = [row[0] for row in cursor.fetchall()]
+    if not user_ids:
+        raise ValueError("No users found in Users table. Please create users first.")
+        
     count = 0
     
     for _ in range(num_identifiers):
@@ -82,7 +89,7 @@ def create_sample_contact_identifiers(conn, contact_ids, num_identifiers=None):
             random.choice(["Client", "Resource", "Provider"]),  # ContactType
             identifier_type,
             generate_identifier_value(identifier_type),
-            random.randint(1, 1000),  # UserStamp
+            random.choice(user_ids),  # UserStamp
             datetime.now()  # DateTimeStamp
         ))
         count += 1
