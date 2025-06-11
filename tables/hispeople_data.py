@@ -40,8 +40,8 @@ def create_sample_hispeople(conn, num_records=50, default_user_stamp=1):
 
         insert_sql = """
         INSERT INTO HISPeople (
-            ContactID, CreatedBy, CreatedOn, Userstamp, DateTimeStamp, ReadOnly
-        ) VALUES (?, ?, ?, ?, GETDATE(), 0)
+            ContactID, CreatedBy, CreatedOn, Userstamp, DateTimeStamp, ReadOnly, Confidential
+        ) VALUES (?, ?, ?, ?, GETDATE(), 0, 0)
         """
 
         try:
