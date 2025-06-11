@@ -29,7 +29,6 @@ def create_sample_demographics(conn, contact_ids):
         
         cursor.execute('''
             INSERT INTO Demographics (
-                caseno,
                 MedicareID,
                 LivesAlone,
                 MEDICAIDENROLLED,
@@ -41,9 +40,8 @@ def create_sample_demographics(conn, contact_ids):
                 UserStamp,
                 DateTimeStamp,
                 GenericCheckbox1
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', (
-            case_no,
             medicare_id,
             random.choice(lives_alone_options),
             random.choice([0, 1]),  # MEDICAIDENROLLED as bit
