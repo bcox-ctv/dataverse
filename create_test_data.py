@@ -77,7 +77,7 @@ def main():
             
             print("\nPopulating Demographics table...")
             # Get contact IDs for demographics
-            cursor.execute("SELECT ContactID FROM Contacts")
+            cursor.execute("SELECT ContactID FROM Contact")
             contact_ids = [row[0] for row in cursor.fetchall()]
             
             # Create demographics records with contact IDs
