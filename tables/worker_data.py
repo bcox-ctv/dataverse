@@ -81,8 +81,9 @@ def create_sample_workers(conn, num_workers=50, default_user_stamp=1):
                 EXCLUDE,
                 LICENSE,
                 GENERICTEXT1,
-                GENERICTEXT2
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                GENERICTEXT2,
+                UserStamp
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', (
             start_date,
             end_date,
@@ -96,7 +97,8 @@ def create_sample_workers(conn, num_workers=50, default_user_stamp=1):
             1 if exclude else 0,  # EXCLUDE is NOT NULL
             license_type,
             generic_text1,
-            generic_text2
+            generic_text2,
+            default_user_stamp  # UserStamp is NOT NULL
         ))
         workers_created += cursor.rowcount
 
