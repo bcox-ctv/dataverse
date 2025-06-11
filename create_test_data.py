@@ -6,6 +6,7 @@ from tables.vendor_data import create_sample_vendors
 from tables.address_data import create_sample_addresses
 from tables.demographics_data import create_sample_demographics
 from tables.contact_data import create_sample_contacts
+from tables.contact_identifier_data import create_sample_contact_identifiers
 
 def load_settings():
     """Load database settings from settings.yaml"""
@@ -83,6 +84,11 @@ def main():
             # Create demographics records with contact IDs
             num_demographics = create_sample_demographics(conn, contact_ids)  # Create demographics for each contact
             print(f"✓ Created {num_demographics} demographic records")
+            
+            print("\nPopulating ContactIdentifier table...")
+            # Create contact identifier records
+            num_identifiers = create_sample_contact_identifiers(conn, contact_ids)  # Create identifiers for each contact
+            print(f"✓ Created {num_identifiers} contact identifier records")
             
             conn.commit()
             print("All sample data created successfully")
