@@ -1,5 +1,9 @@
 import random
 from datetime import datetime, timedelta
+from faker import Faker
+
+# Initialize Faker with consistent seed for reproducibility
+fake = Faker()
 
 def create_sample_hispeople(conn, num_records=50, default_user_stamp=1):
     """
@@ -47,10 +51,13 @@ def create_sample_hispeople(conn, num_records=50, default_user_stamp=1):
         # Generate random dates within a reasonable range
         created_on = datetime.now() - timedelta(days=random.randint(0, 365))
 
+        # Generate directions that look realistic
+        directions = f"Take {fake.street_name()} {random.choice(['North', 'South', 'East', 'West'])} for {random.randint(1, 5)} miles. Turn {random.choice(['right', 'left'])} on {fake.street_name()}. {random.choice(['House', 'Building', 'Location'])} will be on the {random.choice(['right', 'left'])}."
+
         insert_sql = """
         INSERT INTO HISPeople (
-            ContactID, CreatedBy, CreatedOn, Userstamp, DateTimeStamp, ReadOnly, Confidential
-        ) VALUES (?, ?, ?, ?, GETDATE(), 0, 0)
+            ContactID, CreatedBy, CreatedOn, Userstamp, DateTimeStamp, ReadOnly, Confidential, DirectionsToHome
+        ) VALUES (?, ?, ?, ?, GETDATE(), 0, 0, ?)
         """
 
         try:
@@ -58,7 +65,8 @@ def create_sample_hispeople(conn, num_records=50, default_user_stamp=1):
                 contact_id,
                 user_id,
                 created_on,
-                user_id
+                user_id,
+                directions
             ))
             count += 1
         except Exception as e:
