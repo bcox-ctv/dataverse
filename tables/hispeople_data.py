@@ -23,6 +23,14 @@ def create_sample_hispeople(conn, num_records=50, default_user_stamp=1):
         print("No Contact records found. Please create Contact records first.")
         return 0
 
+    # Get valid user IDs for UserStamp
+    cursor.execute("SELECT USERID FROM Users")
+    user_ids = [row[0] for row in cursor.fetchall()]
+    
+    if not user_ids:
+        print("No User records found. Please create User records first.")
+        return 0
+
     # Required fields based on SQL schema:
     # - CreatedBy (NOT NULL)
     # - CreatedOn (NOT NULL)
@@ -34,6 +42,7 @@ def create_sample_hispeople(conn, num_records=50, default_user_stamp=1):
     count = 0
     for _ in range(num_records):
         contact_id = random.choice(contact_ids)
+        user_id = random.choice(user_ids)
         
         # Generate random dates within a reasonable range
         created_on = datetime.now() - timedelta(days=random.randint(0, 365))
@@ -47,9 +56,9 @@ def create_sample_hispeople(conn, num_records=50, default_user_stamp=1):
         try:
             cursor.execute(insert_sql, (
                 contact_id,
-                default_user_stamp,
+                user_id,
                 created_on,
-                default_user_stamp
+                user_id
             ))
             count += 1
         except Exception as e:
