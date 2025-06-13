@@ -11,6 +11,7 @@ from tables.user_data import create_sample_users
 from tables.worker_data import create_sample_workers
 from tables.hispeople_data import create_sample_hispeople
 from tables.relatereview_data import create_sample_relatereview
+from tables.vendorsworkers_data import create_sample_vendorsworkers
 
 def load_settings():
     """Load database settings from settings.yaml"""
@@ -113,6 +114,10 @@ def main():
             # Create relationship records using contact IDs and case numbers
             num_relationships = create_sample_relatereview(conn, contact_ids, case_numbers)
             print(f"✓ Created {num_relationships} relationship records")
+            
+            print("\nPopulating VENDORSWORKERS table...")
+            num_vendorsworkers = create_sample_vendorsworkers(conn)  # Create worker assignments for vendors
+            print(f"✓ Created {num_vendorsworkers} vendor-worker relationships")
             
             conn.commit()
             print("All sample data created successfully")
