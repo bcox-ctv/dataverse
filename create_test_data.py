@@ -10,6 +10,7 @@ from tables.contact_identifier_data import create_sample_contact_identifiers
 from tables.user_data import create_sample_users
 from tables.worker_data import create_sample_workers
 from tables.hispeople_data import create_sample_hispeople
+from tables.relatereview_data import create_sample_relatereview
 
 def load_settings():
     """Load database settings from settings.yaml"""
@@ -103,6 +104,15 @@ def main():
             # Create contact identifier records
             num_identifiers = create_sample_contact_identifiers(conn, contact_ids)  # Create identifiers for each contact
             print(f"✓ Created {num_identifiers} contact identifier records")
+            
+            print("\nPopulating RELATEREVIEW table...")
+            # Get case numbers from Demographics table
+            cursor.execute("SELECT CASENO FROM Demographics")
+            case_numbers = [row[0] for row in cursor.fetchall()]
+            
+            # Create relationship records using contact IDs and case numbers
+            num_relationships = create_sample_relatereview(conn, contact_ids, case_numbers)
+            print(f"✓ Created {num_relationships} relationship records")
             
             conn.commit()
             print("All sample data created successfully")
