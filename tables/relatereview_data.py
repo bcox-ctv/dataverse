@@ -35,8 +35,13 @@ def create_sample_relatereview(conn, contact_ids, case_numbers):
         ]
     }
 
-    # For each case number, create relationships avoiding self-referential relationships
+    # For each case number, decide if it will have relationships
+    # About 70% of cases will have relationships
     for case_no in case_numbers:
+        # Skip this case 30% of the time
+        if random.random() < 0.3:
+            continue
+            
         # Get the contact ID associated with this case number from Demographics
         cursor.execute('''
             SELECT ContactID 
@@ -52,7 +57,7 @@ def create_sample_relatereview(conn, contact_ids, case_numbers):
         # Get available contact IDs excluding the case's contact
         available_contacts = [c for c in contact_ids if c != case_contact_id]
         
-        # Create 1-3 relationships for each case
+        # Create 1-3 relationships for this case
         for _ in range(random.randint(1, 3)):
             # Select a contact ID that's not associated with the case
             if not available_contacts:
