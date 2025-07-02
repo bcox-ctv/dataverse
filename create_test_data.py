@@ -74,7 +74,8 @@ def delete_populated_tables(conn):
         'HISAddress',
         'ContractAddress',  # Added ContractAddress table
         'Vendors',
-        'Users'
+        'Users',
+        'HISPhone',  # Added HISPhone table
     ]
     for table in tables:
         try:
@@ -158,6 +159,13 @@ def main():
             print("\nPopulating VENDORSWORKERS table...")
             num_vendorsworkers = create_sample_vendorsworkers(conn)  # Create worker assignments for vendors
             print(f"✓ Created {num_vendorsworkers} vendor-worker relationships")
+            
+            print("\nPopulating HISPhone table...")
+            cursor.execute("SELECT USERID FROM Users")
+            user_ids = [row[0] for row in cursor.fetchall()]
+            from tables.hisphone_data import create_sample_hisphone
+            num_hisphones = create_sample_hisphone(conn, user_ids, 20)
+            print(f"✓ Created {num_hisphones} HISPhone records")
             
             conn.commit()
             print("All sample data created successfully")
