@@ -20,15 +20,16 @@ def create_sample_group(conn, user_ids, n=5):
         allow_cross_program_access = 1
         is_template = 0
         is_harmony_main_secure = 0
+        is_parent = random.choice([0, 1])  # Always populate isParent
         user_stamp = random.choice(user_ids)
         uniqueid = fake.uuid4()[:16]
         originalid = fake.uuid4()[:16]
         cursor.execute('''
             INSERT INTO [Group] (
-                GroupName, DateTimeStamp, AppType, AccessLevel, AllowCrossProgramAccess, IsTemplate, IsHarmonyMainSecure, UserStamp, UNIQUEID, ORIGINALID
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                GroupName, DateTimeStamp, AppType, AccessLevel, AllowCrossProgramAccess, IsTemplate, IsHarmonyMainSecure, isParent, UserStamp, UNIQUEID, ORIGINALID
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', (
-            group_name, datetimestamp, apptype, access_level, allow_cross_program_access, is_template, is_harmony_main_secure, user_stamp, uniqueid, originalid
+            group_name, datetimestamp, apptype, access_level, allow_cross_program_access, is_template, is_harmony_main_secure, is_parent, user_stamp, uniqueid, originalid
         ))
         count += 1
     conn.commit()
