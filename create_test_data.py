@@ -12,6 +12,7 @@ from tables.worker_data import create_sample_workers
 from tables.hispeople_data import create_sample_hispeople
 from tables.relatereview_data import create_sample_relatereview
 from tables.vendorsworkers_data import create_sample_vendorsworkers
+import argparse
 
 def load_settings():
     """Load database settings from settings.yaml"""
@@ -57,11 +58,43 @@ def create_connection():
         print(f"Missing required setting in settings.yaml: {e}")
         return None
 
+def delete_populated_tables(conn):
+    """Delete contents of all tables populated by this script, in FK-safe order."""
+    cursor = conn.cursor()
+    # Order matters: child tables first
+    tables = [
+        'VENDORSWORKERS',
+        'RELATEREVIEW',
+        'ContactIdentifier',
+        'Demographics',
+        'HISPeople',
+        'WORKERS',
+        'Contact',
+        'HISAddress',
+        'Vendors',
+        'Users'
+    ]
+    for table in tables:
+        try:
+            cursor.execute(f"DELETE FROM {table}")
+        except Exception as e:
+            print(f"Warning: Could not delete from {table}: {e}")
+    conn.commit()
+
 def main():
     """Main function to create sample data in all tables"""
+    parser = argparse.ArgumentParser(description="Populate GDCH sample data.")
+    parser.add_argument('--reset', action='store_true', help='Delete all populated tables before inserting new data')
+    args = parser.parse_args()
+
     conn = create_connection()
     if conn is not None:
         try:
+            if args.reset:
+                print("\nDeleting contents of populated tables...")
+                delete_populated_tables(conn)
+                print("✓ All relevant tables cleared.")
+                
             print("\nPopulating Users table...")
             num_users = create_sample_users(conn, 10)  # Create 10 users
             print(f"✓ Created {num_users} user records")
