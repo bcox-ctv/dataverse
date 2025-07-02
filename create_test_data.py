@@ -67,16 +67,18 @@ def delete_populated_tables(conn):
         'VENDORSWORKERS',
         'RELATEREVIEW',
         'ContactIdentifier',
+        'ContactAddress',  # ContractAddress is a child of Contact
         'Demographics',
         'HISPeople',
         'WORKERS',
         'Contact',
         'HISAddress',
-        'ContractAddress',  # Added ContractAddress table
+        'HISPhone',  # HISPhone references Page
+        'Page',      # Page references Chapter, PageType, Users
+        'PageType',  # PageType is referenced by Page
+        'Chapter',   # Chapter is referenced by Page
         'Vendors',
         'Users',
-        'HISPhone',  # Added HISPhone table
-        'Page',  # Added Page table
     ]
     for table in tables:
         try:
