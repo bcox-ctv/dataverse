@@ -17,22 +17,23 @@ def create_sample_hisphone(conn, user_ids, page_ids, n=20):
         user_id = random.choice(user_ids)
         page_id = random.choice(page_ids)
         phone_number = fake.numerify('##########')
+        page_name = fake.slug()[:255]  # Generate a random page name
         cursor.execute('''
             INSERT INTO HISPhone (
-                PageID,
                 [Primary],
                 PhoneNumber,
                 Active,
                 UserStamp,
-                DateTimeStamp
+                DateTimeStamp,
+                PageName
             ) VALUES (?, ?, ?, ?, ?, ?)
         ''', (
-            page_id,
             1,  # Primary (BIT, always 1 for sample)
             phone_number,
             1,  # Active (BIT, always 1 for sample)
             user_id,
-            now
+            now,
+            page_name
         ))
         count += 1
     conn.commit()
