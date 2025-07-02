@@ -12,6 +12,7 @@ from tables.worker_data import create_sample_workers
 from tables.hispeople_data import create_sample_hispeople
 from tables.relatereview_data import create_sample_relatereview
 from tables.vendorsworkers_data import create_sample_vendorsworkers
+from tables.contactaddress_data import create_sample_contactaddress
 import argparse
 
 def load_settings():
@@ -71,6 +72,7 @@ def delete_populated_tables(conn):
         'WORKERS',
         'Contact',
         'HISAddress',
+        'ContractAddress',  # Added ContractAddress table
         'Vendors',
         'Users'
     ]
@@ -138,6 +140,11 @@ def main():
             # Create contact identifier records
             num_identifiers = create_sample_contact_identifiers(conn, contact_ids)  # Create identifiers for each contact
             print(f"✓ Created {num_identifiers} contact identifier records")
+            
+            print("\nPopulating ContactAddress table...")
+            # Use the same contact_ids as for Demographics/ContactIdentifier
+            num_contactaddresses = create_sample_contactaddress(conn, contact_ids)
+            print(f"✓ Created {num_contactaddresses} contact address records")
             
             print("\nPopulating RELATEREVIEW table...")
             # Get case numbers from Demographics table
