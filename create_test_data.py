@@ -79,6 +79,7 @@ def delete_populated_tables(conn):
         'Chapter',   # Chapter is referenced by Page
         'Vendors',
         'Users',
+        'Group',  # Added Group here (should be deleted last, after Users)
     ]
     for table in tables:
         try:
@@ -163,6 +164,13 @@ def main():
             num_vendorsworkers = create_sample_vendorsworkers(conn)  # Create worker assignments for vendors
             print(f"✓ Created {num_vendorsworkers} vendor-worker relationships")
             
+            print("\nPopulating Group table...")
+            cursor.execute("SELECT USERID FROM Users")
+            user_ids = [row[0] for row in cursor.fetchall()]
+            from tables.group_data import create_sample_group
+            num_groups = create_sample_group(conn, user_ids, 5)
+            print(f"✓ Created {num_groups} Group records")
+
             print("\nPopulating Chapter table...")
             cursor.execute("SELECT USERID FROM Users")
             user_ids = [row[0] for row in cursor.fetchall()]
