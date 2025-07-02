@@ -1,0 +1,13243 @@
+CREATE TABLE ActivityClaimLink (
+ActivityClaimLinkID INTEGER NOT NULL,
+ActivityID INTEGER NOT NULL,
+ClaimGUID VARCHAR(300) NOT NULL,
+ClaimID INTEGER,
+DateTimeStamp DATE NOT NULL,
+Userstamp INTEGER NOT NULL
+);
+
+ALTER TABLE ActivityClaimLink ADD FOREIGN KEY (ActivityID) REFERENCES Activity(ActivityID);
+
+ALTER TABLE ActivityClaimLink ADD FOREIGN KEY (ClaimID) REFERENCES Claim(ClaimID);
+
+ALTER TABLE ActivityClaimLink ADD FOREIGN KEY (Userstamp) REFERENCES Users(USERID);
+
+CREATE TABLE ActivityDetail (
+ActivityDetailID INTEGER NOT NULL,
+ActivityID INTEGER NOT NULL,
+ScreenDesignID INTEGER NOT NULL,
+ScreenScaleID INTEGER NOT NULL,
+Score DECIMAL(9),
+Item VARCHAR(max),
+LookupValue VARCHAR(50),
+DateTimeStamp DATE NOT NULL,
+UserStamp INTEGER NOT NULL
+);
+
+ALTER TABLE ActivityDetail ADD FOREIGN KEY (ActivityID) REFERENCES Activity(ActivityID);
+
+CREATE TABLE ActivityPayments (
+ActivityPaymentID DECIMAL(9) NOT NULL,
+ActivityID DECIMAL(9) NOT NULL,
+ClaimPaymentID DECIMAL(9),
+CheckPaymentID DECIMAL(9),
+Amount DECIMAL(9),
+Comment VARCHAR(max),
+DATETIMESTAMP DATE,
+APPTYPE VARCHAR(5),
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE ActivityReimbursementLink (
+ActivityReimbursementLinkID INTEGER NOT NULL,
+ActivityID INTEGER NOT NULL,
+ReimbursementItemID INTEGER NOT NULL,
+LinkCategory VARCHAR(100),
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+LockActivity BOOLEAN,
+AreaPlanUnitCost DECIMAL(9),
+AreaPlanTotalCost DECIMAL(9),
+AreaPlanISComboCodeID INTEGER,
+AreaPlanFundingSourceID INTEGER,
+ActivityUnit DECIMAL(9)
+);
+
+CREATE TABLE ActivityTime (
+ActivityTimeID INTEGER NOT NULL,
+StartTime DATE NOT NULL,
+EndTime DATE NOT NULL,
+ActivityID INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE Activity (
+ActivityID INTEGER,
+OpenID INTEGER,
+EnrollID INTEGER,
+AuthServiceID INTEGER,
+StartDate DATE,
+EndDate DATE,
+MemberID INTEGER,
+PayerID INTEGER,
+Location VARCHAR(100),
+FacilityID INTEGER,
+PlaceOfService VARCHAR(100),
+ContactType VARCHAR(max),
+Status VARCHAR(100),
+Confidential BOOLEAN,
+Attended BOOLEAN,
+AbsenceReason VARCHAR(100),
+VServiceID INTEGER,
+UnitCost DECIMAL(9),
+Unit DECIMAL(9),
+DateTimeStamp DATE,
+UserStamp INTEGER,
+VENDORGROUPID INTEGER,
+VendorGroupNote VARCHAR(max),
+BatchNumber VARCHAR(100),
+SubmitDate DATE,
+DiagCode1 INTEGER,
+DiagCode2 INTEGER,
+DiagCode3 INTEGER,
+DiagCode4 INTEGER,
+SubmitterClaimID VARCHAR(38),
+ClaimProviderID INTEGER,
+CardSwiped VARCHAR(30),
+WalkIn BOOLEAN,
+Comment VARCHAR(1000),
+GroupSeriesID INTEGER,
+ContractNo VARCHAR(50),
+ActivitySource VARCHAR(50),
+Cost DECIMAL(9),
+Type VARCHAR(100),
+CareGiverRecipientID INTEGER,
+ISComboCodeID INTEGER,
+ConsumerServed INTEGER,
+UnitsPerConsumer DECIMAL(9),
+AgencyID INTEGER,
+ServiceProviderID INTEGER,
+InternalProgramID INTEGER,
+AdminExpenseAmount DECIMAL(9),
+CreateDateTime DATE,
+AreaPlanUnitCost DECIMAL(9),
+AreaPlanTotalCost DECIMAL(9),
+AreaPlanISComboCodeID INTEGER,
+AreaPlanFundingSourceID INTEGER,
+AreaPlanFiscalYearID INTEGER,
+CurrentAPReimbursementID INTEGER,
+CurrentAPReimbursementStatus VARCHAR(100),
+Locked BOOLEAN,
+ParentProviderID INTEGER,
+DeliveredViaEVV VARCHAR(50),
+MemberIDRenderingWorker INTEGER,
+EVVBillable BOOLEAN,
+Valid BOOLEAN,
+GenericText1 VARCHAR(max),
+GenericText2 VARCHAR(max),
+GenericText3 VARCHAR(max),
+GenericText4 VARCHAR(max),
+GroupName VARCHAR(50),
+GroupNumber VARCHAR(1000),
+SessionNumber VARCHAR(3000),
+SessionWorker2 INTEGER,
+SessionWorker3 INTEGER,
+PaymentDate DATE,
+GenericText5 VARCHAR(max),
+GenericText6 VARCHAR(max),
+GenericText7 VARCHAR(max),
+GenericLookup1 VARCHAR(100),
+GenericLookup2 VARCHAR(100),
+GenericLookup3 VARCHAR(100),
+GenericNumeric1 DECIMAL(9),
+GenericNumeric2 DECIMAL(9),
+GenericNumeric3 DECIMAL(9),
+GenericCurrency1 VARCHAR(8),
+GenericCurrency2 VARCHAR(8),
+GenericCurrency3 VARCHAR(8),
+ClaimXMLGen BOOLEAN,
+ClaimsComments VARCHAR(max)
+);
+
+ALTER TABLE Activity ADD FOREIGN KEY (AuthServiceID) REFERENCES AuthServices(AuthServiceID);
+
+ALTER TABLE Activity ADD FOREIGN KEY (EnrollID) REFERENCES ENROLLMENTS(ENROLLID);
+
+ALTER TABLE Activity ADD FOREIGN KEY (FacilityID) REFERENCES FACILITIES(FACILITYID);
+
+ALTER TABLE Activity ADD FOREIGN KEY (ISComboCodeID) REFERENCES ISComboCodes(ISComboCodeID);
+
+ALTER TABLE Activity ADD FOREIGN KEY (OpenID) REFERENCES OPENCLOSE(OPENID);
+
+ALTER TABLE Activity ADD FOREIGN KEY (PayerID) REFERENCES Payors(PayorID);
+
+ALTER TABLE Activity ADD FOREIGN KEY (VENDORGROUPID) REFERENCES VendorGroup(VendorGroupID);
+
+ALTER TABLE Activity ADD FOREIGN KEY (AgencyID) REFERENCES Vendors(VendorID);
+
+ALTER TABLE Activity ADD FOREIGN KEY (InternalProgramID) REFERENCES Vendors(VendorID);
+
+ALTER TABLE Activity ADD FOREIGN KEY (ServiceProviderID) REFERENCES Vendors(VendorID);
+
+ALTER TABLE Activity ADD FOREIGN KEY (VServiceID) REFERENCES VENDORSERVICES(VSERVICEID);
+
+ALTER TABLE Activity ADD FOREIGN KEY (MemberID) REFERENCES WORKERS(MEMBERID);
+
+CREATE TABLE AdjustmentCode (
+AdjustmentCodeID VARCHAR(8) NOT NULL,
+GroupCode VARCHAR(25) NOT NULL,
+ReasonCode VARCHAR(50) NOT NULL,
+Description VARCHAR(1000),
+Level VARCHAR(25) NOT NULL,
+Active BOOLEAN NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE AgedCategories (
+LOWAGED INTEGER NOT NULL,
+HIGHAGED INTEGER,
+AGEDCAT VARCHAR(15)
+);
+
+CREATE TABLE AGEGROUPS (
+AGEGROUP VARCHAR(25) NOT NULL,
+LOWAGE DECIMAL(5),
+HIGHAGE DECIMAL(5),
+COUNT INTEGER
+);
+
+CREATE TABLE AgencyProviderProgram (
+AgencyProviderProgramID INTEGER NOT NULL,
+AgencyID INTEGER NOT NULL,
+VendorID INTEGER NOT NULL,
+StartDate DATE,
+EndDate DATE,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+Active BOOLEAN NOT NULL
+);
+
+CREATE TABLE AllowableExpenseAccount (
+AllowableExpenseAccountID INTEGER NOT NULL,
+AreaPlanAccountID INTEGER NOT NULL,
+AreaPlanFundingSourceID INTEGER NOT NULL,
+StartDate DATE NOT NULL,
+EndDate DATE,
+Active BOOLEAN NOT NULL,
+ProgramService VARCHAR(100) NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+Reimursable VARCHAR(100),
+IncludeInExpenseSubtotals VARCHAR(10) NOT NULL
+);
+
+CREATE TABLE AllowableFundingSource (
+AllowableFundingSourceID INTEGER NOT NULL,
+AreaPlanProgramFundingID INTEGER NOT NULL,
+AreaPlanFundingSourceID INTEGER NOT NULL,
+StartDate DATE NOT NULL,
+EndDate DATE,
+Active BOOLEAN NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE AllowableRevenueAccount (
+AllowableRevenueAccountID INTEGER NOT NULL,
+AreaPlanAccountID INTEGER NOT NULL,
+AreaPlanFundingSourceID INTEGER NOT NULL,
+StartDate DATE NOT NULL,
+EndDate DATE,
+Active BOOLEAN NOT NULL,
+PrimaryMatchAccount VARCHAR(100),
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+ReportAs VARCHAR(100)
+);
+
+CREATE TABLE AngularConfigSetting (
+Id INTEGER NOT NULL,
+Environment VARCHAR(15),
+Component VARCHAR(30),
+IsVisible BOOLEAN,
+Created_On DATE NOT NULL,
+Created_by VARCHAR(50),
+Modified_On DATE NOT NULL,
+Modified_By VARCHAR(50)
+);
+
+CREATE TABLE APIAccessLog (
+APIAccessLogID INTEGER NOT NULL,
+DateTimeAccessed DATE NOT NULL,
+AccessIP VARCHAR(100) NOT NULL,
+APIID INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+UserStamp INTEGER NOT NULL
+);
+
+ALTER TABLE APIAccessLog ADD FOREIGN KEY (APIID) REFERENCES API(APIID);
+
+ALTER TABLE APIAccessLog ADD FOREIGN KEY (UserStamp) REFERENCES Users(USERID);
+
+CREATE TABLE API (
+APIID INTEGER NOT NULL,
+APIName VARCHAR(160) NOT NULL,
+DateTimeStamp DATE NOT NULL,
+UserStamp INTEGER NOT NULL
+);
+
+ALTER TABLE API ADD FOREIGN KEY (UserStamp) REFERENCES Users(USERID);
+
+CREATE TABLE AppointmentAssessmentLink (
+AppointmentAssessmentLinkID INTEGER NOT NULL,
+AppointmentID INTEGER NOT NULL,
+AssessID INTEGER NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE AppointmentSchedulerActivity (
+AppointmentSchedulerActivityID INTEGER NOT NULL,
+AppointmentId INTEGER NOT NULL,
+SchedulerActivityId INTEGER NOT NULL,
+ParentAppointmentId INTEGER,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE Appointment (
+AppointmentID INTEGER NOT NULL,
+ChapterName VARCHAR(100) NOT NULL,
+ChapterEntityID INTEGER NOT NULL,
+PageName VARCHAR(100) NOT NULL,
+EntityID INTEGER,
+OpenID INTEGER,
+EnrollID INTEGER,
+StartDate DATE,
+EndDate DATE,
+VServiceID INTEGER,
+ActivityID INTEGER,
+EnrollGroupID INTEGER,
+TeamID INTEGER,
+Type VARCHAR(100),
+SubType VARCHAR(100),
+Description VARCHAR(100),
+Reason VARCHAR(255),
+Notes VARCHAR(2000),
+Category VARCHAR(100),
+Location VARCHAR(100),
+Status VARCHAR(100),
+HighPriority BOOLEAN NOT NULL,
+OrigApptID INTEGER,
+ApptGenericDrop1 VARCHAR(100),
+ApptGenericDrop2 VARCHAR(100),
+ApptGenericText1 VARCHAR(2000),
+ApptGenericText2 VARCHAR(2000),
+ApptGenericDate1 DATE,
+ApptGenericDate2 DATE,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+FullDescription VARCHAR(4000),
+RecurrenceRule VARCHAR(1024),
+RecurrenceParentID INTEGER,
+ApptGenericDrop3 VARCHAR(50),
+ApptGenericDrop4 VARCHAR(50),
+ApptGenericDrop5 VARCHAR(50),
+ApptGenericDrop6 VARCHAR(50),
+ApptGenericDrop7 VARCHAR(50),
+ApptGenericDrop8 VARCHAR(50),
+ApptGenericDrop9 VARCHAR(50),
+ApptGenericDrop10 VARCHAR(50),
+ApptGenericText3 VARCHAR(50),
+ApptGenericText4 VARCHAR(50),
+ApptGenericText5 VARCHAR(50),
+ApptGenericText6 VARCHAR(50),
+ApptGenericText7 VARCHAR(50),
+ApptGenericText8 VARCHAR(50),
+ApptGenericText9 VARCHAR(50),
+Room VARCHAR(50),
+VendorID INTEGER,
+ApptGenericDrop11 VARCHAR(max),
+FundCode VARCHAR(25),
+TravelTime DATE,
+PrepTime DATE,
+CreateDate DATE NOT NULL,
+OrganizationName VARCHAR(200),
+ContactName VARCHAR(100),
+ContactPhone VARCHAR(15),
+ContactEmail VARCHAR(50),
+ExpectedAttend INTEGER,
+EventAddress VARCHAR(200)
+);
+
+ALTER TABLE Appointment ADD FOREIGN KEY (ActivityID) REFERENCES Activity(ActivityID);
+
+ALTER TABLE Appointment ADD FOREIGN KEY (OrigApptID) REFERENCES Appointment(AppointmentID);
+
+ALTER TABLE Appointment ADD FOREIGN KEY (EnrollGroupID) REFERENCES EnrollGroup(EnrollGroupID);
+
+ALTER TABLE Appointment ADD FOREIGN KEY (EnrollID) REFERENCES ENROLLMENTS(ENROLLID);
+
+ALTER TABLE Appointment ADD FOREIGN KEY (OpenID) REFERENCES OPENCLOSE(OPENID);
+
+ALTER TABLE Appointment ADD FOREIGN KEY (VendorID) REFERENCES Vendors(VendorID);
+
+ALTER TABLE Appointment ADD FOREIGN KEY (VServiceID) REFERENCES VENDORSERVICES(VSERVICEID);
+
+CREATE TABLE ApptParticipant (
+ApptParticipantID INTEGER NOT NULL,
+AppointmentID INTEGER NOT NULL,
+ContactID INTEGER NOT NULL,
+Status VARCHAR(100),
+Attendance VARCHAR(100),
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+ALTER TABLE ApptParticipant ADD FOREIGN KEY (AppointmentID) REFERENCES Appointment(AppointmentID);
+
+ALTER TABLE ApptParticipant ADD FOREIGN KEY (ContactID) REFERENCES CONTACT(CONTACTID);
+
+CREATE TABLE AreaPlanAccount (
+AreaPlanAccountID INTEGER NOT NULL,
+Type VARCHAR(100) NOT NULL,
+AccountShortName VARCHAR(200) NOT NULL,
+PayorID INTEGER NOT NULL,
+ISComboCodeID INTEGER NOT NULL,
+StartDate DATE NOT NULL,
+EndDate DATE,
+Active BOOLEAN NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE AreaPlanAllocation (
+AreaPlanAllocationID INTEGER NOT NULL,
+AreaPlanID INTEGER NOT NULL,
+AreaPlanAccountID INTEGER NOT NULL,
+PayerID INTEGER NOT NULL,
+IndexCodeID INTEGER NOT NULL,
+SubObjectCodeID INTEGER NOT NULL,
+StartDate DATE NOT NULL,
+EndDate DATE NOT NULL,
+Amount DECIMAL(9) NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE AreaPlanBudget (
+AreaPlanBudgetID INTEGER NOT NULL,
+AreaPlanID INTEGER NOT NULL,
+ProgramID INTEGER NOT NULL,
+ServiceID INTEGER NOT NULL,
+ProviderID INTEGER NOT NULL,
+AreaPlanFundingSourceID INTEGER NOT NULL,
+StartDate DATE NOT NULL,
+EndDate DATE NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE AreaPlanFiscalYear (
+AreaPlanFiscalYearID INTEGER NOT NULL,
+Type VARCHAR(100) NOT NULL,
+StartDate DATE NOT NULL,
+EndDate DATE NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE AreaPlanFundingSource (
+AreaPlanFundingSourceID INTEGER NOT NULL,
+FundingSourceName VARCHAR(200) NOT NULL,
+StartDate DATE NOT NULL,
+EndDate DATE,
+Active BOOLEAN NOT NULL,
+AllowableAgencies VARCHAR(max),
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE AreaPlanMatchRequirement (
+AreaPlanMatchRequirementID INTEGER NOT NULL,
+AreaPlanFundingSourceID INTEGER NOT NULL,
+RuleNumber INTEGER NOT NULL,
+MinReqPercent DECIMAL(9) NOT NULL,
+Active BOOLEAN NOT NULL,
+Accounts VARCHAR(max) NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+MatchType VARCHAR(100),
+OfAccounts VARCHAR(max)
+);
+
+CREATE TABLE AreaPlanProgramExpense (
+AreaPlanProgramExpenseID INTEGER NOT NULL,
+AreaPlanBudgetID INTEGER NOT NULL,
+AreaPlanAccountID INTEGER NOT NULL,
+StartDate DATE NOT NULL,
+EndDate DATE NOT NULL,
+Amount DECIMAL(9) NOT NULL,
+DefaultReimbursement DECIMAL(9),
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE AreaPlanProgramFunding (
+AreaPlanProgramFundingID INTEGER NOT NULL,
+VendorID INTEGER NOT NULL,
+ServiceID INTEGER NOT NULL,
+StartDate DATE NOT NULL,
+EndDate DATE,
+Active BOOLEAN NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE AreaPlanReimbursement (
+AreaPlanReimbursementID INTEGER NOT NULL,
+Date DATE,
+ServiceMonth DATE NOT NULL,
+Status VARCHAR(100),
+StateFiscalContact INTEGER,
+AgencyFiscalContact INTEGER,
+AreaPlanID INTEGER NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+ReimbType BOOLEAN,
+ReasonForIgnoringValidation VARCHAR(255),
+Valid BOOLEAN,
+DirectorCertification VARCHAR(150),
+CertifiedBy INTEGER,
+CertificationDate DATE,
+CertificationTime DATE
+);
+
+CREATE TABLE AreaPlanRevenue (
+AreaPlanRevenueID INTEGER NOT NULL,
+AreaPlanBudgetID INTEGER NOT NULL,
+AreaPlanAccountID INTEGER NOT NULL,
+StartDate DATE NOT NULL,
+EndDate DATE NOT NULL,
+Amount DECIMAL(9) NOT NULL,
+DefaultReimbursement DECIMAL(9),
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE AreaPlanServiceExpenseAccount (
+AreaPlanServiceExpenseAccountID INTEGER NOT NULL,
+AreaPlanServiceExpenseID INTEGER NOT NULL,
+AreaPlanAccountID INTEGER NOT NULL,
+Amount DECIMAL(9) NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE AreaPlanServiceExpense (
+AreaPlanServiceExpenseID INTEGER NOT NULL,
+AreaPlanBudgetID INTEGER NOT NULL,
+DirectContract VARCHAR(100) NOT NULL,
+EstimatedUnits INTEGER NOT NULL,
+UnitCost DECIMAL(9) NOT NULL,
+EstimatedConsumers INTEGER NOT NULL,
+EstimatedCost DECIMAL(9),
+StartDate DATE NOT NULL,
+EndDate DATE NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE AreaPlan (
+AreaPlanID INTEGER NOT NULL,
+AgencyID INTEGER NOT NULL,
+AreaPlanFiscalYearID INTEGER NOT NULL,
+StartDate DATE NOT NULL,
+EndDate DATE NOT NULL,
+Status VARCHAR(100),
+StatePrimaryMemberID INTEGER,
+AgencyPrimaryMemberID INTEGER,
+StateFiscalMemberID INTEGER,
+AgencyFiscalMemberID INTEGER,
+Version INTEGER NOT NULL,
+ActiveVersion BOOLEAN NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+VersionIdentifier VARCHAR(16),
+DirectorCertification VARCHAR(150),
+CertifiedBy INTEGER,
+CertificationDate DATE,
+CertificationTime DATE,
+ReasonForIgnoringValidation VARCHAR(255),
+Valid BOOLEAN
+);
+
+CREATE TABLE ASSESSMENTDETREVIEW (
+ASSESSID INTEGER NOT NULL,
+SCALE VARCHAR(255),
+ITEM VARCHAR(max),
+ASSESSMENT VARCHAR(50),
+SCORE DECIMAL(9),
+COMMENTS VARCHAR(max),
+YN INTEGER,
+LOOKUPVALUE VARCHAR(50),
+SCALEID DECIMAL(9) NOT NULL,
+QUESTIONID VARCHAR(15),
+SECID VARCHAR(500),
+APPTYPE VARCHAR(5),
+ASSESSMENTDETREVIEWID INTEGER NOT NULL,
+DateTimestamp DATE NOT NULL,
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE AssessmentMobileTracker (
+AssessmentMobileTrackerID INTEGER NOT NULL,
+uploaddate DATE NOT NULL,
+mobileassessmentkey VARCHAR(800) NOT NULL,
+mobileassessmentdata VARCHAR(max) NOT NULL
+);
+
+CREATE TABLE AssessmentReviewLog (
+AssessmentReviewLogID INTEGER NOT NULL,
+AssessID INTEGER,
+XMLData VARCHAR(max) NOT NULL,
+SaveSuccessful BOOLEAN NOT NULL,
+ErrorID INTEGER,
+ErrorMessage VARCHAR(255),
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE ASSESSMENTREVIEW (
+ASSESSID INTEGER NOT NULL,
+CASENO INTEGER NOT NULL,
+ASSESSMENT VARCHAR(50),
+REVIEW VARCHAR(100),
+RATER DECIMAL(9),
+COMMENTS VARCHAR(max),
+SYSTEMFACTORS VARCHAR(50),
+INDIVIDUALFACTORS VARCHAR(50),
+STATUS VARCHAR(100),
+RISKS VARCHAR(50),
+FUNDCODE VARCHAR(25),
+REVIEWDATE DATE,
+DATETIMESTAMP DATE NOT NULL,
+PROGRAM DECIMAL(9),
+APPROVEDBY DECIMAL(9),
+APPROVEDATE DATE,
+APPROVEUSER VARCHAR(100),
+TRIGGERID DECIMAL(9),
+TRIGGERPAGE VARCHAR(20),
+APPTYPE VARCHAR(5),
+ENROLLID INTEGER,
+OPENCLOSEID DECIMAL(9),
+ScreenDesignID INTEGER NOT NULL,
+NoteID INTEGER,
+UserStamp INTEGER NOT NULL,
+PageName VARCHAR(100),
+EntityID INTEGER,
+InfoPathFormStatus INTEGER,
+InfoPathFormUserStamp INTEGER,
+InfoPathFormCheckOutDate DATE,
+ExpirationDate DATE,
+Expired BOOLEAN,
+Agency INTEGER,
+ServiceProvider INTEGER,
+ExternalRater INTEGER,
+AsessOriginalID INTEGER,
+TotalProgress VARCHAR(500),
+RequiredProgress VARCHAR(500),
+CheckOutBy INTEGER,
+CheckOutStatus INTEGER,
+CheckOutDate DATE,
+CheckInDate DATE
+);
+
+ALTER TABLE ASSESSMENTREVIEW ADD FOREIGN KEY (ENROLLID) REFERENCES ENROLLMENTS(ENROLLID);
+
+ALTER TABLE ASSESSMENTREVIEW ADD FOREIGN KEY (ExternalRater) REFERENCES CONTACT(CONTACTID);
+
+ALTER TABLE ASSESSMENTREVIEW ADD FOREIGN KEY (Agency) REFERENCES Vendors(VendorID);
+
+ALTER TABLE ASSESSMENTREVIEW ADD FOREIGN KEY (ServiceProvider) REFERENCES Vendors(VendorID);
+
+CREATE TABLE AssessmentsLogServer (
+AssessmentsLogServerID INTEGER NOT NULL,
+Date DATE NOT NULL,
+Database VARCHAR(50),
+Thread VARCHAR(255) NOT NULL,
+Level VARCHAR(20) NOT NULL,
+Logger VARCHAR(255) NOT NULL,
+Message VARCHAR(4000) NOT NULL,
+Exception VARCHAR(2000) NOT NULL
+);
+
+CREATE TABLE AssignedRole_Reports (
+RoleReportID INTEGER NOT NULL,
+RoleID INTEGER NOT NULL,
+ReportID INTEGER NOT NULL,
+Zone VARCHAR(50) NOT NULL,
+SequenceOrder INTEGER NOT NULL
+);
+
+CREATE TABLE AuthCreatedLogs (
+AuthCreatedLogID INTEGER NOT NULL,
+AuthScheduleExecutionLogID INTEGER NOT NULL,
+OriginatingAuthID INTEGER NOT NULL,
+AuthID INTEGER NOT NULL,
+Success BOOLEAN NOT NULL,
+Message VARCHAR(max)
+);
+
+CREATE TABLE AuthResponse (
+AuthServiceId INTEGER,
+RecordDate DATE,
+AuthID VARCHAR(40),
+RecordType VARCHAR(1),
+ResponseStatus VARCHAR(20),
+MCOAuthServiceID VARCHAR(40),
+AuthResponseDate DATE,
+RejectReason_1 VARCHAR(200),
+RejectReason_2 VARCHAR(200),
+RejectReason_3 VARCHAR(200),
+RejectReason_4 VARCHAR(200),
+RejectReason_5 VARCHAR(200),
+RejectReason_6 VARCHAR(200),
+RejectReason_7 VARCHAR(200),
+RejectReason_8 VARCHAR(200),
+RejectReason_9 VARCHAR(200),
+RejectReason_10 VARCHAR(200),
+OtherText VARCHAR(200),
+AuthResponseId INTEGER NOT NULL,
+FileId INTEGER,
+TimeStamp DATE
+);
+
+CREATE TABLE AuthScheduleExecutionLogs (
+AuthScheduleExecutionLogID INTEGER NOT NULL,
+AuthScheduleID INTEGER NOT NULL,
+LastRunDate DATE NOT NULL,
+AuthCreatedCount INTEGER NOT NULL
+);
+
+CREATE TABLE AuthSchedulesConfig (
+int VARCHAR(NOT NULL),
+int VARCHAR(NOT NULL)
+);
+
+CREATE TABLE AuthSchedulesFilters (
+AuthSchedulesFilterID INTEGER NOT NULL,
+AuthScheduleID INTEGER NOT NULL,
+DBFieldName VARCHAR(255) NOT NULL,
+FieldLabel VARCHAR(255) NOT NULL,
+FieldValue VARCHAR(500),
+FieldDisplayValue VARCHAR(500),
+FieldOperatorCriteria VARCHAR(500) NOT NULL,
+FieldOperator VARCHAR(500) NOT NULL,
+FieldDataType VARCHAR(200) NOT NULL
+);
+
+CREATE TABLE AuthSchedules (
+AuthScheduleID INTEGER NOT NULL,
+JobName VARCHAR(250) NOT NULL,
+AuthStatus VARCHAR(100) NOT NULL,
+AuthServiceStatus VARCHAR(100),
+AuthServiceEDIStatus VARCHAR(100),
+UserID INTEGER NOT NULL,
+RoleID INTEGER NOT NULL,
+DynamicSQL VARCHAR(max) NOT NULL,
+DateTimeStamp DATE NOT NULL,
+freq_type INTEGER NOT NULL,
+freq_interval INTEGER NOT NULL,
+freq_relative_interval INTEGER NOT NULL
+);
+
+CREATE TABLE AuthServicePayments (
+AuthServicePaymentID INTEGER NOT NULL,
+PaymentDate DATE NOT NULL,
+AuthServiceID INTEGER NOT NULL,
+AuthorizationID INTEGER NOT NULL,
+Amount DECIMAL(9) NOT NULL,
+Units DECIMAL(9),
+Comments VARCHAR(1000),
+DateTimeStamp DATE NOT NULL,
+UserStamp INTEGER NOT NULL
+);
+
+ALTER TABLE AuthServicePayments ADD FOREIGN KEY (AuthorizationID) REFERENCES Auth(Authid);
+
+ALTER TABLE AuthServicePayments ADD FOREIGN KEY (AuthServiceID) REFERENCES AuthServices(AuthServiceID);
+
+CREATE TABLE AuthServicePayment (
+AuthServicePaymentID INTEGER NOT NULL,
+AuthServiceID INTEGER NOT NULL,
+Amount DECIMAL(9),
+Units DECIMAL(9)
+);
+
+ALTER TABLE AuthServicePayment ADD FOREIGN KEY (AuthServiceID) REFERENCES AuthServices(AuthServiceID);
+
+CREATE TABLE AuthServicesErrorMessage (
+AuthServicesErrorMessageID INTEGER NOT NULL,
+AuthServiceId INTEGER NOT NULL,
+Source VARCHAR(100),
+ErrorCode VARCHAR(100),
+ErrorMessage VARCHAR(max),
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+CodeType VARCHAR(50),
+ActionCode VARCHAR(50),
+ActionMessage VARCHAR(max)
+);
+
+ALTER TABLE AuthServicesErrorMessage ADD FOREIGN KEY (AuthServiceId) REFERENCES AuthServices(AuthServiceID);
+
+ALTER TABLE AuthServicesErrorMessage ADD FOREIGN KEY (UserStamp) REFERENCES Users(USERID);
+
+CREATE TABLE AuthServices (
+AuthServiceID INTEGER NOT NULL,
+Authid INTEGER NOT NULL,
+VSERVICEID INTEGER NOT NULL,
+UnitsApproved INTEGER NOT NULL,
+MaxAmount DECIMAL(9) NOT NULL,
+UNITCOST DECIMAL(9) NOT NULL,
+OVERHEAD DECIMAL(9),
+StartDate DATE NOT NULL,
+ENDDATE DATE NOT NULL,
+TERMINATE INTEGER,
+TERMDATE DATE,
+TERMBALANCE DECIMAL(9),
+PAID INTEGER,
+BALANCE DECIMAL(9),
+ORDERED INTEGER,
+FUNDSOURCE VARCHAR(50),
+MAXUNITSMONTH VARCHAR(8),
+DATETIMESTAMP DATE NOT NULL,
+STRATEGYID DECIMAL(9),
+Monday INTEGER,
+Tuesday INTEGER,
+Wednesday INTEGER,
+Thursday INTEGER,
+Friday INTEGER,
+Saturday INTEGER,
+Sunday INTEGER,
+ExpectedMonthlyAmount DECIMAL(9),
+ExpectedMonthlyUnits INTEGER,
+DATAENTRYDATE DATE,
+BILLTHESAMETIME INTEGER,
+AccountNumber DECIMAL(9),
+Worker DECIMAL(5),
+SecondaryCode VARCHAR(25),
+PayerID DECIMAL(9),
+PROJECTEDAMOUNT DECIMAL(9),
+COMMENT VARCHAR(max),
+SERVICETYPE VARCHAR(50),
+APPTYPE VARCHAR(5),
+PROJAMT DECIMAL(9),
+EXPECTEDTERMDATE DATE,
+ServiceCode VARCHAR(500) NOT NULL,
+ServiceDescription VARCHAR(500),
+UnitsRequested DECIMAL(9),
+AmountRequested VARCHAR(8),
+UnitCostRequested VARCHAR(8),
+Modifier1 VARCHAR(100),
+Modifier2 VARCHAR(100),
+Modifier3 VARCHAR(100),
+Modifier4 VARCHAR(100),
+POServiceStatus VARCHAR(100),
+POServiceStatusDate DATE,
+DateApproved DATE,
+ToothSystem VARCHAR(100),
+ToothNumber VARCHAR(100),
+ToothSurface VARCHAR(100),
+LevelofCare VARCHAR(100),
+CodeList VARCHAR(25),
+Frequency VARCHAR(100),
+UnitType VARCHAR(100),
+TimePeriodQualifier VARCHAR(100),
+NumberofPeriods DECIMAL(5),
+PatternCode VARCHAR(100),
+PatternTimeCode VARCHAR(100),
+ExtUnitsRequested DECIMAL(9),
+ExtUnitsApproved DECIMAL(9),
+SubmitterTranID VARCHAR(25),
+RequestID INTEGER,
+TerminateReason VARCHAR(100),
+Determination VARCHAR(100),
+NoteID INTEGER,
+UserStamp INTEGER NOT NULL,
+UnitsOfMeasure VARCHAR(25),
+MaxUnitsRequested INTEGER,
+IsComboCodeID INTEGER,
+Diagnosis1 INTEGER,
+Diagnosis2 INTEGER,
+UnitsPer DECIMAL(9),
+AbsenteeRate DECIMAL(9),
+ParentAuthServiceID INTEGER,
+BaseCost DECIMAL(9),
+UseServiceSchedule BOOLEAN,
+ConsumerLiability DECIMAL(5),
+AuthServiceNumber VARCHAR(15),
+AutoCreated BOOLEAN NOT NULL,
+GenericText1 VARCHAR(100),
+GenericText2 VARCHAR(100),
+GenericText3 VARCHAR(100),
+GenericText4 VARCHAR(100),
+GenericText5 VARCHAR(100),
+GenericText6 VARCHAR(100),
+GenericText7 VARCHAR(100),
+GenericText8 VARCHAR(100),
+AuthServiceEDIStatus VARCHAR(200),
+PtLvlExternalTRN VARCHAR(50),
+PtLvlExternalTRNCompanyID VARCHAR(50),
+PtLvlHCRActionCode VARCHAR(50),
+PtLvlAdminRefNumber VARCHAR(50),
+SvcLvlExternalTRN VARCHAR(50),
+SvcLvlExternalTRNCompanyID VARCHAR(50),
+SvcLvlHCRActionCode VARCHAR(50),
+SvcLvlAdminRefNumber VARCHAR(50),
+UnitsApprovedFractional DECIMAL(9),
+COMMENTS_278 VARCHAR(264),
+AllowEVVDelivery BOOLEAN,
+EVVComments VARCHAR(500),
+ContractNumber VARCHAR(50),
+ProviderRateType VARCHAR(100),
+InternalProgram VARCHAR(100),
+ConsumerCounty VARCHAR(100),
+ServiceRatio VARCHAR(100),
+InventoryID INTEGER
+);
+
+ALTER TABLE AuthServices ADD FOREIGN KEY (Authid) REFERENCES Auth(Authid);
+
+CREATE TABLE Auth (
+Authid INTEGER,
+VENDORID INTEGER,
+StartDate DATE,
+ENDDATE DATE,
+FIPSCODE VARCHAR(15),
+TERMINATE INTEGER,
+TerminationEffectiveDate DATE,
+TerminationReason VARCHAR(100),
+MAXAMT DECIMAL(9),
+FiscalYear VARCHAR(100),
+DATETIMESTAMP DATE,
+COMMENTS VARCHAR(max),
+Message VARCHAR(175),
+InvoiceComments VARCHAR(175),
+Status VARCHAR(100),
+POENCUMBEREDAMT DECIMAL(9),
+RequestedBy INTEGER,
+SECONDAUTHORIZATION DECIMAL(9),
+THIRDAUTHORIZATION DECIMAL(9),
+ACCOUNTNO DECIMAL(9),
+SETTING VARCHAR(15),
+LOCATION VARCHAR(25),
+AUTHDATE DATE,
+AUTHNO VARCHAR(15),
+PAYORID INTEGER,
+SUBMITTERTRACENUMBER VARCHAR(50),
+FIRSTAUTHDATE DATE,
+SECONDAUTHDATE DATE,
+THIRDAUTHDATE DATE,
+APPTYPE VARCHAR(5),
+ForBatchServices INTEGER,
+MaxBatchServiceAmount VARCHAR(8),
+MaxBatchServiceUnit DECIMAL(9),
+REGENERATED INTEGER,
+SUBMITTERTRANID VARCHAR(25),
+EnrollID INTEGER,
+ForBundleServices INTEGER,
+RequestID INTEGER,
+LocationReason VARCHAR(100),
+ProviderType VARCHAR(100),
+ServiceType VARCHAR(100),
+OriginatingPO INTEGER,
+ProviderEligible BOOLEAN,
+ExternalAuthStatus VARCHAR(100),
+DataEntryDate DATE,
+POStatusDate DATE,
+ReviewedBy INTEGER,
+DateReceived DATE,
+NoteID INTEGER,
+UserStamp INTEGER,
+OPENID INTEGER,
+DateRequested DATE,
+LevelOfCare VARCHAR(25),
+InsuranceID INTEGER,
+Priority VARCHAR(25),
+RequestMethod VARCHAR(25),
+RequestType VARCHAR(25),
+RoleID INTEGER,
+ApprovedBy INTEGER,
+ApprovedDate DATE,
+DenialReason VARCHAR(100),
+DeniedBy INTEGER,
+TerminatedBy INTEGER,
+AutoCreated BOOLEAN,
+DisableAutoCreation BOOLEAN,
+GenericText1 VARCHAR(100),
+GenericText2 VARCHAR(100),
+GenericText3 VARCHAR(100),
+GenericText4 VARCHAR(100),
+GenericText5 VARCHAR(100),
+COMMENTS_278 VARCHAR(264)
+);
+
+ALTER TABLE Auth ADD FOREIGN KEY (OriginatingPO) REFERENCES Auth(Authid);
+
+ALTER TABLE Auth ADD FOREIGN KEY (EnrollID) REFERENCES ENROLLMENTS(ENROLLID);
+
+ALTER TABLE Auth ADD FOREIGN KEY (InsuranceID) REFERENCES INSURANCE(InsuranceID);
+
+ALTER TABLE Auth ADD FOREIGN KEY (NoteID) REFERENCES NOTES(NoteID);
+
+ALTER TABLE Auth ADD FOREIGN KEY (OPENID) REFERENCES OPENCLOSE(OPENID);
+
+ALTER TABLE Auth ADD FOREIGN KEY (PAYORID) REFERENCES Payors(PayorID);
+
+ALTER TABLE Auth ADD FOREIGN KEY (RoleID) REFERENCES Role(RoleID);
+
+ALTER TABLE Auth ADD FOREIGN KEY (VENDORID) REFERENCES Vendors(VendorID);
+
+CREATE TABLE AutoDistribute (
+AutoDistID DECIMAL(9) NOT NULL,
+VendorID DECIMAL(9) NOT NULL,
+MemberID DECIMAL(9) NOT NULL,
+DocumentType VARCHAR(100) NOT NULL,
+DateTimeStamp DATE,
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE BizTalkConfiguration (
+BizTalkConfigID INTEGER NOT NULL,
+FolderType VARCHAR(20),
+FolderPath VARCHAR(100),
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE BulkWordMergeDetail (
+BulkWordMergeDetailId INTEGER NOT NULL,
+BulkWordMergeId INTEGER,
+NoteId INTEGER,
+MergedBy INTEGER,
+DateMerged DATE,
+TimeMerged DATE,
+MergeStatus VARCHAR(100),
+ErrorLogs VARCHAR(max),
+MergeId INTEGER,
+DistributionGroupId INTEGER,
+WordMergeTemplateId INTEGER,
+MergeType VARCHAR(100),
+MergeCategory VARCHAR(100),
+VendorID INTEGER,
+FUNDCODE VARCHAR(25),
+NOTETYPE VARCHAR(100),
+NoteSubType VARCHAR(100),
+NoteStatus VARCHAR(100),
+NoteDescription VARCHAR(max)
+);
+
+ALTER TABLE BulkWordMergeDetail ADD FOREIGN KEY (NoteId) REFERENCES NOTES(NoteID);
+
+ALTER TABLE BulkWordMergeDetail ADD FOREIGN KEY (MergedBy) REFERENCES Users(USERID);
+
+ALTER TABLE BulkWordMergeDetail ADD FOREIGN KEY (VendorID) REFERENCES Vendors(VendorID);
+
+CREATE TABLE BulkWordMerge (
+BulkWordMergeId INTEGER NOT NULL,
+DistributionGroupId INTEGER,
+WordMergeTemplateId INTEGER,
+MergeType VARCHAR(100),
+MergeCategory VARCHAR(100),
+VendorID INTEGER,
+FUNDCODE VARCHAR(25),
+NOTETYPE VARCHAR(100),
+NoteSubType VARCHAR(100),
+NoteStatus VARCHAR(100),
+NoteDescription VARCHAR(max),
+CreatedBy INTEGER,
+CreatedOn DATE,
+UserStamp INTEGER,
+DateTimeStamp DATE,
+Active BOOLEAN NOT NULL,
+CurrentMergeStatus VARCHAR(100)
+);
+
+ALTER TABLE BulkWordMerge ADD FOREIGN KEY (DistributionGroupId) REFERENCES DistributionGroup(DistributionGroupId);
+
+ALTER TABLE BulkWordMerge ADD FOREIGN KEY (CreatedBy) REFERENCES Users(USERID);
+
+ALTER TABLE BulkWordMerge ADD FOREIGN KEY (UserStamp) REFERENCES Users(USERID);
+
+ALTER TABLE BulkWordMerge ADD FOREIGN KEY (VendorID) REFERENCES Vendors(VendorID);
+
+CREATE TABLE BusinessDayClosure (
+BusinessDayClosureID INTEGER NOT NULL,
+FundCode VARCHAR(25) NOT NULL,
+ClosureDate DATE NOT NULL,
+Comments VARCHAR(max),
+DATETIMESTAMP DATE NOT NULL,
+UserStamp INTEGER NOT NULL,
+FiscalYear INTEGER,
+DisplayScheduler BOOLEAN
+);
+
+ALTER TABLE BusinessDayClosure ADD FOREIGN KEY (FundCode) REFERENCES SITE(FUNDCODE);
+
+CREATE TABLE BusinessPoliciesRules (
+BusinessPolicyRuleID INTEGER NOT NULL,
+BusinessRuleID INTEGER NOT NULL,
+BusinessPolicyID INTEGER NOT NULL,
+IsActive BOOLEAN NOT NULL,
+DateTimeStamp DATE NOT NULL,
+UserStamp INTEGER NOT NULL
+);
+
+ALTER TABLE BusinessPoliciesRules ADD FOREIGN KEY (BusinessRuleID) REFERENCES BusinessRules(BusinessRuleID);
+
+CREATE TABLE BusinessPoliciesType (
+BusinessPolicyTypeID INTEGER NOT NULL,
+Name VARCHAR(50) NOT NULL,
+Description VARCHAR(200) NOT NULL,
+DateTimeStamp DATE NOT NULL,
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE BusinessPolicies (
+BusinessPolicyID INTEGER NOT NULL,
+BusinessPolicyTypeID INTEGER NOT NULL,
+PolicyName VARCHAR(50) NOT NULL,
+PolicyVersion VARCHAR(10) NOT NULL,
+IsActive BOOLEAN NOT NULL,
+DateTimeStamp DATE NOT NULL,
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE BusinessRulesMessages (
+BusinessRulesMessageId INTEGER NOT NULL,
+BusinessRuleID INTEGER,
+BusinessRulesMessage VARCHAR(600)
+);
+
+ALTER TABLE BusinessRulesMessages ADD FOREIGN KEY (BusinessRuleID) REFERENCES BusinessRules(BusinessRuleID);
+
+CREATE TABLE BusinessRulesTracking (
+BusinessRulesTrackingID INTEGER NOT NULL,
+PlanValidationID INTEGER NOT NULL,
+BusinessRuleID INTEGER,
+DateTime DATE,
+Result VARCHAR(500),
+Reason VARCHAR(max),
+PlanServiceID INTEGER,
+TableIndicator VARCHAR(70),
+AreaPlanBudgetID INTEGER,
+SanServiceID INTEGER,
+AuthServiceID INTEGER
+);
+
+ALTER TABLE BusinessRulesTracking ADD FOREIGN KEY (BusinessRuleID) REFERENCES BusinessRules(BusinessRuleID);
+
+ALTER TABLE BusinessRulesTracking ADD FOREIGN KEY (PlanValidationID) REFERENCES PlanValidation(PlanValidationID);
+
+CREATE TABLE BusinessRules (
+BusinessRuleID INTEGER NOT NULL,
+RuleName VARCHAR(100),
+RuleDescription VARCHAR(500),
+RuleOrder INTEGER NOT NULL,
+RuleDisplayName VARCHAR(500),
+RuleLogic VARCHAR(max),
+AdjustmentCode VARCHAR(10) NOT NULL,
+IsActive BOOLEAN NOT NULL,
+IsDataSetter BOOLEAN NOT NULL,
+HasUniqueMethod BOOLEAN NOT NULL,
+DateTimeStamp DATE NOT NULL,
+UserStamp INTEGER NOT NULL,
+StandardCustom VARCHAR(100),
+SpecificationName VARCHAR(100)
+);
+
+CREATE TABLE Card (
+CardID INTEGER NOT NULL,
+ContactID INTEGER NOT NULL,
+Active BOOLEAN NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+IssueDate DATE NOT NULL,
+ExpirationDate DATE,
+Comment VARCHAR(255)
+);
+
+ALTER TABLE Card ADD FOREIGN KEY (ContactID) REFERENCES CONTACT(CONTACTID);
+
+ALTER TABLE Card ADD FOREIGN KEY (UserStamp) REFERENCES Users(USERID);
+
+CREATE TABLE CareGiverRecipient (
+CareGiverRecipientID INTEGER NOT NULL,
+CaseNo INTEGER NOT NULL,
+Type VARCHAR(100) NOT NULL,
+ClientID INTEGER NOT NULL,
+CaregiverRelship VARCHAR(100) NOT NULL,
+StartDate DATE,
+EndDate DATE,
+PrimaryYN BOOLEAN NOT NULL,
+ProgramType VARCHAR(100),
+Comment VARCHAR(max),
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+OriginalRelationID VARCHAR(16) NOT NULL
+);
+
+ALTER TABLE CareGiverRecipient ADD FOREIGN KEY (CaseNo) REFERENCES DEMOGRAPHICS(CASENO);
+
+ALTER TABLE CareGiverRecipient ADD FOREIGN KEY (ClientID) REFERENCES DEMOGRAPHICS(CASENO);
+
+ALTER TABLE CareGiverRecipient ADD FOREIGN KEY (UserStamp) REFERENCES Users(USERID);
+
+CREATE TABLE CCILog (
+CCILogID INTEGER NOT NULL,
+CaseNo INTEGER NOT NULL,
+ModuleTransactionId VARCHAR(200),
+SentToCCI BOOLEAN,
+AckStatus VARCHAR(100),
+AckMessage VARCHAR(200),
+MemberAction VARCHAR(50),
+ProcessedStatus VARCHAR(100),
+ProcessedMessage VARCHAR(200),
+Comment VARCHAR(1000),
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+ALTER TABLE CCILog ADD FOREIGN KEY (UserStamp) REFERENCES Users(USERID);
+
+CREATE TABLE CHANGETRACKING (
+TABLENAME VARCHAR(256) NOT NULL
+);
+
+CREATE TABLE ChapterMenu (
+ChapterMenuID INTEGER NOT NULL,
+MenuID INTEGER NOT NULL,
+ChapterID INTEGER NOT NULL,
+UNIQUEID VARCHAR(16) NOT NULL,
+ORIGINALID VARCHAR(16) NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+Visible BOOLEAN,
+SortBy INTEGER NOT NULL
+);
+
+CREATE TABLE Chapter (
+ChapterID INTEGER NOT NULL,
+GroupID INTEGER NOT NULL,
+Label VARCHAR(255) NOT NULL,
+ChapterName VARCHAR(255) NOT NULL,
+SortBy INTEGER NOT NULL,
+QryRetVal INTEGER NOT NULL,
+AccessLevel INTEGER NOT NULL,
+Visible BOOLEAN NOT NULL,
+UserRequired BOOLEAN NOT NULL,
+SystemRequired BOOLEAN NOT NULL,
+HarmonyHelpID INTEGER,
+UserHelpID INTEGER,
+DisplayAsChapter BOOLEAN NOT NULL,
+IsMyHarmony BOOLEAN NOT NULL,
+UseInWFW BOOLEAN NOT NULL,
+UNIQUEID VARCHAR(16) NOT NULL,
+ORIGINALID VARCHAR(16) NOT NULL,
+UsePageSet BOOLEAN NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE ChargeCode (
+ChargeCodeID INTEGER NOT NULL,
+ChargeCode VARCHAR(15) NOT NULL,
+SecCode VARCHAR(15),
+Description VARCHAR(100),
+Type VARCHAR(100),
+Category VARCHAR(100),
+Class VARCHAR(100),
+Active BOOLEAN NOT NULL,
+DateTimestamp DATE NOT NULL,
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE Charge (
+ChargeID INTEGER NOT NULL,
+JacketID INTEGER NOT NULL,
+ChargeDate DATE,
+ChargeCodeID INTEGER NOT NULL,
+Counts DECIMAL(9),
+MostSerious BOOLEAN,
+DispositionStatus VARCHAR(100),
+DispositionDate DATE,
+GenericDate1 DATE,
+GenericDate2 DATE,
+GenericText1 VARCHAR(2000),
+GenericText2 VARCHAR(2000),
+GenericDropDown1 VARCHAR(100),
+GenericDropDown2 VARCHAR(100),
+DateTimestamp DATE NOT NULL,
+UserStamp INTEGER NOT NULL
+);
+
+ALTER TABLE Charge ADD FOREIGN KEY (ChargeCodeID) REFERENCES ChargeCode(ChargeCodeID);
+
+ALTER TABLE Charge ADD FOREIGN KEY (JacketID) REFERENCES Jacket(JacketID);
+
+CREATE TABLE CHECKPAYMENTS (
+CHECKPAYID DECIMAL(9) NOT NULL,
+CHECKDATE DATE,
+PAYMETHOD VARCHAR(100),
+PAIDBY VARCHAR(75),
+PAIDAMOUNT DECIMAL(9),
+DATETIMESTAMP DATE,
+PAYORID DECIMAL(9),
+UNAPPLIED DECIMAL(9),
+POSTDATE DATE,
+RECEIPTDATE DATE,
+DEPOSITDATE DATE,
+CHECKNO VARCHAR(16),
+NONINVOICED DECIMAL(9),
+CASENO DECIMAL(9),
+FUNDCODE VARCHAR(25),
+INSUREID DECIMAL(9),
+HIPAATYPE VARCHAR(50),
+HIPAAFILE VARCHAR(255),
+APPTYPE VARCHAR(5),
+CHECKBATCHID VARCHAR(20),
+ActivityID DECIMAL(9),
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE CHECKS (
+CHECKNO VARCHAR(15) NOT NULL,
+VENDORID INTEGER,
+CHECKAMOUNT DECIMAL(9),
+STATUS VARCHAR(100),
+PRINTEDBY VARCHAR(10),
+CHECKNUMBER DECIMAL(9),
+COMMENTS VARCHAR(max),
+FUNDCODE VARCHAR(25),
+GARNISHAMT DECIMAL(9),
+GLACCOUNT VARCHAR(20),
+MAILTONAME VARCHAR(75),
+MAILTOSTREET VARCHAR(100),
+MAILTOCITY VARCHAR(30),
+MAILTOSTATE VARCHAR(3),
+MAILTOZIP VARCHAR(10),
+MAILTOCOUNTRY VARCHAR(30),
+MAILTOSTREET2 VARCHAR(100),
+CHECKDATE DATE,
+DATETIMESTAMP DATE,
+PRINTDATE DATE,
+VOIDDATE DATE,
+CASENO DECIMAL(9),
+CMTranID DECIMAL(9),
+ExtCheckNumber VARCHAR(15),
+AppType VARCHAR(5),
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE Claim (
+ClaimID INTEGER,
+OriginalClaimID INTEGER,
+ClaimSource VARCHAR(100),
+OpenID INTEGER,
+ClaimAmount VARCHAR(8),
+Status VARCHAR(100),
+Resubmitted BOOLEAN,
+Queue VARCHAR(100),
+CheckOutBy INTEGER,
+CheckOutDate DATE,
+SubmitDate DATE,
+ReceiptDate DATE,
+WarningDate DATE,
+PatientSignatureOnFile BOOLEAN,
+PatientLastName VARCHAR(30),
+SubmissionMethod VARCHAR(100),
+PatientFirstName VARCHAR(30),
+PatientMiddleName VARCHAR(30),
+FollowupDate DATE,
+PatientSuffix VARCHAR(30),
+PatientAddress1 VARCHAR(100),
+PatientAddress2 VARCHAR(100),
+PatientSecID INTEGER,
+PatientCity VARCHAR(30),
+PatientState VARCHAR(100),
+PatientZip VARCHAR(15),
+PatientPhone VARCHAR(16),
+PatientDOB DATE,
+PatientSSN VARCHAR(11),
+PatientGender VARCHAR(100),
+PatientMaritalStatus VARCHAR(100),
+PlaceOfService VARCHAR(100),
+ReleaseInformationCode VARCHAR(100),
+PatientSignatureSourceCode VARCHAR(100),
+RelatedCauseInfo VARCHAR(100),
+PatientConditionEmployment BOOLEAN,
+PatientConditionAutoAccident BOOLEAN,
+PatientConditionOtherAccident BOOLEAN,
+PatientConditionAutoAccidentStateCode VARCHAR(100),
+ReservedForLocalUse VARCHAR(30),
+PayerID INTEGER,
+PatientCaseno INTEGER,
+FundCode VARCHAR(25),
+AssignedWorker INTEGER,
+ExternalPayerControlNumber INTEGER,
+PayerIdentificationCodeQualifier VARCHAR(100),
+Comment VARCHAR(max),
+PayerIdentificationCode INTEGER,
+ClaimFrequencyType VARCHAR(100),
+ClaimBatchNo VARCHAR(150),
+AdjudicationType VARCHAR(100),
+SubmitToOtherPayer BOOLEAN,
+PayerName VARCHAR(100),
+PayerAddress1 VARCHAR(100),
+PayerAddress2 VARCHAR(100),
+PayerCity VARCHAR(30),
+PayerState VARCHAR(100),
+PayerZip VARCHAR(11),
+ExpirationDate DATE,
+PeriodStartDate DATE,
+PeriodEndDate DATE,
+ClaimFilingIndicator VARCHAR(100),
+CurrentClaimAmount VARCHAR(8),
+TransactionNumber VARCHAR(18),
+ClaimTrackingID INTEGER,
+BizTalkPolicyName VARCHAR(50),
+BizTalkPolicyVersion VARCHAR(50),
+RuleName VARCHAR(100),
+RuleDescription VARCHAR(500),
+AdjustmentCodeID INTEGER,
+SubmitBy INTEGER,
+FacilityCode VARCHAR(100),
+ProviderAcceptAssignment VARCHAR(100),
+AssignmentofBenefitIndicator BOOLEAN,
+ReleaseofInformation VARCHAR(100),
+RelatedCauseCode VARCHAR(18),
+AuthID INTEGER,
+EnrollID INTEGER,
+ImportDate DATE,
+MedicalRecordNo VARCHAR(30),
+OriginalReferenceNo INTEGER,
+PriorAuthNo INTEGER,
+PredeterminationBenefitID INTEGER,
+UserStamp INTEGER,
+DateTimeStamp DATE,
+SubmitterClaimID VARCHAR(38),
+ClaimType VARCHAR(100),
+ClaimStatusID INTEGER,
+Voided BOOLEAN,
+VoidReason VARCHAR(100),
+SubmitByName VARCHAR(100),
+ClaimProvidorSignature BOOLEAN,
+VoidUser INTEGER,
+VoidDateTimeStamp DATE,
+VoidMethod VARCHAR(100),
+ClaimPurpose VARCHAR(100),
+30DayCreatedDate DATE,
+30DayFundsLastChecked DATE,
+30DayPendClaim BOOLEAN,
+ControlNumberSequence INTEGER,
+ActivityID INTEGER,
+VoidInitiated BOOLEAN,
+ManualApprovalDatetime DATE,
+ManualApprovalUser VARCHAR(100),
+ManualApprovalAdjustmentReason VARCHAR(100),
+ManualApprovalComment VARCHAR(255),
+PaperClaim BOOLEAN,
+PrintDate DATE,
+DelayCode INTEGER,
+MMIS_Status VARCHAR(50),
+ClaimMMISLogID INTEGER,
+BillingProvNPI VARCHAR(80),
+SCETimelyFilingException VARCHAR(100),
+SpecialProcessing VARCHAR(100),
+AdminOverride VARCHAR(100),
+TPLPaidAmount VARCHAR(8),
+TPLReasonCode VARCHAR(100),
+TPLCarrierID VARCHAR(50),
+ClaimOperation VARCHAR(20),
+AccidentDate DATE,
+TPLAdjustmentAmt VARCHAR(8),
+OtherPayerControlNumber INTEGER,
+IsClaimSkippedFromBatch BOOLEAN
+);
+
+ALTER TABLE Claim ADD FOREIGN KEY (ActivityID) REFERENCES Activity(ActivityID);
+
+CREATE TABLE Claim837Log (
+Claim837LogID INTEGER NOT NULL,
+SenderID VARCHAR(15),
+InterchangeID VARCHAR(9) NOT NULL,
+Doc VARCHAR(max),
+UserStamp INTEGER,
+DateTimeStamp DATE NOT NULL,
+ClaimBatchFileName VARCHAR(150),
+Doc997 VARCHAR(max),
+ClaimConfigurationID INTEGER,
+ClaimFileGUID VARCHAR(100),
+GenericDoc VARCHAR(max),
+IsInternalClaim BOOLEAN NOT NULL
+);
+
+CREATE TABLE ClaimAdjustmentReimbursement (
+ClaimAdjustmentReimbursementID INTEGER,
+AdjustmentAmount VARCHAR(8),
+AdjustedBy INTEGER,
+AdjustedDate DATE,
+ClaimID INTEGER,
+AdjustmentCodeID INTEGER,
+Unit DECIMAL(9),
+AdjustmentType VARCHAR(100),
+UserStamp INTEGER,
+DateTimeStamp DATE,
+PrimaryAdjustment BOOLEAN,
+ClaimReimbursementID INTEGER
+);
+
+CREATE TABLE ClaimAdjustment (
+ClaimAdjustmentID INTEGER NOT NULL,
+AdjustmentAmount VARCHAR(8) NOT NULL,
+AdjustedBy INTEGER,
+AdjustedDate DATE NOT NULL,
+ClaimID INTEGER NOT NULL,
+AdjustmentCodeID INTEGER NOT NULL,
+Unit DECIMAL(9) NOT NULL,
+AdjustmentType VARCHAR(100) NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+PrimaryAdjustment BOOLEAN NOT NULL
+);
+
+CREATE TABLE ClaimBRFData (
+BRFID INTEGER NOT NULL,
+TradingPartnerID VARCHAR(15),
+FileTrackingID VARCHAR(9),
+ICN VARCHAR(13),
+BRFClaimStatus VARCHAR(1),
+DetailCount INTEGER,
+NPI VARCHAR(15),
+MedicaidID VARCHAR(15),
+RecipientID VARCHAR(15),
+CheckDigit VARCHAR(1),
+PatientAccountNumber VARCHAR(38),
+MedicalRecordNumber VARCHAR(30),
+DateOfService DATE,
+BilledAmount DECIMAL(5),
+PaidAmount DECIMAL(5),
+ErrorCount INTEGER,
+BRFFilename VARCHAR(250),
+DateTimeStamp DATE
+);
+
+CREATE TABLE ClaimBRFErrors (
+BRFERRORID INTEGER NOT NULL,
+BRFID INTEGER,
+DetailNumber VARCHAR(4),
+ErrorCodeStatus VARCHAR(1),
+ErrorCode VARCHAR(4),
+ErrorMsg VARCHAR(50),
+DateTimeStamp DATE
+);
+
+CREATE TABLE ClaimConfiguration (
+ClaimConfigurationID INTEGER NOT NULL,
+FundCode VARCHAR(10),
+IsComboCodeID INTEGER,
+IndexCode VARCHAR(10),
+SubObjectCode VARCHAR(10),
+FileName VARCHAR(250) NOT NULL,
+Description VARCHAR(250) NOT NULL,
+Active BOOLEAN NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE ClaimDentalMissingTeeth (
+ClaimDentalMissingTeethID INTEGER NOT NULL,
+ClaimDentalID INTEGER NOT NULL,
+MissingToothNumber INTEGER NOT NULL,
+DatetimeStamp DATE NOT NULL,
+Userstamp INTEGER NOT NULL
+);
+
+ALTER TABLE ClaimDentalMissingTeeth ADD FOREIGN KEY (ClaimDentalID) REFERENCES ClaimDental(ClaimDentalID);
+
+CREATE TABLE ClaimDental (
+ClaimDentalID INTEGER NOT NULL,
+ClaimID INTEGER NOT NULL,
+OrthodonticsYN BOOLEAN,
+OrthodonticsDateAppliancePlaced DATE,
+OrthodonticsMonthsTreatmentRemaining DECIMAL(9),
+ReplacementProsthesisYN BOOLEAN,
+DatePriorPlacement DATE,
+DatetimeStamp DATE NOT NULL,
+Userstamp INTEGER NOT NULL
+);
+
+ALTER TABLE ClaimDental ADD FOREIGN KEY (ClaimID) REFERENCES Claim(ClaimID);
+
+CREATE TABLE ClaimDiagnosis (
+ClaimDiagnosisID INTEGER NOT NULL,
+ClaimID INTEGER NOT NULL,
+SortOrder INTEGER NOT NULL,
+DiagCode VARCHAR(25) NOT NULL,
+DiagType VARCHAR(100) NOT NULL,
+Description VARCHAR(500),
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE ClaimDocument (
+ClaimDocumentID INTEGER NOT NULL,
+ClaimID INTEGER NOT NULL,
+DocumentName VARCHAR(500) NOT NULL,
+DocumentType VARCHAR(100) NOT NULL,
+Document VARCHAR(max) NOT NULL,
+DateReceived DATE,
+DateSent DATE,
+TransactionSetControl VARCHAR(25),
+DATETIMESTAMP DATE NOT NULL,
+UserStamp INTEGER NOT NULL,
+Status VARCHAR(100),
+ReasonCode VARCHAR(100),
+FirstCSRResponse BOOLEAN,
+ExternalPayerControlNumber VARCHAR(30),
+FileName VARCHAR(100)
+);
+
+CREATE TABLE ClaimETRRCodes (
+ClaimETRRCodesID INTEGER NOT NULL,
+ERROR_NUMBER VARCHAR(50) NOT NULL,
+DESCRIPTION VARCHAR(300),
+DateTimeStamp DATE
+);
+
+CREATE TABLE ClaimETRRDetail (
+ClaimETRRDetailID INTEGER NOT NULL,
+ClaimETRRID INTEGER NOT NULL,
+CAPITATED_PLAN_ID VARCHAR(20),
+SUBMISSION_NUMBER VARCHAR(30),
+FAILED_RECORD_COUNT INTEGER,
+DateTimeStamp DATE,
+ERROR_NUMBER VARCHAR(50),
+ERROR_SEVERITY VARCHAR(2),
+ClaimID INTEGER
+);
+
+ALTER TABLE ClaimETRRDetail ADD FOREIGN KEY (ClaimID) REFERENCES Claim(ClaimID);
+
+ALTER TABLE ClaimETRRDetail ADD FOREIGN KEY (ClaimETRRID) REFERENCES ClaimETRR(ClaimETRRID);
+
+CREATE TABLE ClaimETRRError (
+ClaimETRRErrorID INTEGER NOT NULL,
+ClaimETRRDetailID INTEGER NOT NULL,
+CAPITATED_PLAN_ID VARCHAR(20),
+RELATED_PLAN_ID VARCHAR(20),
+SUBMISSION_NUMBER VARCHAR(30),
+ENCOUNTER_REF_NUMBER VARCHAR(30),
+ENCOUNTER_LINE_NUMBER VARCHAR(3),
+RECORD_TYPE INTEGER,
+RECORD_CATEGORY VARCHAR(1),
+ERROR_NUMBER VARCHAR(50),
+ERROR_SEVERITY VARCHAR(2),
+ERROR_FIELD VARCHAR(20),
+TCN VARCHAR(18),
+DateTimeStamp DATE
+);
+
+ALTER TABLE ClaimETRRError ADD FOREIGN KEY (ClaimETRRDetailID) REFERENCES ClaimETRRDetail(ClaimETRRDetailID);
+
+CREATE TABLE ClaimETRR (
+ClaimETRRID INTEGER NOT NULL,
+FileName VARCHAR(250),
+EDI_RECORD_COUNT INTEGER,
+EDI_DATE DATE,
+DateTimeStamp DATE,
+Doc VARCHAR(max)
+);
+
+CREATE TABLE ClaimExternal835Messages (
+MSGID INTEGER NOT NULL,
+DateTimeStamp DATE,
+ClaimSubmitterID VARCHAR(50),
+ClaimStatusCode INTEGER,
+ClaimICN VARCHAR(50),
+ClaimPaymentAmt VARCHAR(8),
+ClaimChargeAmt VARCHAR(8),
+ClaimFileName VARCHAR(200),
+FileNumber835 INTEGER
+);
+
+CREATE TABLE ClaimFailedMsgLog (
+MsgID INTEGER NOT NULL,
+ClaimStatusID INTEGER,
+DateTimeStamp DATE,
+NumberOfTries INTEGER
+);
+
+CREATE TABLE ClaimInstitutional (
+ClaimInstitutionalID INTEGER NOT NULL,
+ClaimID INTEGER NOT NULL,
+StatementStartDate DATE NOT NULL,
+StatementEndDate DATE NOT NULL,
+AdmissionDate DATE,
+DischargeDateTime DATE,
+AdmissionTypeCode VARCHAR(250),
+AdmissionSourceCode VARCHAR(250),
+PatientStatusCode VARCHAR(250) NOT NULL,
+Userstamp INTEGER NOT NULL,
+DatetimeStamp DATE NOT NULL,
+NewbornAdmissionTypeSourceCode VARCHAR(250),
+AdmissionTime VARCHAR(5)
+);
+
+ALTER TABLE ClaimInstitutional ADD FOREIGN KEY (ClaimID) REFERENCES Claim(ClaimID);
+
+CREATE TABLE ClaimMMISLog (
+ClaimMMISLogID INTEGER,
+FileName VARCHAR(250),
+DateTimeStamp DATE,
+PayloadID VARCHAR(16),
+SentToMMISDateTimeStamp DATE,
+ReceivedTA1 BOOLEAN,
+Received999FileName VARCHAR(250),
+Received999DateTimeStamp DATE
+);
+
+CREATE TABLE ClaimPreviousAdjustment (
+ClaimPreviousAdjustmentID INTEGER NOT NULL,
+ClaimAdjustmentID INTEGER,
+AdjustmentAmount VARCHAR(8),
+AdjustedBy INTEGER,
+AdjustedDate DATE,
+ClaimID INTEGER,
+AdjustmentCodeID INTEGER,
+Unit DECIMAL(9),
+AdjustmentType VARCHAR(100),
+UserStamp INTEGER,
+DateTimeStamp DATE,
+PrimaryAdjustment BOOLEAN,
+DateMoved DATE,
+ClaimRemittanceID INTEGER
+);
+
+CREATE TABLE ClaimPreviousRemittance (
+ClaimPreviousRemittanceID INTEGER NOT NULL,
+ClaimRemittanceID INTEGER,
+RemittanceDate DATE,
+ClaimChargeAmount VARCHAR(8),
+RemittanceRemark VARCHAR(100),
+RemittanceStatus VARCHAR(100),
+ClaimID INTEGER,
+ClaimPaymentAmount VARCHAR(8),
+PatientResponsibilityAmount VARCHAR(8),
+TransactionHandlingCode VARCHAR(100),
+PaymentMethod VARCHAR(100),
+PaymentFormatCode VARCHAR(100),
+GLStatus VARCHAR(100),
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+Doc VARCHAR(max),
+Received835FileName VARCHAR(50),
+Sent835FileName VARCHAR(50),
+VoucherDetailID INTEGER,
+SecondaryVoucherDetailID INTEGER,
+primaryamount VARCHAR(8),
+SecondaryAmount VARCHAR(8),
+EOPDATE DATE,
+Suppress BOOLEAN NOT NULL,
+External BOOLEAN,
+Generated835 BOOLEAN,
+FileName835 VARCHAR(250),
+FileNumber835 INTEGER,
+SplitFileNumber835 INTEGER,
+SysError BOOLEAN,
+UserExcluded BOOLEAN,
+ValidationStatus VARCHAR(200),
+PVLogID INTEGER,
+DateMoved DATE
+);
+
+CREATE TABLE ClaimPreviousServiceAdjustment (
+ClaimPreviousServiceAdjustmentID INTEGER NOT NULL,
+ClaimServiceAdjustmentID INTEGER,
+AdjustmentAmount VARCHAR(8),
+AdjustedBy INTEGER,
+AdjustedDate DATE,
+AdjustmentCodeID INTEGER,
+Unit DECIMAL(9),
+ClaimServiceID INTEGER,
+AdjustmentType VARCHAR(100),
+UserStamp INTEGER,
+DateTimeStamp DATE,
+PrimaryAdjustment BOOLEAN,
+DateMoved DATE,
+ClaimServiceRemittanceID INTEGER
+);
+
+CREATE TABLE ClaimPreviousServiceRemittance (
+ClaimPreviousServiceRemittanceID INTEGER NOT NULL,
+ClaimServiceRemittanceID INTEGER,
+ClaimServiceID INTEGER,
+ChargeAmount VARCHAR(8),
+PaymentAmount VARCHAR(8),
+Unit DECIMAL(9),
+RevenueCode INTEGER,
+UserStamp INTEGER,
+DateTimeStamp DATE,
+DateMoved DATE,
+ClaimRemittanceID INTEGER
+);
+
+CREATE TABLE ClaimProvider (
+ClaimProviderID INTEGER,
+ClaimID INTEGER,
+ProviderType VARCHAR(100),
+LastNameAgency VARCHAR(75),
+FirstName VARCHAR(30),
+GroupNo VARCHAR(50),
+MiddleName VARCHAR(30),
+Address1 VARCHAR(100),
+Address2 VARCHAR(100),
+City VARCHAR(30),
+State VARCHAR(100),
+Zip VARCHAR(11),
+ContactName VARCHAR(100),
+Phone VARCHAR(16),
+ProviderID INTEGER,
+ProviderIDQualifier VARCHAR(100),
+EntityTypeQualifier VARCHAR(100),
+SecID INTEGER,
+MemberID INTEGER,
+VendorID INTEGER,
+UserStamp INTEGER,
+DateTimeStamp DATE,
+SenderID VARCHAR(15),
+NPI VARCHAR(25),
+BillingProviderLastName VARCHAR(100),
+BillingProviderIdentifier VARCHAR(100),
+BillingProviderEIN VARCHAR(100),
+BillingProviderID VARCHAR(100),
+Taxonomy VARCHAR(100),
+AltProviderID VARCHAR(25)
+);
+
+ALTER TABLE ClaimProvider ADD FOREIGN KEY (VendorID) REFERENCES Vendors(VendorID);
+
+ALTER TABLE ClaimProvider ADD FOREIGN KEY (MemberID) REFERENCES WORKERS(MEMBERID);
+
+CREATE TABLE ClaimPVServiceCodes (
+ClaimPVServiceCodesID INTEGER NOT NULL,
+ServiceID INTEGER NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+ALTER TABLE ClaimPVServiceCodes ADD FOREIGN KEY (ServiceID) REFERENCES SERVICECODES(SERVICEID);
+
+ALTER TABLE ClaimPVServiceCodes ADD FOREIGN KEY (UserStamp) REFERENCES Users(USERID);
+
+CREATE TABLE ClaimReimbursementOutpatientInformation (
+ClaimOutpatientInformationID INTEGER NOT NULL,
+ClaimReimbursementID INTEGER,
+Percentage INTEGER,
+HCPCSPayableAmount INTEGER,
+ClaimPaymentRemarkCode03 VARCHAR(20),
+ClaimPaymentRemarkCode04 VARCHAR(20),
+ClaimPaymentRemarkCode05 VARCHAR(20),
+ClaimPaymentRemarkCode06 VARCHAR(20),
+ClaimPaymentRemarkCode07 VARCHAR(20),
+ESRDPaymentAmount INTEGER,
+NonpayableAmount INTEGER
+);
+
+CREATE TABLE ClaimReimbursement (
+ClaimReimbursementID INTEGER,
+ReimbursementDate DATE,
+ClaimChargeAmount VARCHAR(8),
+ReimbursementRemark VARCHAR(100),
+ReimbursementStatus VARCHAR(100),
+ClaimID INTEGER,
+ClaimPaymentAmount VARCHAR(8),
+PatientResponsibilityAmount VARCHAR(8),
+TransactionHandlingCode VARCHAR(100),
+PaymentMethod VARCHAR(100),
+PaymentFormatCode VARCHAR(100),
+GLStatus VARCHAR(100),
+UserStamp INTEGER,
+DateTimeStamp DATE,
+Doc VARCHAR(max),
+Received835FileName VARCHAR(50),
+Sent835FileName VARCHAR(50),
+PrimaryAmount VARCHAR(8),
+SecondaryAmount VARCHAR(8),
+VoucherDetailid INTEGER,
+SecondaryVoucherDetailid INTEGER,
+EOPDate DATE,
+Suppress BOOLEAN,
+External BOOLEAN,
+Generated835 BOOLEAN,
+FileName835 VARCHAR(150),
+FileNumber835 INTEGER,
+SplitFileNumber835 INTEGER,
+PVLogID INTEGER,
+SysError BOOLEAN,
+UserExcluded BOOLEAN,
+ValidationStatus VARCHAR(200),
+CurrentPaymentAmount VARCHAR(8)
+);
+
+CREATE TABLE ClaimRemittance835BPR (
+BPRID INTEGER NOT NULL,
+BPRAmount VARCHAR(8) NOT NULL,
+BPRAction VARCHAR(3),
+RemittanceDate DATE NOT NULL,
+UserStamp VARCHAR(50) NOT NULL,
+DateTimeStamp DATE NOT NULL,
+FileName835 VARCHAR(150),
+FileNumber835 INTEGER,
+NumberOfSplitFiles835 INTEGER,
+ADJREASON VARCHAR(100),
+InvalidProvider BOOLEAN NOT NULL
+);
+
+CREATE TABLE ClaimRemittanceCode (
+ClaimRemittanceCodeID INTEGER NOT NULL,
+ClaimID INTEGER NOT NULL,
+RemittanceRemarkID INTEGER NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE ClaimRemittance (
+ClaimRemittanceID INTEGER,
+RemittanceDate DATE,
+ClaimChargeAmount VARCHAR(8),
+RemittanceRemark VARCHAR(100),
+RemittanceStatus VARCHAR(100),
+ClaimID INTEGER,
+ClaimPaymentAmount VARCHAR(8),
+PatientResponsibilityAmount VARCHAR(8),
+TransactionHandlingCode VARCHAR(100),
+PaymentMethod VARCHAR(100),
+PaymentFormatCode VARCHAR(100),
+GLStatus VARCHAR(100),
+UserStamp INTEGER,
+DateTimeStamp DATE,
+Doc VARCHAR(max),
+Received835FileName VARCHAR(50),
+Sent835FileName VARCHAR(50),
+VoucherDetailID INTEGER,
+SecondaryVoucherDetailID INTEGER,
+primaryamount VARCHAR(8),
+SecondaryAmount VARCHAR(8),
+EOPDATE DATE,
+Suppress BOOLEAN,
+External BOOLEAN,
+Generated835 BOOLEAN,
+FileName835 VARCHAR(250),
+FileNumber835 INTEGER,
+SplitFileNumber835 INTEGER,
+SysError BOOLEAN,
+UserExcluded BOOLEAN,
+ValidationStatus VARCHAR(200),
+PVLogID INTEGER,
+RANumber VARCHAR(20),
+PaymentDate DATE,
+CheckNo VARCHAR(50)
+);
+
+ALTER TABLE ClaimRemittance ADD FOREIGN KEY (PVLogID) REFERENCES PVLog(PVLogID);
+
+CREATE TABLE ClaimResubQueue (
+ClaimResubQueueID INTEGER NOT NULL,
+OriginalClaimID INTEGER NOT NULL,
+DateTimeAddedToQueue DATE NOT NULL,
+BatchNo VARCHAR(80),
+ResubDateTime DATE,
+ResubClaimID INTEGER,
+ResubClaimDateTime DATE,
+Datetimestamp DATE NOT NULL,
+UserStamp INTEGER NOT NULL
+);
+
+ALTER TABLE ClaimResubQueue ADD FOREIGN KEY (OriginalClaimID) REFERENCES Claim(ClaimID);
+
+ALTER TABLE ClaimResubQueue ADD FOREIGN KEY (ResubClaimID) REFERENCES Claim(ClaimID);
+
+ALTER TABLE ClaimResubQueue ADD FOREIGN KEY (UserStamp) REFERENCES Users(USERID);
+
+CREATE TABLE ClaimRollupBatch (
+ClaimRollupBatchID INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE ClaimRollupServices (
+ClaimRollupServicesID INTEGER NOT NULL,
+ClaimRollupID INTEGER NOT NULL,
+ClaimServiceID INTEGER NOT NULL,
+ServiceLine INTEGER NOT NULL,
+Active_Void BOOLEAN NOT NULL
+);
+
+ALTER TABLE ClaimRollupServices ADD FOREIGN KEY (ClaimRollupID) REFERENCES ClaimRollup(ClaimRollupID);
+
+ALTER TABLE ClaimRollupServices ADD FOREIGN KEY (ClaimServiceID) REFERENCES ClaimService(ClaimServiceID);
+
+CREATE TABLE ClaimRollup (
+ClaimRollupID INTEGER NOT NULL,
+RollupNumber VARCHAR(25),
+ICN VARCHAR(30),
+XML VARCHAR(max),
+Sent BOOLEAN,
+ClaimRollupBatchID INTEGER NOT NULL,
+Status VARCHAR(20),
+Voided BOOLEAN,
+ClaimType VARCHAR(10) NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+ALTER TABLE ClaimRollup ADD FOREIGN KEY (ClaimRollupBatchID) REFERENCES ClaimRollupBatch(ClaimRollupBatchID);
+
+CREATE TABLE ClaimServiceAdjustmentReimbursement (
+ClaimServiceAdjustmentReimbursementID INTEGER,
+AdjustmentAmount VARCHAR(8),
+AdjustedBy INTEGER,
+AdjustedDate DATE,
+AdjustmentCodeID INTEGER,
+Unit DECIMAL(9),
+ClaimServiceID INTEGER,
+AdjustmentType VARCHAR(100),
+UserStamp INTEGER,
+DateTimeStamp DATE,
+PrimaryAdjustment BOOLEAN,
+ClaimServiceReimbursementID INTEGER
+);
+
+CREATE TABLE ClaimServiceAdjustment (
+ClaimServiceAdjustmentID INTEGER NOT NULL,
+AdjustmentAmount VARCHAR(8) NOT NULL,
+AdjustedBy INTEGER,
+AdjustedDate DATE NOT NULL,
+AdjustmentCodeID INTEGER NOT NULL,
+Unit DECIMAL(9) NOT NULL,
+ClaimServiceID INTEGER NOT NULL,
+AdjustmentType VARCHAR(100) NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+PrimaryAdjustment BOOLEAN NOT NULL
+);
+
+ALTER TABLE ClaimServiceAdjustment ADD FOREIGN KEY (ClaimServiceID) REFERENCES ClaimService(ClaimServiceID);
+
+CREATE TABLE ClaimServiceDental (
+ClaimServiceDentalID INTEGER NOT NULL,
+ClaimServiceID INTEGER,
+AreaOralCavity VARCHAR(100),
+ToothSystem VARCHAR(100),
+ToothNumbersOrLetters VARCHAR(300),
+DatetimeStamp DATE NOT NULL,
+Userstamp INTEGER NOT NULL,
+ToothSurface VARCHAR(100)
+);
+
+ALTER TABLE ClaimServiceDental ADD FOREIGN KEY (ClaimServiceID) REFERENCES ClaimService(ClaimServiceID);
+
+CREATE TABLE ClaimServiceDiagnosis (
+ClaimsServiceDiagnosisID INTEGER NOT NULL,
+ClaimServiceID INTEGER NOT NULL,
+ClaimDiagnosisID INTEGER NOT NULL,
+SortOrder INTEGER NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+ALTER TABLE ClaimServiceDiagnosis ADD FOREIGN KEY (ClaimServiceID) REFERENCES ClaimService(ClaimServiceID);
+
+CREATE TABLE CLaimServicePayment (
+ClaimServicePayorID INTEGER NOT NULL,
+ClaimServiceID INTEGER NOT NULL,
+OtherPayerID INTEGER NOT NULL,
+PaidAmount VARCHAR(8) NOT NULL,
+MedicalProcedureID VARCHAR(18) NOT NULL,
+ProductServiceIDQualifier VARCHAR(100) NOT NULL,
+PaidUnit DECIMAL(9) NOT NULL,
+Modifier1 VARCHAR(100),
+ProductServiceID INTEGER NOT NULL,
+Modifier2 VARCHAR(100),
+Modifier3 VARCHAR(100),
+Modifier4 VARCHAR(100),
+Description VARCHAR(100),
+AssignedNumber INTEGER,
+ReasonCode VARCHAR(50),
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+ALTER TABLE CLaimServicePayment ADD FOREIGN KEY (ClaimServiceID) REFERENCES ClaimService(ClaimServiceID);
+
+ALTER TABLE CLaimServicePayment ADD FOREIGN KEY (OtherPayerID) REFERENCES OtherPayer(OtherPayerID);
+
+CREATE TABLE ClaimService (
+ClaimServiceID INTEGER NOT NULL,
+ClaimID INTEGER NOT NULL,
+Modifier1 VARCHAR(100),
+Modifier2 VARCHAR(100),
+Modifier3 VARCHAR(100),
+Modifier4 VARCHAR(100),
+ServiceType VARCHAR(100),
+ServiceAmount VARCHAR(8) NOT NULL,
+Unit DECIMAL(9) NOT NULL,
+UnitType VARCHAR(100),
+PlaceOfService VARCHAR(100),
+StartDate DATE,
+EndDate DATE,
+Emergency BOOLEAN NOT NULL,
+ServiceID INTEGER,
+COBFlag BOOLEAN NOT NULL,
+AuthServiceID INTEGER,
+SalesTaxAmount VARCHAR(8),
+CurrentUnits INTEGER,
+ApprovedAmount VARCHAR(8),
+CurrentServiceAmount VARCHAR(8),
+PostageClaimedAmount VARCHAR(8),
+ProcedureCode VARCHAR(25),
+CopayStatus BOOLEAN NOT NULL,
+VServiceID INTEGER,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+ServiceCode VARCHAR(25) NOT NULL,
+Status VARCHAR(100) NOT NULL,
+AdjustmentCodeID INTEGER,
+PrimaryIndexCode VARCHAR(100),
+PrimarySubObjectCode VARCHAR(100),
+ServiceLine INTEGER,
+ServiceLineControlNumber VARCHAR(50),
+Description VARCHAR(255),
+SecondaryIndexCode VARCHAR(100),
+SecondarySubObjectCode VARCHAR(100),
+SecondaryPercent DECIMAL(9),
+VendorContractID INTEGER,
+PrimaryPercent DECIMAL(9),
+LevelOfCare VARCHAR(100),
+PriorityPopulation VARCHAR(50),
+PrimaryPaymentAmount VARCHAR(8),
+SecondaryPaymentAmount VARCHAR(8),
+SecondaryReportingAmount VARCHAR(8),
+ControlNumberSequence INTEGER NOT NULL,
+FiscalYear INTEGER,
+RemittedFiscalYear INTEGER,
+PayerType VARCHAR(20),
+RemittedContractID INTEGER,
+SentToMMISDateTime DATE,
+RemarkCode VARCHAR(20),
+NoShow BOOLEAN NOT NULL,
+NoShowReason VARCHAR(100),
+MemberID INTEGER,
+ServiceRevenueCode VARCHAR(100),
+ModifierBypass VARCHAR(100)
+);
+
+ALTER TABLE ClaimService ADD FOREIGN KEY (MemberID) REFERENCES WORKERS(MEMBERID);
+
+CREATE TABLE ClaimServiceProvider (
+ClaimServiceProviderID INTEGER NOT NULL,
+ProviderType VARCHAR(100) NOT NULL,
+LastNameAgency VARCHAR(75) NOT NULL,
+FirstName VARCHAR(30),
+GroupNo VARCHAR(50),
+MiddleName VARCHAR(30),
+Address1 VARCHAR(100) NOT NULL,
+Address2 VARCHAR(100),
+City VARCHAR(30) NOT NULL,
+State VARCHAR(100) NOT NULL,
+Zip VARCHAR(11) NOT NULL,
+ContactName VARCHAR(100),
+Phone VARCHAR(16),
+ProviderID INTEGER,
+ProviderIDQualifier VARCHAR(100) NOT NULL,
+EntityTypeQualifier VARCHAR(100) NOT NULL,
+SecID INTEGER,
+ClaimServiceID INTEGER NOT NULL,
+MemberID INTEGER,
+VendorID INTEGER,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+NPI VARCHAR(25)
+);
+
+ALTER TABLE ClaimServiceProvider ADD FOREIGN KEY (ClaimServiceID) REFERENCES ClaimService(ClaimServiceID);
+
+ALTER TABLE ClaimServiceProvider ADD FOREIGN KEY (VendorID) REFERENCES Vendors(VendorID);
+
+ALTER TABLE ClaimServiceProvider ADD FOREIGN KEY (MemberID) REFERENCES WORKERS(MEMBERID);
+
+CREATE TABLE ClaimServiceReimbursement (
+ClaimServiceReimbursementID INTEGER NOT NULL,
+ClaimServiceID INTEGER NOT NULL,
+ChargeAmount VARCHAR(8) NOT NULL,
+PaymentAmount VARCHAR(8),
+Unit DECIMAL(9) NOT NULL,
+RevenueCode INTEGER,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+ClaimReimbursementID INTEGER
+);
+
+CREATE TABLE ClaimServiceRemittance (
+ClaimServiceRemittanceID INTEGER NOT NULL,
+ClaimServiceID INTEGER NOT NULL,
+ChargeAmount VARCHAR(8) NOT NULL,
+PaymentAmount VARCHAR(8),
+Unit DECIMAL(9) NOT NULL,
+RevenueCode INTEGER,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+ALTER TABLE ClaimServiceRemittance ADD FOREIGN KEY (ClaimServiceID) REFERENCES ClaimService(ClaimServiceID);
+
+CREATE TABLE CLaimServiceRemittanceCode (
+ClaimServiceRemittanceCodeID INTEGER NOT NULL,
+ClaimServiceID INTEGER NOT NULL,
+RemittanceRemarkID INTEGER NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+ALTER TABLE CLaimServiceRemittanceCode ADD FOREIGN KEY (ClaimServiceID) REFERENCES ClaimService(ClaimServiceID);
+
+CREATE TABLE CLAIMSTATUS (
+ClaimStatusID INTEGER NOT NULL,
+Claim837LogID INTEGER NOT NULL,
+ProviderID VARCHAR(15),
+ProviderClaimID VARCHAR(38) NOT NULL,
+Status INTEGER NOT NULL,
+Doc VARCHAR(max),
+UserStamp INTEGER,
+DateTimeStamp DATE NOT NULL,
+PrepaidClaim VARCHAR(100)
+);
+
+CREATE TABLE ClaimSubscriber (
+ClaimSubscriberID INTEGER,
+EmployerName VARCHAR(100),
+SortOrder INTEGER,
+ClaimID INTEGER,
+RelationshipToPatient VARCHAR(100),
+SubscriberLastNameAgency VARCHAR(30),
+SubscriberFirstName VARCHAR(30),
+SubscriberMiddleName VARCHAR(30),
+SubscriberSuffix VARCHAR(30),
+SubscriberIDQualifier VARCHAR(100),
+SubscriberID INTEGER,
+SubscriberAddress1 VARCHAR(100),
+SubscriberAddress2 VARCHAR(100),
+SubscriberCity VARCHAR(30),
+SubscriberState VARCHAR(100),
+SubscriberZip VARCHAR(11),
+SubscriberPhone VARCHAR(16),
+SubscriberDOB DATE,
+SubscriberGender VARCHAR(100),
+SubscriberSSN VARCHAR(11),
+SubscriberGroupNumber VARCHAR(50),
+SubscriberPolicyNumber VARCHAR(25),
+EntityTypeQualifier VARCHAR(100),
+OtherPayerID INTEGER,
+UserStamp INTEGER,
+DateTimeStamp DATE
+);
+
+ALTER TABLE ClaimSubscriber ADD FOREIGN KEY (OtherPayerID) REFERENCES OtherPayer(OtherPayerID);
+
+CREATE TABLE ClaimTPLInfo (
+ClaimTPLInfoID INTEGER NOT NULL,
+ClaimID INTEGER,
+EntityIdentifierCode VARCHAR(3),
+EntityTypeQualifier VARCHAR(2),
+PayerName VARCHAR(60),
+IdentificationCodeQualifier VARCHAR(2),
+PayerIdentifier VARCHAR(50),
+PayerSequence VARCHAR(3),
+ClaimPaymentAmount VARCHAR(8),
+ServicePaymentAmount VARCHAR(8),
+ClaimPaymentDate DATE,
+ServicePaymentDate DATE
+);
+
+ALTER TABLE ClaimTPLInfo ADD FOREIGN KEY (ClaimID) REFERENCES Claim(ClaimID);
+
+CREATE TABLE ClaimTPLInfoAdjustment (
+ClaimTPLInfoAdjustmentID INTEGER NOT NULL,
+ClaimID INTEGER NOT NULL,
+ClaimServiceID INTEGER,
+GroupCode VARCHAR(2),
+ReasonCode1 VARCHAR(50),
+MonetaryAmount1 VARCHAR(8),
+Quantity1 DECIMAL(9),
+ReasonCode2 VARCHAR(50),
+MonetaryAmount2 VARCHAR(8),
+Quantity2 DECIMAL(9),
+ReasonCode3 VARCHAR(50),
+MonetaryAmount3 VARCHAR(8),
+Quantity3 DECIMAL(9),
+ReasonCode4 VARCHAR(50),
+MonetaryAmount4 VARCHAR(8),
+Quantity4 DECIMAL(9),
+ReasonCode5 VARCHAR(50),
+MonetaryAmount5 VARCHAR(8),
+Quantity5 DECIMAL(9),
+ReasonCode6 VARCHAR(50),
+MonetaryAmount6 VARCHAR(8),
+Quantity6 DECIMAL(9),
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+ClaimTPLInfoID INTEGER
+);
+
+CREATE TABLE CloneAllowedType (
+CloneAllowedTypeID INTEGER NOT NULL,
+CloneSetupID INTEGER NOT NULL,
+AllowedType VARCHAR(100) NOT NULL,
+AppType VARCHAR(5) NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE CloneSetup (
+CloneSetupID INTEGER NOT NULL,
+Type VARCHAR(100) NOT NULL,
+Disposition VARCHAR(100) NOT NULL,
+AppType VARCHAR(5) NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE cm_Audit (
+Id INTEGER NOT NULL,
+UserId INTEGER NOT NULL,
+Section VARCHAR(250) NOT NULL,
+Action VARCHAR(500) NOT NULL,
+DetailedAction VARCHAR(max),
+CreatedOn DATE NOT NULL
+);
+
+CREATE TABLE cm_Configuration (
+ConfigId INTEGER NOT NULL,
+Key VARCHAR(200) NOT NULL,
+Value VARCHAR(max) NOT NULL,
+Value2 VARCHAR(max),
+Value3 VARCHAR(max),
+Value4 VARCHAR(max),
+CreatedOn DATE,
+ModifiedOn DATE
+);
+
+CREATE TABLE CMTransactions (
+CMTranID DECIMAL(9) NOT NULL,
+TranDate DATE NOT NULL,
+Amount VARCHAR(8) NOT NULL,
+VendorID INTEGER NOT NULL,
+PaymentGroupID DECIMAL(9),
+PaymentSequenceNo INTEGER,
+ReversedTranID DECIMAL(9),
+Status VARCHAR(100),
+ExportedCreditAccount VARCHAR(20),
+ExportedDebitAccount VARCHAR(20),
+ExportedReferenceNumber VARCHAR(20),
+ExportedApplyToDate DATE,
+ExportedDate DATE,
+PostingDate DATE,
+AppType VARCHAR(5) NOT NULL,
+DateTimeStamp DATE NOT NULL,
+ParentVendorID DECIMAL(9),
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE ConfigPackage (
+PackageID INTEGER NOT NULL,
+PackageName VARCHAR(64) NOT NULL,
+AppType VARCHAR(5) NOT NULL,
+UserStamp VARCHAR(10) NOT NULL,
+DateTimeStamp DATE NOT NULL,
+IsTemplate INTEGER NOT NULL,
+ConfigPackageTypeID INTEGER NOT NULL
+);
+
+CREATE TABLE ConfigPackageType (
+ConfigPackageTypeID INTEGER NOT NULL,
+PackageTypeName VARCHAR(255) NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+AppType VARCHAR(5) NOT NULL
+);
+
+CREATE TABLE ConsumerModuleUser (
+ConsumerModuleUserID INTEGER NOT NULL,
+ContactID INTEGER NOT NULL,
+ModuleUserID VARCHAR(100) NOT NULL,
+PasswordHash VARCHAR(64),
+AccessRole VARCHAR(100) NOT NULL,
+Status VARCHAR(100) NOT NULL,
+CredentialsSent DATE,
+AccessExpiration DATE,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+AdminUser BOOLEAN
+);
+
+ALTER TABLE ConsumerModuleUser ADD FOREIGN KEY (ContactID) REFERENCES CONTACT(CONTACTID);
+
+ALTER TABLE ConsumerModuleUser ADD FOREIGN KEY (UserStamp) REFERENCES Users(USERID);
+
+CREATE TABLE ConsumerModuleUserRelation (
+ConsumerModuleUserRelationID INTEGER NOT NULL,
+ConsumerModuleUserID INTEGER NOT NULL,
+ModuleUserType VARCHAR(100) NOT NULL,
+UserIsConsumer BOOLEAN NOT NULL,
+RecID INTEGER,
+Notification VARCHAR(max),
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+ALTER TABLE ConsumerModuleUserRelation ADD FOREIGN KEY (RecID) REFERENCES RELATEREVIEW(RECID);
+
+ALTER TABLE ConsumerModuleUserRelation ADD FOREIGN KEY (UserStamp) REFERENCES Users(USERID);
+
+CREATE TABLE ConsumersSANSWorkers (
+ConsumersSANSWorkersID INTEGER NOT NULL,
+MemberID INTEGER,
+SanID INTEGER NOT NULL,
+WorkerType VARCHAR(50) NOT NULL,
+DateTimeStamp DATE NOT NULL,
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE CONTACT (
+CONTACTID INTEGER NOT NULL,
+FIRSTNAME VARCHAR(30) NOT NULL,
+LASTNAME VARCHAR(30) NOT NULL,
+MIDDLENAME VARCHAR(30),
+ALIAS VARCHAR(100),
+DOB DATE,
+SSN VARCHAR(11),
+STREET VARCHAR(100),
+CITY VARCHAR(30),
+STATE VARCHAR(100),
+ZIPCODE VARCHAR(10),
+PHONE VARCHAR(16),
+RESIDENCETYPE VARCHAR(100),
+CENSUSTRACT VARCHAR(7),
+DISTRICT VARCHAR(25),
+GENDER VARCHAR(100),
+RACE VARCHAR(max),
+HISPORIGIN INTEGER,
+DATETIMESTAMP DATE NOT NULL,
+AGE VARCHAR(8),
+AGEGROUP VARCHAR(30),
+FIPSCODE VARCHAR(100),
+FAMILYSIZE INTEGER,
+STREET2 VARCHAR(100),
+ALIENID VARCHAR(11),
+COUNTRYORIGIN VARCHAR(20),
+BIRTHPLACE VARCHAR(100),
+BIRTHCERTIFICATE VARCHAR(20),
+RELIGION VARCHAR(100),
+SPIRITUALORIENTATION VARCHAR(20),
+HAIRCOLOR VARCHAR(100),
+EYECOLOR VARCHAR(100),
+WEIGHT VARCHAR(10),
+HEIGHT VARCHAR(20),
+IDENTIFYINGMARKS VARCHAR(255),
+ADDRESSTYPE VARCHAR(100),
+PLANGUAGE VARCHAR(100),
+SLANGUAGE VARCHAR(100),
+CONSUMERPICTURE VARCHAR(200),
+WORKPHONE VARCHAR(16),
+CELLPHONE VARCHAR(16),
+PAGER VARCHAR(16),
+MESSAGEPHONE VARCHAR(16),
+RESCOUNTY VARCHAR(100),
+PAYCOUNTY VARCHAR(100),
+LEGALCOUNTY VARCHAR(100),
+CITIZENSHIP VARCHAR(100),
+LENRESIDENCY VARCHAR(10),
+CHURCHMEMBER INTEGER,
+CHURCH VARCHAR(50),
+EMAIL VARCHAR(60),
+COUNTRY VARCHAR(25),
+CURMARSTATUS VARCHAR(100),
+HOMEPHONE2 VARCHAR(16),
+INDIANBLOOD VARCHAR(100),
+TRIBE VARCHAR(50),
+HOH INTEGER,
+APPTYPE VARCHAR(5),
+SALUTATION VARCHAR(100),
+TITLE VARCHAR(50),
+ETHNICITYLOOKUP VARCHAR(100),
+ASIANLOOKUP VARCHAR(100),
+LATINOLOOKUP VARCHAR(100),
+PARISHLOOKUP VARCHAR(100),
+PACIFICISLANDER VARCHAR(100),
+RECORDSOURCE VARCHAR(30),
+DOD DATE,
+USERSTAMP INTEGER NOT NULL,
+DLNUMBER VARCHAR(20),
+DLSTATE VARCHAR(100),
+WEBSITE VARCHAR(50),
+SIN VARCHAR(11),
+EXTENSION VARCHAR(9),
+FAX VARCHAR(50),
+Confidential BOOLEAN NOT NULL,
+GenericText1 VARCHAR(100),
+GenericText2 VARCHAR(100),
+GenericText3 VARCHAR(100),
+GenericDropDown1 VARCHAR(100),
+GenericDropDown2 VARCHAR(100),
+GenericDropDown3 VARCHAR(100),
+GenericDropDown4 VARCHAR(100),
+GenericDropDown5 VARCHAR(100),
+GenericDropDown6 VARCHAR(100),
+GenericDropDown7 VARCHAR(100),
+GenericDropDown8 VARCHAR(100),
+GenericDropDown9 VARCHAR(100),
+GenericDropDown10 VARCHAR(100),
+GenericNumeric1 DECIMAL(9),
+GenericNumeric2 DECIMAL(9),
+Suffix VARCHAR(10),
+MailingOption VARCHAR(100),
+InterpreterNeeded BOOLEAN,
+SexualOrientation VARCHAR(100),
+Transgender VARCHAR(100),
+CauseOfDeath VARCHAR(1000),
+VeteranStatus VARCHAR(100),
+NameType VARCHAR(100),
+ConsumerGroup BOOLEAN,
+ConsumerGroupName VARCHAR(100),
+DODAction VARCHAR(50),
+DODFileNumber VARCHAR(25),
+MultiRace VARCHAR(max),
+GenderIdentity VARCHAR(50),
+Pronouns VARCHAR(50),
+AgeText VARCHAR(50)
+);
+
+CREATE TABLE ContactAddress (
+ContactAddressID INTEGER NOT NULL,
+AddressType VARCHAR(100),
+AddressCategory VARCHAR(100),
+Primary BOOLEAN NOT NULL,
+Street VARCHAR(100),
+Street2 VARCHAR(100),
+City VARCHAR(30),
+State VARCHAR(100),
+ZipCode VARCHAR(10),
+PostalCode VARCHAR(30),
+CensusTract VARCHAR(7),
+District VARCHAR(25),
+Country VARCHAR(25),
+StartDate DATE,
+EndDate DATE,
+Active BOOLEAN NOT NULL,
+Comments VARCHAR(max),
+GenericDropDown1 VARCHAR(100),
+GenericDropDown2 VARCHAR(100),
+GenericText1 VARCHAR(max),
+GenericText2 VARCHAR(max),
+GenericDate1 DATE,
+GenericDate2 DATE,
+DateTimeStamp DATE NOT NULL,
+UserStamp INTEGER NOT NULL,
+ContactID INTEGER NOT NULL,
+ContactType VARCHAR(30),
+AddressValid BOOLEAN,
+County VARCHAR(100),
+Region VARCHAR(100),
+AddressValidDate DATE,
+GPSLocation VARCHAR(50),
+DescriptiveAddress VARCHAR(4000),
+RecordSource VARCHAR(30),
+Rural VARCHAR(100),
+Latitude DECIMAL(9),
+Longitude DECIMAL(9)
+);
+
+ALTER TABLE ContactAddress ADD FOREIGN KEY (ContactID) REFERENCES CONTACT(CONTACTID);
+
+CREATE TABLE ContactEmail (
+ContactEmailID INTEGER NOT NULL,
+ContactID INTEGER NOT NULL,
+Active BOOLEAN NOT NULL,
+PrimaryYN BOOLEAN NOT NULL,
+StartDate DATE,
+EndDate DATE,
+Comment VARCHAR(500),
+ContactType VARCHAR(100) NOT NULL,
+EmailType VARCHAR(100),
+EmailCategory VARCHAR(100),
+EmailValid BOOLEAN,
+Email VARCHAR(100),
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+RecordSource VARCHAR(30)
+);
+
+ALTER TABLE ContactEmail ADD FOREIGN KEY (ContactID) REFERENCES CONTACT(CONTACTID);
+
+ALTER TABLE ContactEmail ADD FOREIGN KEY (UserStamp) REFERENCES Users(USERID);
+
+CREATE TABLE ContactEnrollment (
+ContactEnrollmentID INTEGER NOT NULL,
+ENROLLID INTEGER NOT NULL,
+Relationship VARCHAR(100) NOT NULL,
+DATETIMESTAMP DATE NOT NULL,
+APPTYPE VARCHAR(5),
+USERSTAMP INTEGER NOT NULL,
+TabType VARCHAR(30) NOT NULL,
+RelateReviewID INTEGER NOT NULL
+);
+
+CREATE TABLE ContactIdentifier (
+ContactIdentifierID INTEGER NOT NULL,
+ContactID INTEGER NOT NULL,
+Active BOOLEAN,
+PrimaryYN BOOLEAN,
+StartDate DATE,
+EndDate DATE,
+Comment VARCHAR(500),
+ContactType VARCHAR(100),
+IdentifierType VARCHAR(100),
+IdentifierValue VARCHAR(500),
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+ALTER TABLE ContactIdentifier ADD FOREIGN KEY (ContactID) REFERENCES CONTACT(CONTACTID);
+
+ALTER TABLE ContactIdentifier ADD FOREIGN KEY (UserStamp) REFERENCES Users(USERID);
+
+CREATE TABLE ContactName (
+ContactNameID INTEGER NOT NULL,
+ContactID INTEGER NOT NULL,
+Active BOOLEAN NOT NULL,
+PrimaryYN BOOLEAN NOT NULL,
+StartDate DATE,
+EndDate DATE,
+Comment VARCHAR(500),
+ContactType VARCHAR(100) NOT NULL,
+NameType VARCHAR(100),
+FirstName VARCHAR(30),
+MiddleName VARCHAR(30),
+LastName VARCHAR(30),
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+RecordSource VARCHAR(30)
+);
+
+ALTER TABLE ContactName ADD FOREIGN KEY (ContactID) REFERENCES CONTACT(CONTACTID);
+
+ALTER TABLE ContactName ADD FOREIGN KEY (UserStamp) REFERENCES Users(USERID);
+
+CREATE TABLE ContactPhone (
+ContactPhoneID INTEGER NOT NULL,
+ContactID INTEGER NOT NULL,
+Active BOOLEAN NOT NULL,
+PrimaryYN BOOLEAN NOT NULL,
+StartDate DATE,
+EndDate DATE,
+Comment VARCHAR(500),
+ContactType VARCHAR(100) NOT NULL,
+PhoneType VARCHAR(100) NOT NULL,
+PhoneCategory VARCHAR(100),
+PhoneValid BOOLEAN,
+PhoneCallable BOOLEAN,
+Phone VARCHAR(16),
+Extension VARCHAR(9),
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+RecordSource VARCHAR(30)
+);
+
+ALTER TABLE ContactPhone ADD FOREIGN KEY (ContactID) REFERENCES CONTACT(CONTACTID);
+
+ALTER TABLE ContactPhone ADD FOREIGN KEY (UserStamp) REFERENCES Users(USERID);
+
+CREATE TABLE CONTACTROLEINQUIRY (
+CONTACTROLEINQUIRYID INTEGER NOT NULL,
+CONTACTID INTEGER NOT NULL,
+INQUIRYID INTEGER NOT NULL,
+ROLE VARCHAR(100) NOT NULL,
+DATETIMESTAMP DATE NOT NULL,
+APPTYPE VARCHAR(2) NOT NULL,
+USERSTAMP INTEGER NOT NULL
+);
+
+CREATE TABLE CONTACTROLEOPENCLOSE (
+CONTACTROLEOPENCLOSEID INTEGER NOT NULL,
+CONTACTID INTEGER NOT NULL,
+OPENID INTEGER NOT NULL,
+ROLE VARCHAR(100) NOT NULL,
+DATETIMESTAMP DATE NOT NULL,
+APPTYPE VARCHAR(2) NOT NULL,
+USERSTAMP INTEGER NOT NULL
+);
+
+CREATE TABLE ContentType (
+Extension VARCHAR(255) NOT NULL,
+Type VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE COPAYRATES (
+COPAYID DECIMAL(9) NOT NULL,
+CASENO DECIMAL(9),
+COPAYTYPE VARCHAR(100),
+AMOUNT DECIMAL(9),
+STARTDATE DATE,
+ENDDATE DATE,
+COMMENTS VARCHAR(max),
+DATETIMESTAMP DATE,
+SERVICECODE VARCHAR(12),
+PERCENTAGE DECIMAL(9),
+INSUREDID INTEGER NOT NULL,
+APPTYPE VARCHAR(5),
+TERMINATED INTEGER,
+DATETERMINATED DATE,
+REASONFORTERMINATION VARCHAR(max),
+VENDORID DECIMAL(9),
+VServiceID DECIMAL(9),
+MAXAMT VARCHAR(8),
+TieredCoPayerID DECIMAL(9),
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE COUNTRIES (
+COUNTRY VARCHAR(50) NOT NULL,
+CountryID INTEGER NOT NULL,
+DATETIMESTAMP DATE NOT NULL,
+AppType VARCHAR(5),
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE CRITERIA (
+CRITERIAID DECIMAL(9) NOT NULL,
+FUNDCODE VARCHAR(25),
+LOWINCOME DECIMAL(9),
+HIGHINCOME DECIMAL(9),
+LOWNUMINFAMILY INTEGER,
+HIGHNUMINFAMILY INTEGER,
+USCITIZEN INTEGER,
+HOH INTEGER,
+MEDICALINS INTEGER,
+LOWAGE INTEGER,
+HIGHAGE INTEGER
+);
+
+CREATE TABLE CSRErrorCode (
+CSRErrorCodeID INTEGER NOT NULL,
+CSRErrorCode INTEGER NOT NULL,
+CSRErrorDescription VARCHAR(100) NOT NULL,
+DateTimeStamp DATE NOT NULL,
+UserStamp INTEGER NOT NULL,
+AdjustmentCodeID INTEGER NOT NULL
+);
+
+ALTER TABLE CSRErrorCode ADD FOREIGN KEY (AdjustmentCodeID) REFERENCES AdjustmentCode(AdjustmentCodeID);
+
+CREATE TABLE CustomForm (
+FormId INTEGER NOT NULL,
+FormIdDynamo VARCHAR(200),
+FormName VARCHAR(50),
+FormVersion INTEGER
+);
+
+CREATE TABLE CustomFormField (
+FieldId INTEGER NOT NULL,
+FieldName VARCHAR(200),
+FieldType VARCHAR(100),
+ParentFieldId INTEGER,
+FormId INTEGER
+);
+
+ALTER TABLE CustomFormField ADD FOREIGN KEY (FormId) REFERENCES CustomForm(FormId);
+
+CREATE TABLE CustomFormFieldInstance (
+FieldInstanceId INTEGER NOT NULL,
+Question VARCHAR(max),
+Answer VARCHAR(max),
+InstanceId INTEGER,
+FieldId INTEGER
+);
+
+ALTER TABLE CustomFormFieldInstance ADD FOREIGN KEY (InstanceId) REFERENCES CustomFormInstance(InstanceId);
+
+ALTER TABLE CustomFormFieldInstance ADD FOREIGN KEY (FieldId) REFERENCES CustomFormField(FieldId);
+
+CREATE TABLE CustomFormFieldOption (
+OptionId INTEGER NOT NULL,
+Label VARCHAR(50),
+Value VARCHAR(50),
+FieldId INTEGER
+);
+
+ALTER TABLE CustomFormFieldOption ADD FOREIGN KEY (FieldId) REFERENCES CustomFormField(FieldId);
+
+CREATE TABLE CustomFormInstance (
+InstanceId INTEGER NOT NULL,
+DateCreated DATE,
+DateUpdated DATE,
+InstanceStatus VARCHAR(50),
+FormId INTEGER,
+FormIdDynamo VARCHAR(200),
+UserId INTEGER
+);
+
+ALTER TABLE CustomFormInstance ADD FOREIGN KEY (UserId) REFERENCES CustomFormUser(UserId);
+
+ALTER TABLE CustomFormInstance ADD FOREIGN KEY (FormId) REFERENCES CustomForm(FormId);
+
+CREATE TABLE CustomFormTriggerSchedule (
+TrigerScheduleId INTEGER NOT NULL,
+Job VARCHAR(150),
+LastRun DATE
+);
+
+CREATE TABLE CustomFormUser (
+UserId INTEGER NOT NULL,
+UserName VARCHAR(50)
+);
+
+CREATE TABLE DashboardLevel (
+DashLevelID INTEGER NOT NULL,
+DashLevelName VARCHAR(100) NOT NULL,
+LabelName VARCHAR(100),
+DATETIMESTAMP DATE NOT NULL,
+USERSTAMP INTEGER,
+SystemRequired BOOLEAN,
+Type VARCHAR(25),
+AppType VARCHAR(5),
+SortOrder INTEGER
+);
+
+CREATE TABLE DashLevelPanel (
+DashLevelPanelID INTEGER NOT NULL,
+Panel VARCHAR(100),
+DashLevelID INTEGER,
+DATETIMESTAMP DATE,
+USERSTAMP INTEGER
+);
+
+CREATE TABLE DashLevelRole (
+DashLevelRoleID INTEGER NOT NULL,
+DashLevelID INTEGER,
+RoleID INTEGER NOT NULL,
+DATETIMESTAMP DATE NOT NULL,
+USERSTAMP INTEGER
+);
+
+ALTER TABLE DashLevelRole ADD FOREIGN KEY (RoleID) REFERENCES Role(RoleID);
+
+CREATE TABLE DashPanel (
+DashPanelID INTEGER NOT NULL,
+PanelName VARCHAR(100) NOT NULL,
+PanelDescription VARCHAR(250),
+Title VARCHAR(100),
+DATETIMESTAMP DATE NOT NULL,
+USERSTAMP INTEGER,
+Version VARCHAR(100),
+Type VARCHAR(25),
+Audience VARCHAR(50),
+Market VARCHAR(50)
+);
+
+CREATE TABLE DATAEXCHANGE (
+DEID DECIMAL(9) NOT NULL,
+IMEX VARCHAR(1),
+IMEXNAME VARCHAR(50),
+DESCRIPTIONS VARCHAR(255),
+DEFUNCTION VARCHAR(150),
+ACTIVE INTEGER,
+SCHEDULE VARCHAR(150)
+);
+
+CREATE TABLE DataOwners (
+DataOwnerID INTEGER NOT NULL,
+SourceTablePK DECIMAL(9) NOT NULL,
+SourceTableName VARCHAR(50) NOT NULL,
+IsCheckedOut BOOLEAN,
+DateOut DATE NOT NULL,
+DateIn DATE,
+MemberID DECIMAL(9) NOT NULL,
+Comment VARCHAR(max),
+DateTimeStamp DATE NOT NULL,
+AppType VARCHAR(5) NOT NULL,
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE Day30PendDebug (
+int VARCHAR(NOT NULL),
+varchar(40) VARCHAR(NULL allowed),
+money VARCHAR(NULL allowed),
+money VARCHAR(NULL allowed),
+varchar(300) VARCHAR(NULL allowed),
+int VARCHAR(NULL allowed),
+varchar(300) VARCHAR(NULL allowed)
+);
+
+CREATE TABLE DEMOGRAPHICS (
+CASENO INTEGER,
+STATUS VARCHAR(100),
+FUNDCODE VARCHAR(25),
+SECID VARCHAR(500),
+TERID VARCHAR(50),
+FAMILYID VARCHAR(20),
+RELEASESIGNED DECIMAL(9),
+MEMBERID DECIMAL(9),
+ANNUALINCOME DECIMAL(9),
+MAXANNUALAMOUNT DECIMAL(9),
+INCOMERANGEID INTEGER,
+MEETCRITERIA INTEGER,
+CURRENTTEAM VARCHAR(30),
+CURRENTMANDATEDSTATUS VARCHAR(100),
+CURRENTIVESTATUS VARCHAR(100),
+CURRENTIEPCATEGORY VARCHAR(100),
+COPAY DECIMAL(9),
+REFERRALSOURCE VARCHAR(100),
+DATETIMESTAMP DATE,
+LEVELOFNEED VARCHAR(100),
+DSSSPECIALWELFARE INTEGER,
+LASTFAPTDATE DATE,
+NEXTFAPTDATE DATE,
+MOSTRECENTASSESSMENTSCORE DECIMAL(9),
+MOSTRECENTASSESSMENTDATE DATE,
+DUPID DECIMAL(9),
+PAYEENAME VARCHAR(50),
+CAT1 DECIMAL(9),
+CAT2 DECIMAL(9),
+CAT3 DECIMAL(9),
+REFDATE DATE,
+LOCATIONPHYSRECORDS VARCHAR(100),
+GEN1 VARCHAR(500),
+GEN2 VARCHAR(500),
+GEN3 VARCHAR(500),
+GEN4 VARCHAR(500),
+GEN5 VARCHAR(100),
+PURGEDATE DATE,
+FEEWAIVED DECIMAL(9),
+MEDICAIDENROLLED INTEGER,
+APPTYPE VARCHAR(5),
+TRANSMIT INTEGER,
+LASTURDATE DATE,
+TargetPopulation1 VARCHAR(100),
+TargetPopulation2 VARCHAR(100),
+TargetPopulation3 VARCHAR(100),
+GenericDate1 DATE,
+OriginalID VARCHAR(15),
+GenericDate2 DATE,
+GEN6 VARCHAR(50),
+GEN7 VARCHAR(50),
+GEN8 VARCHAR(50),
+GEN9 VARCHAR(50),
+GEN10 VARCHAR(50),
+GenericDate3 DATE,
+GenericText1 VARCHAR(25),
+GenericText2 VARCHAR(25),
+GenericLookup1 VARCHAR(50),
+GenericLookup2 VARCHAR(50),
+GenericLookup3 VARCHAR(50),
+GenericLookup4 VARCHAR(50),
+MaxAnnualIncome DECIMAL(9),
+UserStamp INTEGER,
+CONTACTID INTEGER,
+GenericCheckbox1 BOOLEAN,
+MedicareID VARCHAR(25),
+MedicaidRedeterminationDate DATE,
+Rural VARCHAR(100),
+LivesAlone VARCHAR(100),
+Poverty VARCHAR(100),
+NSIPMealEligible BOOLEAN,
+NSIPEligibilityType VARCHAR(100),
+BelowPovertyLevel VARCHAR(100),
+NutritionRisk VARCHAR(100),
+Disabled BOOLEAN,
+CognitiveImpairment VARCHAR(100),
+OtherCommMethod VARCHAR(100),
+VulnerableCondition VARCHAR(max),
+ADLScore INTEGER,
+IADLScore INTEGER,
+LegalStatus VARCHAR(100),
+Payments VARCHAR(100),
+StudentWithADisability VARCHAR(max),
+IndividualWithADisability VARCHAR(max),
+PrimaryDisabilityType VARCHAR(max),
+PrimaryDisabilitySource VARCHAR(max),
+SecondaryDisabilityType VARCHAR(max),
+SecondaryDisabilitySource VARCHAR(max),
+SignificanceOfDisability VARCHAR(max),
+DegreeOfVisualImpairment VARCHAR(100),
+MajorCauseOfVisualImpairment VARCHAR(100),
+OtherAgeRelatedImpairments VARCHAR(max),
+NutritionRiskScore INTEGER,
+GenderIdentity VARCHAR(50),
+Pronouns VARCHAR(50),
+TobaccoUse VARCHAR(20),
+AverageIncome VARCHAR(100)
+);
+
+CREATE TABLE DeterminedRules (
+DeterminedRuleID DECIMAL(9) NOT NULL,
+RuleMangerID DECIMAL(9),
+DateDetermined DATE,
+CaseNo INTEGER NOT NULL,
+FundCode VARCHAR(25),
+MemberID INTEGER NOT NULL,
+Result VARCHAR(10),
+DateTimeStamp DATE,
+APPTYPE VARCHAR(5),
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE DIAGCODES (
+DIAGCODESID INTEGER NOT NULL,
+DIAGCODE VARCHAR(10),
+DESCRIPTION VARCHAR(500),
+AXIS INTEGER,
+CATEGORY VARCHAR(100),
+CLASS VARCHAR(10),
+ACTIVE BOOLEAN NOT NULL,
+SecCode VARCHAR(10),
+SortOrder INTEGER,
+MinAge DECIMAL(9),
+MaxAge DECIMAL(9),
+Gender VARCHAR(100),
+EPSDT BOOLEAN,
+PriorAuth BOOLEAN,
+EmergencyTreatment BOOLEAN,
+Accident BOOLEAN,
+Sterilization BOOLEAN,
+Hysterectomy BOOLEAN,
+Abortion BOOLEAN,
+FamilyPlanning BOOLEAN,
+Suspense BOOLEAN,
+ControlCode VARCHAR(2),
+ProviderTypeIndicator INTEGER,
+DateTimeStamp DATE NOT NULL,
+AppType VARCHAR(5) NOT NULL,
+UserStamp INTEGER NOT NULL,
+Type VARCHAR(100),
+ICDType INTEGER
+);
+
+CREATE TABLE DIAGREVIEW (
+DIAGREVIEWID INTEGER NOT NULL,
+CASENO INTEGER NOT NULL,
+REVIEW VARCHAR(100),
+REVIEWDATE DATE,
+AXISIIPRIMARY INTEGER,
+AXISIISECONDARY INTEGER,
+AXISIII INTEGER,
+GAF VARCHAR(7),
+NUMDAYSTILNEXT INTEGER,
+AXISIVA INTEGER,
+AXISIVB INTEGER,
+AXISIVC INTEGER,
+AXISIVD INTEGER,
+AXISIVE INTEGER,
+AXISIVF INTEGER,
+AXISIVG INTEGER,
+AXISIVH INTEGER,
+AXISIVI INTEGER,
+AXISIVJ INTEGER,
+CURRENTREVIEW INTEGER,
+DATETIMESTAMP DATE,
+STATUS VARCHAR(100),
+DIAGNOSISBY DECIMAL(9),
+SMI VARCHAR(100),
+PRINCIPALDIAG INTEGER,
+AXISIIIPRIMARY INTEGER,
+AXISIIISECONDARY INTEGER,
+RULEOUTAXIS1PRIMARY INTEGER,
+RULEOUTAXIS1SECONDARY INTEGER,
+RULEOUTAXISIIPRIMARY INTEGER,
+RULEOUTAXISIISECONDARY INTEGER,
+HIGHESTGAF VARCHAR(7),
+RULEOUTAXISIPRIMARY INTEGER,
+RULEOUTAXISISECONDARY INTEGER,
+COMMENTS VARCHAR(max),
+GENERIC1 VARCHAR(50),
+AXISIITERTIARY INTEGER,
+AXISIIQUATERNARY INTEGER,
+AXISIIITERTIARY INTEGER,
+AXISIIIQUATERNARY INTEGER,
+RULEOUTAXIS1TERTIARY INTEGER,
+RULEOUTAXIS1QUATERNARY INTEGER,
+RULEOUTAXISIITERTIARY INTEGER,
+RULEOUTAXISIIQUATERNARY INTEGER,
+RULEOUTAXISIIITERTIARY INTEGER,
+RULEOUTAXISIIIQUATERNARY INTEGER,
+AppType VARCHAR(5),
+EnrollID INTEGER,
+UserStamp INTEGER NOT NULL,
+OpenID INTEGER,
+ParentEntity VARCHAR(256),
+AXISIPRIMARY INTEGER,
+AXISISECONDARY INTEGER,
+AXISITERTIARY INTEGER,
+AXISIQUATERNARY INTEGER,
+PrimaryDiagnosis INTEGER,
+PrimaryPointer INTEGER,
+ICDType INTEGER,
+AxisIPrimaryOnsetDate DATE,
+AxisIIPrimaryOnsetDate DATE,
+AxisIIIPrimaryOnsetDate DATE,
+AxisISecondaryOnsetDate DATE,
+AxisIISecondaryOnsetDate DATE,
+AxisIIISecondaryOnsetDate DATE,
+AxisITertiaryOnsetDate DATE,
+AxisIITertiaryOnsetDate DATE,
+AxisIIITertiaryOnsetDate DATE,
+AxisIQuartenaryOnsetDate DATE,
+AxisIIQuartenaryOnsetDate DATE,
+AxisIIIQuartenaryOnsetDate DATE,
+Generic2 INTEGER,
+Generic3 VARCHAR(max),
+Generic4 VARCHAR(max)
+);
+
+ALTER TABLE DIAGREVIEW ADD FOREIGN KEY (EnrollID) REFERENCES ENROLLMENTS(ENROLLID);
+
+ALTER TABLE DIAGREVIEW ADD FOREIGN KEY (OpenID) REFERENCES OPENCLOSE(OPENID);
+
+CREATE TABLE DistributionGroup (
+DistributionGroupId INTEGER NOT NULL,
+GroupName VARCHAR(500),
+GroupType VARCHAR(50),
+DateTimeStamp DATE,
+CreatedOn DATE,
+CreatedBy INTEGER,
+UserStamp INTEGER,
+Active BOOLEAN
+);
+
+ALTER TABLE DistributionGroup ADD FOREIGN KEY (UserStamp) REFERENCES Users(USERID);
+
+CREATE TABLE DistributionGroupFilter (
+DistributionGroupFilterId INTEGER NOT NULL,
+DistributionGroupId INTEGER,
+FilterName VARCHAR(500),
+DateTimeStamp DATE,
+CreatedOn DATE,
+CreatedBy INTEGER,
+UserStamp INTEGER
+);
+
+ALTER TABLE DistributionGroupFilter ADD FOREIGN KEY (DistributionGroupId) REFERENCES DistributionGroup(DistributionGroupId);
+
+ALTER TABLE DistributionGroupFilter ADD FOREIGN KEY (UserStamp) REFERENCES Users(USERID);
+
+CREATE TABLE DistributionGroupFilterDetail (
+DistributionGroupFilterDetailId INTEGER NOT NULL,
+DistributionGroupFilterId INTEGER,
+FieldName VARCHAR(500),
+FieldValue VARCHAR(max),
+DateTimeStamp DATE,
+CreatedOn DATE,
+CreatedBy INTEGER,
+UserStamp INTEGER
+);
+
+ALTER TABLE DistributionGroupFilterDetail ADD FOREIGN KEY (UserStamp) REFERENCES Users(USERID);
+
+CREATE TABLE DocumentManagement (
+DocumentManagementID INTEGER NOT NULL,
+ExternalDocumentID VARCHAR(100),
+DocumentName VARCHAR(100),
+DocumentDate DATE,
+DocumentWorker INTEGER,
+DocumentType VARCHAR(100),
+DocumentCategory VARCHAR(100),
+DocumentDescription VARCHAR(255),
+ChapterName VARCHAR(100) NOT NULL,
+ChapterEntityID INTEGER NOT NULL,
+PageName VARCHAR(100) NOT NULL,
+PageEntityID INTEGER NOT NULL,
+UserStamp INTEGER NOT NULL,
+DATETIMESTAMP DATE NOT NULL,
+DocumentStatus VARCHAR(100),
+DocumentFileName VARCHAR(300),
+ContainerName VARCHAR(100),
+DownLoadLink VARCHAR(2000)
+);
+
+CREATE TABLE DuplicatePackageServices (
+DuplicatePackageServicesID INTEGER NOT NULL,
+LookupCodesMastID INTEGER,
+VendorID INTEGER,
+ServiceID INTEGER,
+ServiceCodeUnitCostID INTEGER,
+DuplicateType INTEGER,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE ELIGCRITERIA (
+FCELID DECIMAL(9) NOT NULL,
+RULEDESC VARCHAR(1000),
+RULENAME VARCHAR(50),
+FUNDCODE VARCHAR(25),
+ACTIVEYN INTEGER,
+MEMBERID DECIMAL(9),
+STARTDATE DATE,
+ENDDATE DATE
+);
+
+CREATE TABLE ELIGDETERMINED (
+ELIGDETID DECIMAL(9) NOT NULL,
+ELDATE DATE,
+CASENO DECIMAL(9),
+FUNDCODE VARCHAR(25),
+ELRULE INTEGER,
+DETERMINATION VARCHAR(10),
+DATETIMESTAMP DATE,
+USERSTAMP VARCHAR(10)
+);
+
+CREATE TABLE ELIGIBILITY (
+ELIGID INTEGER NOT NULL,
+STATUS VARCHAR(100),
+STARTDATE DATE NOT NULL,
+ENDDATE DATE,
+DATETIMESTAMP DATE NOT NULL,
+APPTYPE VARCHAR(5),
+EligibilitySource VARCHAR(15),
+EligibilityType VARCHAR(50),
+Area VARCHAR(100),
+CurrentID VARCHAR(15),
+GenericText1 VARCHAR(max),
+GenericText2 VARCHAR(100),
+GenericText3 VARCHAR(100),
+PayerCode VARCHAR(3),
+GenericDate1 DATE,
+UserStamp INTEGER NOT NULL,
+InsuranceID INTEGER NOT NULL,
+COPAY DECIMAL(9),
+ISComboCodeID INTEGER NOT NULL,
+GenericText4 VARCHAR(100),
+Active BOOLEAN NOT NULL,
+SubscriberIdentifier VARCHAR(20),
+PriorSubscriberIdentifier VARCHAR(20),
+GenericText5 VARCHAR(100),
+GenericText6 VARCHAR(300),
+Amount DECIMAL(9),
+MedicaidRedeterminationDateAlternate DATE,
+Verified VARCHAR(250)
+);
+
+ALTER TABLE ELIGIBILITY ADD FOREIGN KEY (InsuranceID) REFERENCES INSURANCE(InsuranceID);
+
+ALTER TABLE ELIGIBILITY ADD FOREIGN KEY (ISComboCodeID) REFERENCES ISComboCodes(ISComboCodeID);
+
+CREATE TABLE EligibilityStaging (
+int VARCHAR(NOT NULL),
+varchar(11) VARCHAR(NULL
+allowed),
+datetime VARCHAR(NULL
+allowed),
+varchar(100) VARCHAR(NULL
+allowed),
+varchar(4) VARCHAR(NULL
+allowed),
+varchar(20) VARCHAR(NULL
+allowed),
+varchar(5) VARCHAR(NULL
+allowed),
+varchar(20) VARCHAR(NULL
+allowed),
+varchar(20) VARCHAR(NULL
+allowed),
+varchar(10) VARCHAR(NULL
+allowed),
+varchar(100) VARCHAR(NULL
+allowed),
+bit VARCHAR(NULL
+allowed),
+varchar(50) VARCHAR(NULL
+allowed),
+varchar(8) VARCHAR(NULL
+allowed),
+varchar(8) VARCHAR(NULL
+allowed),
+varchar(2) VARCHAR(NULL
+allowed),
+varchar(2) VARCHAR(NULL
+allowed),
+int VARCHAR(NULL
+allowed),
+varchar(5) VARCHAR(NULL
+allowed),
+varchar(70) VARCHAR(NULL
+allowed),
+varchar(2) VARCHAR(NULL
+allowed),
+varchar(80) VARCHAR(NULL
+allowed),
+varchar(55) VARCHAR(NULL
+allowed),
+varchar(30) VARCHAR(NULL
+allowed),
+varchar(2) VARCHAR(NULL
+allowed),
+varchar(15) VARCHAR(NULL
+allowed),
+varchar(50) VARCHAR(NULL
+allowed),
+varchar(50) VARCHAR(NULL
+allowed),
+varchar(300) VARCHAR(NULL
+allowed),
+varchar(10) VARCHAR(NULL
+allowed),
+varchar(60) VARCHAR(NULL
+allowed),
+varchar(10) VARCHAR(NULL
+allowed),
+varchar(60) VARCHAR(NULL
+allowed),
+varchar(60) VARCHAR(NULL
+allowed)
+);
+
+CREATE TABLE ENCOUNTERS (
+EncID DECIMAL(9) NOT NULL,
+PContractNo VARCHAR(100),
+lstnam VARCHAR(40),
+fstnam VARCHAR(30),
+midnam VARCHAR(2),
+socsec VARCHAR(24),
+dob VARCHAR(510),
+sexcod VARCHAR(2),
+FamilyID VARCHAR(100),
+servdate DATE,
+Vendorid INTEGER,
+location VARCHAR(100),
+VserviceID INTEGER,
+CPT1 VARCHAR(20),
+Modifier VARCHAR(2),
+BillingDiagnosis VARCHAR(20),
+pdate DATE,
+puser VARCHAR(100),
+WorkerID INTEGER,
+ProvNo VARCHAR(50),
+Rate DECIMAL(9),
+NumberOfSessions VARCHAR(10),
+TransactionCode VARCHAR(2),
+CarrierCode VARCHAR(4),
+RegionCode VARCHAR(2),
+MunicipalityResidence VARCHAR(8),
+MunicipalityOfService VARCHAR(510),
+HOHSocialSecurity VARCHAR(24),
+ASESMemberSuffix VARCHAR(4),
+PatientAge VARCHAR(100),
+DailyDoses VARCHAR(510),
+PrescriptionDays VARCHAR(10),
+ClaimType VARCHAR(2),
+In/OutPatient VARCHAR(2),
+PrimaryCenter VARCHAR(20),
+ServiceCenter VARCHAR(20),
+ContractType VARCHAR(4),
+PlaceOfService VARCHAR(510),
+PrimaryProviderLicense VARCHAR(20),
+ProviderProviderSpecialty VARCHAR(6),
+ServiceProviderLicense VARCHAR(20),
+ServiceProviderSpecialty VARCHAR(6),
+HICCode VARCHAR(24),
+ReferringProviderLicense VARCHAR(20),
+Deductible VARCHAR(18),
+Co-Pay VARCHAR(18),
+PatientName VARCHAR(68),
+ASESFamilyID VARCHAR(22),
+ProviderNumber VARCHAR(18),
+AccidentDate DATE,
+PaymentDate DATE,
+ServiceToDate DATE,
+ServiceFromDate DATE,
+EncounterOrFee VARCHAR(2),
+ServiceType VARCHAR(2),
+CaseType VARCHAR(2),
+ReasonCode VARCHAR(2),
+COBCode VARCHAR(2),
+DrugstoreDispense VARCHAR(18),
+NetPayment VARCHAR(18),
+CaseCode VARCHAR(2),
+AxisIISecondary VARCHAR(20),
+AxisISecondary VARCHAR(20),
+AxisIIPrimary VARCHAR(20),
+ServiceCode VARCHAR(12),
+ProcCode VARCHAR(10),
+SvcDegree VARCHAR(10),
+UnitCost DECIMAL(9),
+ServiceID DECIMAL(9),
+LiceNo VARCHAR(10),
+Specialty VARCHAR(50),
+DateTimeStamp DATE,
+ExportUser VARCHAR(50),
+ExportDate DATE,
+ExportID DECIMAL(9),
+mpi VARCHAR(13),
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE EnrollFacilities (
+ENFACID INTEGER NOT NULL,
+ENROLLID INTEGER NOT NULL,
+FACILITYID INTEGER NOT NULL,
+STARTDATE DATE,
+ENDDATE DATE,
+COMMENTS VARCHAR(max),
+STATUS VARCHAR(100),
+DATETIMESTAMP DATE NOT NULL,
+AppType VARCHAR(5),
+UserStamp INTEGER NOT NULL,
+Disposition VARCHAR(100),
+DispositionDate DATE
+);
+
+ALTER TABLE EnrollFacilities ADD FOREIGN KEY (ENROLLID) REFERENCES ENROLLMENTS(ENROLLID);
+
+ALTER TABLE EnrollFacilities ADD FOREIGN KEY (FACILITYID) REFERENCES FACILITIES(FACILITYID);
+
+ALTER TABLE EnrollFacilities ADD FOREIGN KEY (UserStamp) REFERENCES Users(USERID);
+
+CREATE TABLE EnrollFacilityBed (
+ENROLLFACILITYBEDID INTEGER NOT NULL,
+BEDID INTEGER NOT NULL,
+ENROLLFACID INTEGER NOT NULL,
+ANTICASSIGNDATE DATE,
+BEDNUMBER VARCHAR(100) NOT NULL,
+ASSIGNDATE DATE,
+ANTICVACDATE DATE,
+VACANCYDATE DATE,
+COMMENTS VARCHAR(2000),
+GENERICDROPDOWN1 VARCHAR(100),
+GENERICDROPDOWN2 VARCHAR(100),
+ACTIVE BOOLEAN NOT NULL,
+USERSTAMP INTEGER NOT NULL,
+DATETIMESTAMP DATE NOT NULL,
+Room VARCHAR(500),
+OnHold BOOLEAN NOT NULL,
+BedHoldStartDate DATE,
+BedHoldStartTime DATE,
+BedHoldEndDate DATE,
+BedHoldEndTime DATE,
+BedHoldComment VARCHAR(2000),
+VacancyTime DATE
+);
+
+ALTER TABLE EnrollFacilityBed ADD FOREIGN KEY (ENROLLFACID) REFERENCES EnrollFacilities(ENFACID);
+
+CREATE TABLE EnrollGroup (
+EnrollGroupID INTEGER NOT NULL,
+EnrollID INTEGER NOT NULL,
+VendorGroupID INTEGER NOT NULL,
+StartDate DATE,
+EndDate DATE,
+Active BOOLEAN NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE ENROLLMENTS (
+ENROLLID INTEGER NOT NULL,
+VENDORID INTEGER NOT NULL,
+ADMITDATE DATE,
+ENROLLTYPE VARCHAR(100),
+DISCHARGEDATE DATE,
+EXPECTEDDISCHDATE DATE,
+REASON1 VARCHAR(100),
+REASON2 VARCHAR(100),
+REASON3 VARCHAR(100),
+DATETIMESTAMP DATE NOT NULL,
+EDISPOSITION VARCHAR(100) NOT NULL,
+DISCHREFERRAL VARCHAR(100),
+DISCHTYPE VARCHAR(100),
+ENROLLTIME DATE,
+DISCHCODE1 VARCHAR(100),
+DISCHCODE2 VARCHAR(100),
+COMMENTS VARCHAR(max),
+DISCHHOUSING VARCHAR(100),
+FOLLOWUP BOOLEAN,
+DISCHTIME DATE,
+OUTCOME VARCHAR(max),
+DISCHARGETO VARCHAR(100),
+FACILITYID INTEGER,
+LAPRIOR VARCHAR(100),
+LAUPON VARCHAR(100),
+DISCHARGED VARCHAR(200),
+REFERREDBY INTEGER,
+REFDATE DATE,
+WAITDATELIST DATE,
+TICKTRIGGER VARCHAR(50),
+DISPOSITIONDATE DATE,
+GENERIC1 VARCHAR(2000),
+GENERIC2 VARCHAR(2000),
+APPTYPE VARCHAR(5),
+OPENCLOSEID INTEGER NOT NULL,
+RiskLevel VARCHAR(100),
+RiskChange VARCHAR(100),
+GenericDropDown1 VARCHAR(100),
+GenericDropDown2 VARCHAR(100),
+UserStamp INTEGER NOT NULL,
+EnrollmentDropDown3 VARCHAR(100),
+EnrollmentDropDown4 VARCHAR(100),
+GenericDate DATE,
+Priority INTEGER,
+ProgramRedeterminationDate DATE,
+StartDate DATE,
+EndDate DATE,
+DateOfEligibilityDetermination DATE,
+EligibilityDeterminationExtension DATE,
+MonthlyPublicSupportAtApplication VARCHAR(max),
+MedicalInsuranceCoverageAtApplication VARCHAR(max),
+ReferralSource VARCHAR(100),
+TypeOfExit VARCHAR(100),
+ReasonForProgramExit VARCHAR(100),
+EmploymentOutcomeAtExit VARCHAR(100),
+PrimaryOccupationAtExit DECIMAL(5),
+HourlyWageAtExit DECIMAL(9),
+HoursWorkedInaWeekAtExit DECIMAL(5),
+MonthlyPublicSupportAtExit VARCHAR(max),
+MedicalInsuranceCoverageAtExit VARCHAR(max),
+StudentWithADisability VARCHAR(300),
+IndividualWithADisability VARCHAR(300),
+PrimaryDisabilityType VARCHAR(300),
+PrimaryDisabilitySource VARCHAR(300),
+SecondaryDisabilityType VARCHAR(300),
+SecondaryDisabilitySource VARCHAR(300),
+SignificanceOfDisability VARCHAR(300),
+StartDateOfPreETS DATE,
+EligibilityStatus VARCHAR(300)
+);
+
+ALTER TABLE ENROLLMENTS ADD FOREIGN KEY (OPENCLOSEID) REFERENCES OPENCLOSE(OPENID);
+
+ALTER TABLE ENROLLMENTS ADD FOREIGN KEY (REFERREDBY) REFERENCES WORKERS(MEMBERID);
+
+CREATE TABLE ENROLLWORKERS (
+ENROLLWORKID INTEGER NOT NULL,
+MEMBERID INTEGER NOT NULL,
+ENROLLID INTEGER NOT NULL,
+STARTDATE DATE NOT NULL,
+ENDDATE DATE,
+PRIMWORK INTEGER NOT NULL,
+DATETIMESTAMP DATE NOT NULL,
+ACTIVE INTEGER NOT NULL,
+APPTYPE VARCHAR(5),
+UserStamp INTEGER NOT NULL,
+GenericDropDown1 VARCHAR(100),
+GenericNumeric1 DECIMAL(9),
+GenericCurrency1 VARCHAR(8),
+Comments VARCHAR(max),
+GenericDropdown2 VARCHAR(100)
+);
+
+CREATE TABLE EventService (
+EventServiceID INTEGER NOT NULL,
+EventName VARCHAR(255) NOT NULL,
+FunctionName VARCHAR(255) NOT NULL,
+IsClientSide BOOLEAN NOT NULL,
+UNIQUEID VARCHAR(16) NOT NULL,
+ORIGINALID VARCHAR(16) NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE EventServiceParameter (
+EventServiceParameterID INTEGER NOT NULL,
+EventServiceID INTEGER,
+FieldControlID INTEGER,
+ParameterName VARCHAR(50),
+UNIQUEID VARCHAR(16) NOT NULL,
+ORIGINALID VARCHAR(16) NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE EventTracking (
+Type VARCHAR(50),
+Event VARCHAR(50),
+Viewed VARCHAR(100),
+Description VARCHAR(max),
+DocID DECIMAL(9),
+ID DECIMAL(9),
+MemberID DECIMAL(9),
+DateTimeStamp DATE,
+AppType VARCHAR(5),
+UserStamp INTEGER NOT NULL,
+Tab VARCHAR(100),
+EventLogID INTEGER NOT NULL,
+HarmonyEntityType VARCHAR(50),
+HarmonyEntityIDOld INTEGER,
+HarmonyEntityIDNew INTEGER,
+RawData VARCHAR(max),
+PageID INTEGER,
+BrowserInfo VARCHAR(500),
+RoleID INTEGER
+);
+
+CREATE TABLE EVVAuthServiceWorkers (
+EVVAuthServiceWorkersID INTEGER NOT NULL,
+MemberID INTEGER,
+AuthServiceID INTEGER NOT NULL,
+WorkerType VARCHAR(50) NOT NULL,
+WorkerStartDate DATE,
+WorkerEndDate DATE,
+DateTimeStamp DATE NOT NULL,
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE EVVDataSyncConfig (
+EVVDataSyncConfigID INTEGER,
+ConsumerAddressType VARCHAR(max),
+ConsumerAddressCategory VARCHAR(max),
+ConsumerAddressOnlyPrimary BOOLEAN,
+ConsumerAddressOnlyActive BOOLEAN,
+ConsumerAddressOnlyValid BOOLEAN,
+ConsumerRelationship VARCHAR(max),
+ConsumerMultiRelationships VARCHAR(max),
+ConsumerRelationOnlyActive BOOLEAN,
+ConsumerRelationAddressOnlyValid BOOLEAN,
+VisibleConsumers VARCHAR(200),
+UserStamp INTEGER,
+DateTimeStamp DATE,
+AuthServiceStatus VARCHAR(max),
+AuthServiceEDIStatus VARCHAR(max)
+);
+
+CREATE TABLE EVVDeliveryDetail (
+EVVDeliveryDetailID INTEGER NOT NULL,
+ActivityID INTEGER NOT NULL,
+StatedAddress VARCHAR(500),
+StatedLatLong VARCHAR(50),
+AllowableDiff INTEGER,
+StartAddress VARCHAR(500),
+StartLatLong VARCHAR(50),
+StartDiff INTEGER,
+EndAddress VARCHAR(500),
+EndLatLong VARCHAR(50),
+EndDiff INTEGER,
+Notes VARCHAR(max),
+Signature VARCHAR(max),
+Photo VARCHAR(max),
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+AutoEnded BOOLEAN,
+IsGeolocationAvaliable BOOLEAN,
+StartAccuracy VARCHAR(8),
+EndAccuracy VARCHAR(8),
+IsStatedAddressValid BOOLEAN,
+UserName VARCHAR(100),
+UserAgent VARCHAR(500)
+);
+
+CREATE TABLE EVVMobileAppConfig (
+EVVMobileAppConfigID INTEGER,
+ApplicationName VARCHAR(50),
+Logo VARCHAR(max),
+LogoFileName VARCHAR(100),
+LogoContentType VARCHAR(50),
+LogoFileSize INTEGER,
+Consumers VARCHAR(50),
+DeliveryRosters VARCHAR(50),
+CurrentDeliveries VARCHAR(50),
+ShowCaseNo BOOLEAN,
+LabelCaseNo VARCHAR(50),
+ShowGender BOOLEAN,
+LabelGender VARCHAR(50),
+ShowAge BOOLEAN,
+LabelAge VARCHAR(50),
+ShowRace BOOLEAN,
+LabelRace VARCHAR(50),
+ShowPrimaryLanguage BOOLEAN,
+LabelPrimaryLanguage VARCHAR(50),
+ShowHomePhone BOOLEAN,
+LabelHomePhone VARCHAR(50),
+ShowMobilePhone BOOLEAN,
+LabelMobilePhone VARCHAR(50),
+ShowPrimaryAddress BOOLEAN,
+LabelPrimaryAddress VARCHAR(50),
+ShowWorkers BOOLEAN,
+LabelWorkers VARCHAR(50),
+ShowWorkerName BOOLEAN,
+LabelWorkerName VARCHAR(50),
+ShowWorkerPhone BOOLEAN,
+LabelWorkerPhone VARCHAR(50),
+ShowWorkerEmail BOOLEAN,
+LabelWorkerEmail VARCHAR(50),
+ShowPhoto BOOLEAN,
+LabelPhoto VARCHAR(50),
+ShowSpecialNotes BOOLEAN,
+LabelSpecialNotes VARCHAR(50),
+SpecialNotesPromptText VARCHAR(2000),
+ShowApprovedDeliveryLocations BOOLEAN,
+LabelApprovedDeliveryLocations VARCHAR(50),
+ShowApprovedServices BOOLEAN,
+LabelApprovedServices VARCHAR(50),
+ShowCurrentDeliveries BOOLEAN,
+ServiceDeliveryNotesPromptText VARCHAR(2000),
+ShowDeliveryConfirmationSignature BOOLEAN,
+ShowDeliveryConfirmationPhoto BOOLEAN,
+AutoendServiceDeliveryTime DECIMAL(9),
+UserStamp INTEGER,
+DateTimeStamp DATE,
+ShowWorkerMobilePhone BOOLEAN,
+LabelWorkerMobilePhone VARCHAR(50),
+ShowContactType BOOLEAN,
+ContactTypeResponses VARCHAR(10),
+LabelContactType VARCHAR(50),
+UploadedDeliveries VARCHAR(50),
+ShowUploadedDeliveries BOOLEAN,
+NotesUpdateExpirationDays INTEGER
+);
+
+CREATE TABLE EVVViolation (
+EVVViolationID INTEGER NOT NULL,
+ActivityID INTEGER NOT NULL,
+Type VARCHAR(100),
+SubType VARCHAR(100),
+Description VARCHAR(2000),
+Status VARCHAR(100),
+ViolationReason VARCHAR(100),
+ViolationComments VARCHAR(2000),
+ExemptionGranted BOOLEAN,
+ExemptionReason VARCHAR(100),
+ExemptionComments VARCHAR(2000),
+GrantedBy INTEGER,
+GrantedOnDate DATE,
+GrantedOnTime DATE,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE Exception (
+ExceptionID VARCHAR(16) NOT NULL,
+Message VARCHAR(3000) NOT NULL,
+UserID INTEGER,
+MemberID INTEGER,
+UserName VARCHAR(300),
+StackTrace VARCHAR(3000),
+ExceptionDate DATE NOT NULL
+);
+
+CREATE TABLE Export270 (
+ExportID INTEGER NOT NULL,
+Document VARCHAR(7000),
+SSN VARCHAR(11),
+DOB DATE,
+SecID VARCHAR(100)
+);
+
+CREATE TABLE ExportReport (
+Id INTEGER NOT NULL,
+Component VARCHAR(300) NOT NULL,
+AclRefNumber VARCHAR(100) NOT NULL,
+Resource VARCHAR(1000) NOT NULL,
+Field VARCHAR(300) NOT NULL,
+SectionName VARCHAR(max) NOT NULL,
+FieldLabel VARCHAR(1000) NOT NULL,
+Sort INTEGER,
+Active BOOLEAN,
+ReportType VARCHAR(100),
+DateTimeStamp DATE
+);
+
+CREATE TABLE EXTDEMOGRAPHICS (
+CASENO DECIMAL(9) NOT NULL,
+FIRSTNAME VARCHAR(30),
+LASTNAME VARCHAR(30),
+MIDDLENAME VARCHAR(30),
+ALIAS VARCHAR(100),
+DOB DATE,
+SSN VARCHAR(11),
+STATUS VARCHAR(100),
+STREET VARCHAR(100),
+CITY VARCHAR(30),
+STATE VARCHAR(100),
+ZIPCODE VARCHAR(10),
+PHONE VARCHAR(16),
+RESIDENCETYPE VARCHAR(50),
+CENSUSTRACT VARCHAR(7),
+FUNDCODE VARCHAR(25),
+DISTRICT VARCHAR(25),
+GENDER VARCHAR(100),
+RACE VARCHAR(50),
+HISPORIGIN INTEGER,
+SECID VARCHAR(15),
+TERID VARCHAR(20),
+FAMILYID VARCHAR(20),
+RELEASESIGNED DECIMAL(9),
+MEMBERID DECIMAL(9),
+ANNUALINCOME DECIMAL(9),
+MAXANNUALAMOUNT DECIMAL(9),
+INCOMERANGEID INTEGER,
+MEETCRITERIA INTEGER,
+CURRENTTEAM VARCHAR(15),
+CURRENTMANDATEDSTATUS VARCHAR(30),
+CURRENTIVESTATUS VARCHAR(25),
+CURRENTIEPCATEGORY VARCHAR(30),
+COPAY DECIMAL(9),
+REFERRALSOURCE VARCHAR(50),
+DATETIMESTAMP DATE,
+AGE VARCHAR(8),
+AGEGROUP VARCHAR(30),
+LEVELOFNEED INTEGER,
+DSSSPECIALWELFARE INTEGER,
+LASTFAPTDATE DATE,
+NEXTFAPTDATE DATE,
+MOSTRECENTASSESSMENTSCORE DECIMAL(9),
+MOSTRECENTASSESSMENTDATE DATE,
+FIPSCODE VARCHAR(3),
+FAMILYSIZE INTEGER,
+DUPID DECIMAL(9),
+STREET2 VARCHAR(100),
+PAYEENAME VARCHAR(50),
+CAT1 DECIMAL(9),
+CAT2 DECIMAL(9),
+CAT3 DECIMAL(9),
+ALIENID VARCHAR(10),
+COUNTRYORIGIN VARCHAR(20),
+REFDATE DATE,
+BIRTHPLACE VARCHAR(20),
+BIRTHCERTIFICATE VARCHAR(20),
+RELIGION VARCHAR(50),
+SPIRITUALORIENTATION VARCHAR(20),
+HAIRCOLOR VARCHAR(50),
+EYECOLOR VARCHAR(50),
+WEIGHT VARCHAR(10),
+HEIGHT VARCHAR(10),
+IDENTIFYINGMARKS VARCHAR(255),
+ADDRESSTYPE VARCHAR(50),
+PLANGUAGE VARCHAR(50),
+SLANGUAGE VARCHAR(50),
+CONSUMERPICTURE VARCHAR(200),
+LOCATIONPHYSRECORDS VARCHAR(50),
+WORKPHONE VARCHAR(16),
+CELLPHONE VARCHAR(16),
+PAGER VARCHAR(16),
+MESSAGEPHONE VARCHAR(16),
+RESCOUNTY VARCHAR(100),
+PAYCOUNTY VARCHAR(100),
+LEGALCOUNTY VARCHAR(100),
+CITIZENSHIP VARCHAR(100),
+LENRESIDENCY VARCHAR(10),
+CHURCHMEMBER INTEGER,
+CHURCH VARCHAR(50),
+EMAIL VARCHAR(50),
+GEN1 VARCHAR(25),
+GEN2 VARCHAR(25),
+GEN3 VARCHAR(50),
+GEN4 VARCHAR(50),
+GEN5 VARCHAR(50),
+COUNTRY VARCHAR(25),
+CURMARSTATUS VARCHAR(50),
+PURGEDATE DATE,
+HOMEPHONE2 VARCHAR(16),
+INDEXCODE VARCHAR(10),
+SUBOBJECT VARCHAR(10),
+TYPE VARCHAR(30),
+SALUTATION VARCHAR(25),
+RecordSource VARCHAR(10),
+AppType VARCHAR(5),
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE EXTELIGIBILITY (
+EXTELIGID DECIMAL(9) NOT NULL,
+HARMONYCASENO DECIMAL(9),
+SOURCEID VARCHAR(50),
+BILLINGAGENTID VARCHAR(50),
+CARRIERID VARCHAR(50),
+MBHOCARRIERID VARCHAR(50),
+MEMBERGROUP VARCHAR(50),
+GROUPREGION VARCHAR(50),
+GROUPMUNICIPALITY VARCHAR(50),
+MEMBERID VARCHAR(50),
+MEMBERCONTRACTNUMBER VARCHAR(50),
+DEPENDENTCODE VARCHAR(50),
+MEMBERIDCOUNTER VARCHAR(50),
+FAMILYIDENTIFIER VARCHAR(25),
+FAMILYID VARCHAR(20),
+FAMILYIDSUFFIX VARCHAR(8),
+COUNTYCODE VARCHAR(100),
+PAYMENTDATE VARCHAR(6),
+PAYMENTMONTH VARCHAR(50),
+PAYMENTFROMDATE VARCHAR(50),
+PAYMENTTHRUDATE VARCHAR(50),
+MEMBERPLAN VARCHAR(50),
+PLANEFFECTIVEDATE VARCHAR(50),
+PRIMARYCENTER VARCHAR(50),
+PCPID VARCHAR(50),
+PCPLICENSENUMBER VARCHAR(50),
+MEDICARE VARCHAR(50),
+ELIGIBILITYTYPE VARCHAR(50),
+SCOPECODE VARCHAR(50),
+DDELIGIBLE INTEGER,
+MHELIGIBLE INTEGER,
+SAELIGIBLE INTEGER,
+RECIPIENTLEVELOFCARE VARCHAR(50),
+LOCPROVIDERID VARCHAR(50),
+OTHERINSURANCECODE VARCHAR(50),
+QHPID DECIMAL(9),
+MHELGDEGID DECIMAL(9),
+NEGATIONACTIONDATE VARCHAR(8),
+DOWNLOADDATE VARCHAR(7),
+DATETIMESTAMP DATE,
+COPAY DECIMAL(9),
+DEDUCTIBLE DECIMAL(9),
+BATCHNO VARCHAR(50),
+RECORDUSE VARCHAR(50),
+CARRIERMEMBERID VARCHAR(25),
+LASTNAME VARCHAR(30),
+FIRSTNAME VARCHAR(30),
+HICN VARCHAR(12),
+MPI VARCHAR(13),
+PCPSpecialty VARCHAR(3),
+SUBOBJECT VARCHAR(10),
+INDEXCODE VARCHAR(10),
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE ExternalDataStoreVendorsMapping (
+ExternalDataStoreVendorsMappingID INTEGER NOT NULL,
+HumanService_VendorID INTEGER NOT NULL,
+External_DataStoreID VARCHAR(200) NOT NULL,
+IsImportedFromDataStore BOOLEAN,
+DateTimeStamp DATE NOT NULL,
+Userstamp INTEGER NOT NULL,
+AppType VARCHAR(5) NOT NULL
+);
+
+ALTER TABLE ExternalDataStoreVendorsMapping ADD FOREIGN KEY (HumanService_VendorID) REFERENCES Vendors(VendorID);
+
+CREATE TABLE ExternalExportLookupMapping (
+ExternalExportLookupMappingID INTEGER NOT NULL,
+ExternalExportMappingID INTEGER NOT NULL,
+LookupCodesMastID INTEGER NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE ExternalExportMapping (
+ExternalExportMappingID INTEGER NOT NULL,
+ExportSource VARCHAR(100) NOT NULL,
+ExternalItemName VARCHAR(500) NOT NULL,
+ExternalItemValue VARCHAR(500) NOT NULL,
+ExternalMappingCode VARCHAR(10),
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE FACILITIES (
+FACILITYID INTEGER NOT NULL,
+VENDORID INTEGER NOT NULL,
+FACILITY VARCHAR(50) NOT NULL,
+FACSTREET1 VARCHAR(100),
+FACSTREET2 VARCHAR(100),
+FACCITY VARCHAR(30),
+FACSTATE VARCHAR(100),
+FACZIP VARCHAR(10),
+FACPHONE VARCHAR(16),
+DATETIMESTAMP DATE NOT NULL,
+APPTYPE VARCHAR(5),
+ACTIVE BOOLEAN NOT NULL,
+UserStamp INTEGER NOT NULL,
+Capacity INTEGER,
+LevelOfCare VARCHAR(100),
+County VARCHAR(100),
+FacilityNo VARCHAR(50)
+);
+
+ALTER TABLE FACILITIES ADD FOREIGN KEY (UserStamp) REFERENCES Users(USERID);
+
+ALTER TABLE FACILITIES ADD FOREIGN KEY (VENDORID) REFERENCES Vendors(VendorID);
+
+CREATE TABLE FHIRLog (
+fhir_log_id INTEGER NOT NULL,
+fhir_resource_type_id INTEGER NOT NULL,
+log_start_date DATE NOT NULL,
+log_end_date DATE,
+error_desc VARCHAR(max)
+);
+
+CREATE TABLE FHIRLogException (
+fhir_log_exception_id INTEGER NOT NULL,
+fhir_log_id INTEGER NOT NULL,
+log_exception_date DATE NOT NULL,
+provider_db_name VARCHAR(50),
+fhir_procedure_name VARCHAR(250),
+error_desc VARCHAR(max)
+);
+
+CREATE TABLE FHIRLogResource (
+fhir_resource_log_id INTEGER NOT NULL,
+fhir_log_id INTEGER NOT NULL,
+fhir_resource_type_id INTEGER NOT NULL,
+fhir_resource_id INTEGER NOT NULL,
+fhir_resource_guid VARCHAR(5000) NOT NULL,
+log_date DATE NOT NULL,
+log_completed BOOLEAN,
+log_error_message VARCHAR(max),
+fhir_resource_last_update_dt DATE
+);
+
+CREATE TABLE FieldControl (
+FieldControlID INTEGER NOT NULL,
+SectionID INTEGER NOT NULL,
+FieldControlTypeID INTEGER NOT NULL,
+Label VARCHAR(255),
+Default INTEGER NOT NULL,
+SortBy INTEGER NOT NULL,
+UserRequired BOOLEAN NOT NULL,
+Visible BOOLEAN NOT NULL,
+ReadOnly INTEGER NOT NULL,
+ControlWidth INTEGER,
+ClientSideControlID VARCHAR(255),
+DBFieldName VARCHAR(255) NOT NULL,
+dType VARCHAR(255),
+UseInWFW BOOLEAN NOT NULL,
+ShowInGrid BOOLEAN NOT NULL,
+FetchSPName VARCHAR(255),
+OraclePackage VARCHAR(255),
+UNIQUEID VARCHAR(16) NOT NULL,
+ORIGINALID VARCHAR(16) NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+SystemRequired BOOLEAN NOT NULL,
+IsWFWValidationField INTEGER NOT NULL,
+APIIntegrationStatus BOOLEAN NOT NULL
+);
+
+CREATE TABLE FieldControlEventService (
+FieldControlEventServiceID INTEGER,
+FieldControlID INTEGER,
+EventServiceID INTEGER,
+UNIQUEID VARCHAR(16),
+ORIGINALID VARCHAR(16),
+UserStamp INTEGER,
+DateTimeStamp DATE
+);
+
+CREATE TABLE FieldControlPermission (
+FieldControlPermissionID INTEGER NOT NULL,
+FieldControlID INTEGER NOT NULL,
+PermissionID INTEGER NOT NULL,
+Visible BOOLEAN NOT NULL,
+ReadOnly INTEGER NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE FieldControlProperty (
+FieldControlPropertyID INTEGER NOT NULL,
+FieldControlID INTEGER NOT NULL,
+PropertyName VARCHAR(100) NOT NULL,
+PropertyValue VARCHAR(7000) NOT NULL,
+UseOnPostback BOOLEAN NOT NULL,
+UseReflection BOOLEAN NOT NULL,
+UNIQUEID VARCHAR(16) NOT NULL,
+ORIGINALID VARCHAR(16) NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE FieldControlType (
+FieldControlTypeID INTEGER NOT NULL,
+Control VARCHAR(255) NOT NULL,
+Width INTEGER,
+Height INTEGER,
+SystemRequired BOOLEAN NOT NULL,
+UNIQUEID VARCHAR(16) NOT NULL,
+ORIGINALID VARCHAR(16) NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE FilterSetting (
+FilterSettingID INTEGER NOT NULL,
+UserStamp INTEGER NOT NULL,
+PageID INTEGER NOT NULL,
+FilterName VARCHAR(255) NOT NULL,
+IsDefault BOOLEAN NOT NULL,
+DateTimeStamp DATE NOT NULL,
+AppType VARCHAR(5) NOT NULL
+);
+
+ALTER TABLE FilterSetting ADD FOREIGN KEY (PageID) REFERENCES Page(PageID);
+
+ALTER TABLE FilterSetting ADD FOREIGN KEY (UserStamp) REFERENCES Users(USERID);
+
+CREATE TABLE FilterSettingDetail (
+FilterSettingDetailID INTEGER NOT NULL,
+FilterSettingID INTEGER NOT NULL,
+FieldControlID INTEGER NOT NULL,
+FieldControlValue VARCHAR(128) NOT NULL,
+FilterCriteria VARCHAR(128) NOT NULL,
+Operator VARCHAR(50) NOT NULL,
+DateTimeStamp DATE NOT NULL,
+UserStamp INTEGER NOT NULL
+);
+
+ALTER TABLE FilterSettingDetail ADD FOREIGN KEY (FieldControlID) REFERENCES FieldControl(FieldControlID);
+
+ALTER TABLE FilterSettingDetail ADD FOREIGN KEY (FilterSettingID) REFERENCES FilterSetting(FilterSettingID);
+
+ALTER TABLE FilterSettingDetail ADD FOREIGN KEY (UserStamp) REFERENCES Users(USERID);
+
+CREATE TABLE FINANCIALMENU (
+MENUID INTEGER,
+ITEMNAME VARCHAR(75),
+ITEMLABEL VARCHAR(75),
+ITEMCATEGORY VARCHAR(75),
+ITEMSUBCATEGORY VARCHAR(75),
+ACTIVE DECIMAL(9),
+ITEMDESCRIPTION VARCHAR(max),
+ITEMHELP VARCHAR(max),
+FUNCTION VARCHAR(75),
+FinancialMenuID INTEGER NOT NULL
+);
+
+CREATE TABLE FundCodeAuthMapping (
+FundCodeAuthMappingID INTEGER NOT NULL,
+SiteID INTEGER NOT NULL,
+Active BOOLEAN,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+SendToEVV BOOLEAN NOT NULL
+);
+
+ALTER TABLE FundCodeAuthMapping ADD FOREIGN KEY (SiteID) REFERENCES SITE(SITEID);
+
+CREATE TABLE FundCodeAuthMappingStatuses (
+FundCodeAuthMappingStatusesID INTEGER,
+FundCodeAuthMappingID INTEGER,
+MappedStatusLeft VARCHAR(100),
+MappedStatusRight VARCHAR(100),
+MapType INTEGER,
+UserStamp INTEGER,
+DateTimeStamp DATE,
+SessionID VARCHAR(100),
+IncludeForEVV BOOLEAN,
+RemoveForEVV BOOLEAN,
+SortOrder INTEGER
+);
+
+CREATE TABLE Goal (
+GoalID INTEGER NOT NULL,
+NeedID INTEGER NOT NULL,
+GoalCodeID INTEGER NOT NULL,
+GoalText VARCHAR(max),
+RevisionDate DATE,
+CompletionDate DATE,
+Status VARCHAR(100),
+StartDate DATE,
+TargetDate DATE,
+ScaleID INTEGER,
+GenericDate1 DATE,
+GenericDate2 DATE,
+GenericDate3 DATE,
+GenericDropDown1 VARCHAR(100),
+GenericDropDown2 VARCHAR(100),
+GenericDropDown3 VARCHAR(100),
+GenericDropDown4 VARCHAR(45),
+GenericText1 VARCHAR(255),
+GenericText2 VARCHAR(255),
+GenericText3 VARCHAR(255),
+GenericText4 VARCHAR(255),
+GenericMemo1 VARCHAR(max),
+GenericMemo2 VARCHAR(max),
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+Progress VARCHAR(100),
+FrequencyOfContact VARCHAR(100),
+Duration VARCHAR(100),
+Accepted BOOLEAN,
+ResourcePlanned VARCHAR(100),
+ResourceUsed VARCHAR(100),
+Achieved VARCHAR(100)
+);
+
+ALTER TABLE Goal ADD FOREIGN KEY (GoalCodeID) REFERENCES GoalCode(GoalCodeID);
+
+ALTER TABLE Goal ADD FOREIGN KEY (NeedID) REFERENCES Need(NeedID);
+
+CREATE TABLE GoalCode (
+GoalCodeID INTEGER NOT NULL,
+Goal VARCHAR(max),
+RequiresNamePrefix BOOLEAN NOT NULL,
+Active BOOLEAN NOT NULL,
+DateTimeStamp DATE NOT NULL,
+UserStamp INTEGER NOT NULL,
+StartDate DATE,
+EndDate DATE
+);
+
+CREATE TABLE GoalCodeCategory (
+GoalCodeCategoryID INTEGER NOT NULL,
+GoalCodeID INTEGER NOT NULL,
+Category VARCHAR(100),
+DateTimeStamp DATE NOT NULL,
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE Group (
+GroupID INTEGER,
+DerivedGroupID INTEGER,
+GroupName VARCHAR(300),
+DateTimeStamp DATE,
+AppType VARCHAR(5),
+AccessLevel INTEGER,
+AllowCrossProgramAccess BOOLEAN,
+IsTemplate BOOLEAN,
+CSSFileName VARCHAR(255),
+IsHarmonyMainSecure BOOLEAN,
+ReportGroup VARCHAR(100),
+UserStamp INTEGER,
+UNIQUEID VARCHAR(16),
+ORIGINALID VARCHAR(16),
+IsParent BOOLEAN
+);
+
+CREATE TABLE GROUPDATES (
+GROUPID DECIMAL(9) NOT NULL,
+MEETINGDATE DATE NOT NULL
+);
+
+CREATE TABLE GROUPEES (
+GROUPID DECIMAL(9) NOT NULL,
+VENDORID INTEGER NOT NULL,
+GROUPNAME VARCHAR(50),
+SCHEDULE VARCHAR(50),
+VSERVICEID DECIMAL(9),
+STARTTIME DATE,
+ENDTIME DATE,
+LOCATION VARCHAR(50),
+MEMBERID DECIMAL(9),
+STARTDATE DATE,
+ENDDATE DATE,
+GROUPS VARCHAR(100),
+DATETIMESTAMP DATE,
+COMMENTS VARCHAR(max),
+ACTIVE INTEGER,
+AppType VARCHAR(5),
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE GroupFilter (
+DistributionGroupFilterId INTEGER NOT NULL,
+DistributionGroupId INTEGER,
+FilterName VARCHAR(500),
+DateTimeStamp DATE,
+CreatedOn DATE,
+CreatedBy INTEGER,
+UserStamp INTEGER
+);
+
+ALTER TABLE GroupFilter ADD FOREIGN KEY (DistributionGroupId) REFERENCES DistributionGroup(DistributionGroupId);
+
+ALTER TABLE GroupFilter ADD FOREIGN KEY (UserStamp) REFERENCES Users(USERID);
+
+CREATE TABLE GroupFilterDetail (
+DistributionGroupFilterDetailId INTEGER NOT NULL,
+DistributionGroupFilterId INTEGER,
+FieldName VARCHAR(500),
+FieldValue VARCHAR(max),
+DateTimeStamp DATE,
+CreatedOn DATE,
+CreatedBy INTEGER,
+UserStamp INTEGER
+);
+
+ALTER TABLE GroupFilterDetail ADD FOREIGN KEY (UserStamp) REFERENCES Users(USERID);
+
+CREATE TABLE GroupPackage (
+GroupPackageID INTEGER NOT NULL,
+PackageID INTEGER NOT NULL,
+Apptype VARCHAR(5) NOT NULL,
+UserStamp VARCHAR(10) NOT NULL,
+DateTimeStamp DATE NOT NULL,
+RoleID INTEGER NOT NULL
+);
+
+CREATE TABLE Groups (
+GroupID DECIMAL(9) NOT NULL,
+GroupName VARCHAR(64) NOT NULL,
+UserStamp VARCHAR(10) NOT NULL,
+DateTimeStamp DATE NOT NULL,
+AppType VARCHAR(5) NOT NULL
+);
+
+CREATE TABLE GroupSeries (
+GroupSeriesID INTEGER NOT NULL,
+VendorGroupID INTEGER NOT NULL,
+VServiceID INTEGER,
+StartDate DATE NOT NULL,
+EndDate DATE NOT NULL,
+StartTime DATE NOT NULL,
+EndTime DATE NOT NULL,
+Location VARCHAR(100),
+MemberID INTEGER NOT NULL,
+FacilityID INTEGER,
+ContactType VARCHAR(100),
+PlaceOfService VARCHAR(100),
+RecurrencePattern VARCHAR(max),
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+SessionNumber VARCHAR(3000),
+SessionWorker2 INTEGER,
+SessionWorker3 INTEGER,
+Comment2 VARCHAR(max),
+GenericMultiSelect VARCHAR(max),
+NumberAttendedSession INTEGER
+);
+
+ALTER TABLE GroupSeries ADD FOREIGN KEY (FacilityID) REFERENCES FACILITIES(FACILITYID);
+
+ALTER TABLE GroupSeries ADD FOREIGN KEY (UserStamp) REFERENCES Users(USERID);
+
+ALTER TABLE GroupSeries ADD FOREIGN KEY (VendorGroupID) REFERENCES VendorGroup(VendorGroupID);
+
+ALTER TABLE GroupSeries ADD FOREIGN KEY (MemberID) REFERENCES WORKERS(MEMBERID);
+
+CREATE TABLE GroupSeriesException (
+GroupSeriesExceptionID INTEGER NOT NULL,
+GroupSeriesID INTEGER NOT NULL,
+ExceptionDate DATE NOT NULL,
+VServiceID INTEGER,
+StartTime DATE NOT NULL,
+EndTime DATE NOT NULL,
+Location VARCHAR(100),
+MemberID INTEGER NOT NULL,
+FacilityID INTEGER,
+ContactType VARCHAR(100),
+PlaceOfService VARCHAR(100),
+Deleted BOOLEAN NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+Action VARCHAR(100) NOT NULL,
+CancelReason VARCHAR(100),
+Cancelnote VARCHAR(max),
+SessionWorker2 INTEGER,
+SessionWorker3 INTEGER,
+Comment2 VARCHAR(max),
+GenericMultiSelect VARCHAR(max),
+NumberAttendedSession INTEGER
+);
+
+ALTER TABLE GroupSeriesException ADD FOREIGN KEY (FacilityID) REFERENCES FACILITIES(FACILITYID);
+
+ALTER TABLE GroupSeriesException ADD FOREIGN KEY (UserStamp) REFERENCES Users(USERID);
+
+ALTER TABLE GroupSeriesException ADD FOREIGN KEY (MemberID) REFERENCES WORKERS(MEMBERID);
+
+CREATE TABLE GroupSeriesParticipant (
+GroupSeriesParticipantID INTEGER NOT NULL,
+GroupSeriesID INTEGER NOT NULL,
+EnrollGroupID INTEGER NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+ALTER TABLE GroupSeriesParticipant ADD FOREIGN KEY (EnrollGroupID) REFERENCES EnrollGroup(EnrollGroupID);
+
+CREATE TABLE GroupSeriesParticipantException (
+GroupSeriesParticipantExceptionID INTEGER NOT NULL,
+GroupSeriesParticipantID INTEGER NOT NULL,
+ExceptionDate DATE NOT NULL,
+Remove BOOLEAN NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE GroupSeriesWorker (
+GroupSeriesWorkerID INTEGER NOT NULL,
+GroupSeriesID INTEGER NOT NULL,
+ProviderGroupWorkersID INTEGER,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+Registered VARCHAR(100),
+MemberID INTEGER NOT NULL
+);
+
+ALTER TABLE GroupSeriesWorker ADD FOREIGN KEY (GroupSeriesID) REFERENCES GroupSeries(GroupSeriesID);
+
+CREATE TABLE GroupSeriesWorkerException (
+GroupSeriesWorkerExceptionID INTEGER NOT NULL,
+GroupSeriesWorkerID INTEGER NOT NULL,
+ExceptionDate DATE NOT NULL,
+Remove BOOLEAN NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE HapiUpLoadFileMapping (
+FileExt VARCHAR(5) NOT NULL,
+classPath VARCHAR(50) NOT NULL,
+MethodName VARCHAR(30) NOT NULL,
+PageName VARCHAR(30) NOT NULL,
+ChapterName VARCHAR(30) NOT NULL,
+FileName VARCHAR(30) NOT NULL,
+UserStamp INTEGER
+);
+
+CREATE TABLE Hapiuploadsubmitlog (
+SubmissionID INTEGER NOT NULL,
+Userid INTEGER NOT NULL,
+Useremail VARCHAR(60) NOT NULL,
+Status VARCHAR(30) NOT NULL,
+Caseno INTEGER NOT NULL,
+SubmitDate DATE NOT NULL,
+uploadFilename VARCHAR(60),
+Status_Description VARCHAR(255)
+);
+
+CREATE TABLE Help (
+HelpID INTEGER NOT NULL,
+HelpText VARCHAR(max) NOT NULL,
+IsHarmonyHelp BOOLEAN NOT NULL
+);
+
+CREATE TABLE HISACTIVITYNOTES (
+ACTIVITYNOTEID INTEGER NOT NULL,
+NoteSnapshot VARCHAR(max),
+NoteType VARCHAR(25) NOT NULL,
+DateTimeStamp DATE NOT NULL,
+USERSTAMP INTEGER NOT NULL,
+ActivityID INTEGER NOT NULL
+);
+
+CREATE TABLE HISAddress (
+AddressID INTEGER,
+AddressType VARCHAR(100),
+AddressCategory VARCHAR(100),
+Primary BOOLEAN,
+Street VARCHAR(100),
+Street2 VARCHAR(100),
+City VARCHAR(30),
+State VARCHAR(100),
+ZipCode VARCHAR(10),
+PostalCode VARCHAR(30),
+CensusTract VARCHAR(7),
+District VARCHAR(25),
+Country VARCHAR(25),
+StartDate DATE,
+EndDate DATE,
+Active BOOLEAN,
+Comments VARCHAR(max),
+GenericDropDown1 VARCHAR(100),
+GenericDropDown2 VARCHAR(100),
+GenericText1 VARCHAR(max),
+GenericText2 VARCHAR(max),
+GenericDate1 DATE,
+GenericDate2 DATE,
+DateTimeStamp DATE,
+UserStamp INTEGER,
+ChapterName VARCHAR(100),
+ChapterEntityID INTEGER,
+PageName VARCHAR(100),
+PageEntityID INTEGER,
+AddressValid BOOLEAN,
+AddressValidDate DATE
+);
+
+CREATE TABLE HISAllegation (
+AllegationID INTEGER NOT NULL,
+EntityName VARCHAR(100) NOT NULL,
+EntityID INTEGER NOT NULL,
+Datetimestamp DATE NOT NULL,
+Userstamp INTEGER NOT NULL,
+AllegationType VARCHAR(100) NOT NULL,
+AllegationSubType VARCHAR(max),
+AllegationDescription VARCHAR(max),
+Determination VARCHAR(100),
+DeterminationDate DATE,
+Outcome VARCHAR(100),
+Status VARCHAR(100),
+AllegedVictim VARCHAR(250),
+Primary BOOLEAN NOT NULL
+);
+
+ALTER TABLE HISAllegation ADD FOREIGN KEY (Userstamp) REFERENCES Users(USERID);
+
+CREATE TABLE HISAllegationPerpetrator (
+AllegationPerpetratorID INTEGER NOT NULL,
+ParticipantID INTEGER NOT NULL,
+AllegationID INTEGER NOT NULL,
+Datetimestamp DATE NOT NULL,
+Userstamp INTEGER NOT NULL,
+Determination VARCHAR(100),
+DeterminationDate DATE,
+Comment VARCHAR(max)
+);
+
+ALTER TABLE HISAllegationPerpetrator ADD FOREIGN KEY (ParticipantID) REFERENCES HISParticipant(ParticipantID);
+
+ALTER TABLE HISAllegationPerpetrator ADD FOREIGN KEY (AllegationID) REFERENCES HISAllegation(AllegationID);
+
+ALTER TABLE HISAllegationPerpetrator ADD FOREIGN KEY (Userstamp) REFERENCES Users(USERID);
+
+CREATE TABLE HISAppeal (
+AppealID INTEGER NOT NULL,
+AllegationPerpetratorID INTEGER NOT NULL,
+AppealType VARCHAR(100),
+AppealFiledDate DATE,
+AppealDecision VARCHAR(100),
+AppealDecisionDate DATE,
+RegistryRemoval BOOLEAN,
+RegistryRemovalDate DATE,
+RegistryRemovalComments VARCHAR(max),
+CAPStatus VARCHAR(100),
+CAPCompletionDate DATE,
+AppealsProcessStatus VARCHAR(100) NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+AppealsGenericDate1 DATE,
+AppealsGenericDate2 DATE,
+AppealsGenericLookup1 VARCHAR(100),
+AppealsGenericLookup2 VARCHAR(100),
+AppealsGenericComment1 VARCHAR(4000),
+AppealsGenericComment2 VARCHAR(4000),
+AssessID INTEGER,
+AllegationSummary VARCHAR(4000),
+DescriptionOfDisposition VARCHAR(4000),
+ApprovalDate DATE,
+RequestForHearingDate DATE,
+RegistryAddedDate DATE,
+HearingScheduledDate DATE,
+HearingScheduledTime DATE,
+HearingDecisionDate DATE,
+HearingDecisionTime DATE,
+AppealsGenericLookup3 VARCHAR(100),
+AppealsGenericWorkerSearch1 INTEGER,
+AppealsGenericLookup4 VARCHAR(100),
+AppealsGenericDate3 DATE,
+RegistryEntryText VARCHAR(max),
+AppealsGenericText1 VARCHAR(max),
+AppealsGenericText2 VARCHAR(max),
+RepresentativeFirstName VARCHAR(200),
+RepresentativeLastName VARCHAR(200),
+RepresentativeStreet1 VARCHAR(200),
+RepresentativeStreet2 VARCHAR(200),
+RepresentativeCity VARCHAR(100),
+RepresentativeState VARCHAR(100),
+RepresentativeZip VARCHAR(10)
+);
+
+ALTER TABLE HISAppeal ADD FOREIGN KEY (AssessID) REFERENCES IncidentReview(AssessID);
+
+CREATE TABLE HISAppointmentRenter (
+AppointmentRenterID INTEGER NOT NULL,
+INQUIRYID INTEGER NOT NULL,
+AppointmentID INTEGER NOT NULL,
+ARGenericDrop1 VARCHAR(50),
+ARGenericDrop2 VARCHAR(50),
+ARGenericDrop3 VARCHAR(50),
+ARGenericDrop4 VARCHAR(50),
+ARGenericDrop5 VARCHAR(50),
+ARGenericDate1 DATE,
+ARGenericDate2 DATE,
+ARGenericDate3 DATE,
+ARGenericDate4 DATE,
+ARGenericDate5 DATE,
+ARGenericText1 VARCHAR(50),
+ARGenericText2 VARCHAR(50),
+ARGenericText3 VARCHAR(50),
+ARGenericText4 VARCHAR(50),
+ARGenericText5 VARCHAR(50),
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+ARGenericDrop6 VARCHAR(max)
+);
+
+ALTER TABLE HISAppointmentRenter ADD FOREIGN KEY (AppointmentID) REFERENCES Appointment(AppointmentID);
+
+ALTER TABLE HISAppointmentRenter ADD FOREIGN KEY (INQUIRYID) REFERENCES INQUIRY(INQUIRYID);
+
+CREATE TABLE HISAssessmentConfiguration (
+ConfigID INTEGER NOT NULL,
+Source VARCHAR(10),
+SourceName VARCHAR(100),
+CurrentSourceStatus VARCHAR(50),
+NewSourceStatus VARCHAR(50),
+SamsStatusQuestionID VARCHAR(15),
+Target VARCHAR(10),
+TargetName VARCHAR(100),
+TargetStatus VARCHAR(50),
+ActionUUID VARCHAR(16),
+AssessmentsLastChecked DATE,
+DateTimeStamp DATE
+);
+
+CREATE TABLE HISAssessmentSuggestedService (
+AssessmentSuggestedServiceID INTEGER NOT NULL,
+EntityID INTEGER NOT NULL,
+EntityName VARCHAR(255) NOT NULL,
+ServiceID INTEGER NOT NULL,
+StartDate DATE NOT NULL,
+EndDate DATE NOT NULL,
+UnitsPer DECIMAL(9) NOT NULL,
+UnitsOfMeasure VARCHAR(25) NOT NULL,
+NumberOfPeriods DECIMAL(9) NOT NULL,
+UnitCost DECIMAL(9) NOT NULL,
+Units DECIMAL(9) NOT NULL,
+Amount DECIMAL(9) NOT NULL,
+Justification VARCHAR(max),
+FundCode VARCHAR(25),
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+ALTER TABLE HISAssessmentSuggestedService ADD FOREIGN KEY (ServiceID) REFERENCES SERVICECODES(SERVICEID);
+
+ALTER TABLE HISAssessmentSuggestedService ADD FOREIGN KEY (UserStamp) REFERENCES Users(USERID);
+
+CREATE TABLE HISBenefitEnrollment (
+BenefitEnrollmentID INTEGER NOT NULL,
+BenefitEnrollmentBatchID INTEGER NOT NULL,
+PayorID INTEGER,
+CaseNo INTEGER,
+LastName VARCHAR(60),
+SSN VARCHAR(15),
+MedicaidID VARCHAR(50),
+PolicyNumber VARCHAR(50),
+CaseNumberFromFile VARCHAR(50),
+MaintenanceTypeCode VARCHAR(3),
+MaintenanceReasonCode VARCHAR(3),
+EmploymentStatusCode VARCHAR(2),
+MaintenanceEffectiveDate DATE,
+EligibilityBeginDate DATE,
+HealthCoverageTypeCode VARCHAR(3),
+InsuranceLineCode VARCHAR(3),
+LateEnrollment VARCHAR(1),
+HealthCoverageStart DATE,
+HealthCoverageEnd DATE,
+DateTimeStamp DATE NOT NULL,
+UserStamp INTEGER NOT NULL
+);
+
+ALTER TABLE HISBenefitEnrollment ADD FOREIGN KEY (CaseNo) REFERENCES DEMOGRAPHICS(CASENO);
+
+ALTER TABLE HISBenefitEnrollment ADD FOREIGN KEY (PayorID) REFERENCES Payors(PayorID);
+
+CREATE TABLE HISBenefitEnrollmentBatch (
+BenefitEnrollmentBatchID INTEGER NOT NULL,
+PurposeCode VARCHAR(2),
+ReferenceID VARCHAR(50),
+FileCreationDate DATE,
+ActionCode VARCHAR(2),
+FileEffectiveDate DATE,
+FileMaintenanceEffectiveDate DATE,
+RecordTotal INTEGER,
+FileName VARCHAR(100),
+DateTimeStamp DATE NOT NULL,
+UserStamp INTEGER NOT NULL,
+FileStatus VARCHAR(100),
+Active BOOLEAN NOT NULL
+);
+
+ALTER TABLE HISBenefitEnrollmentBatch ADD FOREIGN KEY (UserStamp) REFERENCES Users(USERID);
+
+CREATE TABLE HISClientDonationPayment (
+ClientDonationPaymentID INTEGER NOT NULL,
+ClientDonationRequestID INTEGER NOT NULL,
+PaidAmount VARCHAR(8) NOT NULL,
+CheckNo VARCHAR(20),
+PaymentType VARCHAR(100) NOT NULL,
+PaymentStatus VARCHAR(100) NOT NULL,
+PaymentDateTime DATE,
+Comments VARCHAR(100),
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+GenericDropDown1 VARCHAR(100),
+GenericText1 VARCHAR(max),
+GenericDate1 DATE
+);
+
+ALTER TABLE HISClientDonationPayment ADD FOREIGN KEY (UserStamp) REFERENCES Users(USERID);
+
+CREATE TABLE HISClientDonationRequest (
+ClientDonationRequestID INTEGER NOT NULL,
+CaseNo INTEGER NOT NULL,
+StartDate DATE NOT NULL,
+EndDate DATE,
+RequestType VARCHAR(100) NOT NULL,
+RequestedAmount VARCHAR(8) NOT NULL,
+Comments VARCHAR(100),
+RequestStatus VARCHAR(100) NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+CreatedUserID INTEGER NOT NULL,
+GenericDropDown1 VARCHAR(100),
+GenericText1 VARCHAR(max),
+GenericDate1 DATE
+);
+
+ALTER TABLE HISClientDonationRequest ADD FOREIGN KEY (CaseNo) REFERENCES DEMOGRAPHICS(CASENO);
+
+ALTER TABLE HISClientDonationRequest ADD FOREIGN KEY (CreatedUserID) REFERENCES Users(USERID);
+
+ALTER TABLE HISClientDonationRequest ADD FOREIGN KEY (UserStamp) REFERENCES Users(USERID);
+
+CREATE TABLE HISCondition (
+ConditionID INTEGER NOT NULL,
+Languages VARCHAR(max),
+Accessibility VARCHAR(max),
+SpecialConditions VARCHAR(max),
+PaymentOptions VARCHAR(max),
+AcceptsMales BOOLEAN,
+MinAgeMales DECIMAL(9),
+MaxAgeMales DECIMAL(9),
+AcceptsFemales BOOLEAN,
+MinAgeFemales DECIMAL(9),
+MaxAgeFemales DECIMAL(9),
+ChapterEntityID INTEGER NOT NULL,
+ChapterName VARCHAR(100) NOT NULL,
+PageEntityID INTEGER NOT NULL,
+PageName VARCHAR(100) NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE HISConsumerBudget (
+ConsumerBudgetID INTEGER NOT NULL,
+CaseNo INTEGER NOT NULL,
+BudgetNo VARCHAR(50),
+OpenID INTEGER,
+Programs VARCHAR(max),
+InsuranceID INTEGER,
+BudgetType VARCHAR(100) NOT NULL,
+BudgetStatus VARCHAR(100) NOT NULL,
+FiscalYear VARCHAR(100),
+Description VARCHAR(50),
+Worker1 INTEGER,
+Worker2 INTEGER,
+Worker3 INTEGER,
+ApprovedBy INTEGER,
+ApprovalDate DATE,
+StartDate DATE NOT NULL,
+EndDate DATE NOT NULL,
+TerminationDate DATE,
+TerminationReason VARCHAR(100),
+TerminatedBy INTEGER,
+Comments VARCHAR(max),
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+AlgorithmAmount DECIMAL(9),
+GenericCurrency1 DECIMAL(9),
+GenericCurrency2 DECIMAL(9),
+GenericCurrency3 DECIMAL(9),
+GenericText1 VARCHAR(255),
+GenericText2 VARCHAR(255),
+GenericText3 VARCHAR(255),
+GenericLookup1 VARCHAR(100),
+GenericLookup2 VARCHAR(100),
+GenericLookup3 VARCHAR(100),
+GenericDate1 DATE,
+GenericDate2 DATE,
+GenericDate3 DATE,
+BudgetAmount DECIMAL(9),
+AmountEncumbered DECIMAL(9)
+);
+
+CREATE TABLE HISConsumerBudgetAuth (
+ConsumerBudgetAuthID INTEGER NOT NULL,
+ConsumerBudgetID INTEGER NOT NULL,
+AuthID INTEGER NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE HISConsumerBudgetCostPlan (
+ConsumerBudgetCostPlanID INTEGER NOT NULL,
+ConsumerBudgetID INTEGER NOT NULL,
+CostPlanNo VARCHAR(50),
+CostPlanStatus VARCHAR(100) NOT NULL,
+FiscalYear VARCHAR(100),
+ProgramID INTEGER,
+EncumberBudget VARCHAR(100),
+Description VARCHAR(50),
+ApprovedBy INTEGER,
+ApprovalDate DATE,
+StartDate DATE NOT NULL,
+EndDate DATE NOT NULL,
+TerminationDate DATE,
+TerminationReason VARCHAR(100),
+TerminatedBy INTEGER,
+GenericCurrency1 DECIMAL(9),
+Comments VARCHAR(max),
+CostPlanAmount DECIMAL(9),
+AvailableBudgetAmount DECIMAL(9),
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE HISConsumerBudgetCostPlanInformation (
+CostPlanInformationID INTEGER NOT NULL,
+ConsumerBudgetsConfigurationID INTEGER NOT NULL,
+ServiceCategory VARCHAR(100) NOT NULL,
+SERVICEID INTEGER,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE HISConsumerBudgetPlans (
+ConsumerBudgetPlanID INTEGER NOT NULL,
+ConsumerBudgetID INTEGER NOT NULL,
+PlanID INTEGER NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE HISConsumerBudgetsConfiguration (
+ConsumerBudgetsConfigurationID INTEGER NOT NULL,
+ConsumerBudgetType VARCHAR(100) NOT NULL,
+Programs VARCHAR(max) NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE HISConsumerBudgetTransaction (
+ConsumerBudgetTransID INTEGER NOT NULL,
+ConsumerBudgetID INTEGER NOT NULL,
+TransactionNo VARCHAR(50),
+Amount DECIMAL(9) NOT NULL,
+TransactionType VARCHAR(100) NOT NULL,
+OtherTransaction VARCHAR(255),
+ReasonTransaction VARCHAR(100),
+TransactionDate DATE NOT NULL,
+Comments VARCHAR(255),
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE HISContactEntryExitTracking (
+ContactCardID INTEGER NOT NULL,
+ContactID INTEGER NOT NULL,
+CardID INTEGER,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+Caseno INTEGER,
+EntranceExit BOOLEAN NOT NULL,
+FacilityID INTEGER NOT NULL,
+Comment VARCHAR(255),
+CardSwiped BOOLEAN NOT NULL
+);
+
+ALTER TABLE HISContactEntryExitTracking ADD FOREIGN KEY (CardID) REFERENCES Card(CardID);
+
+ALTER TABLE HISContactEntryExitTracking ADD FOREIGN KEY (ContactID) REFERENCES CONTACT(CONTACTID);
+
+ALTER TABLE HISContactEntryExitTracking ADD FOREIGN KEY (FacilityID) REFERENCES FACILITIES(FACILITYID);
+
+CREATE TABLE HISCostPlanService (
+CostPlanServiceID INTEGER NOT NULL,
+CostPlanServiceCategoryID INTEGER NOT NULL,
+ConsumerBudgetCostPlanID INTEGER NOT NULL,
+ServiceID INTEGER NOT NULL,
+ServiceCostCap DECIMAL(9),
+ServiceDate DATE,
+ServiceComments VARCHAR(255),
+ServiceAllowed VARCHAR(100),
+ServiceRequired VARCHAR(100),
+ApplyServiceCostCap VARCHAR(100),
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE HISCostPlanServiceCategory (
+CostPlanServiceCategoryID INTEGER NOT NULL,
+ConsumerBudgetCostPlanID INTEGER NOT NULL,
+ServiceCategory VARCHAR(100) NOT NULL,
+CategoryCostCap DECIMAL(9),
+CategoryDate DATE,
+CategoryComments VARCHAR(255),
+ApplyCategoryCostCap VARCHAR(100),
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE HISCredential (
+CredentialID INTEGER NOT NULL,
+VendorID INTEGER NOT NULL,
+MemberID INTEGER,
+CredentialType VARCHAR(100) NOT NULL,
+Type VARCHAR(100),
+CredentialNumber VARCHAR(50),
+EducationLevel VARCHAR(100),
+EducationInstitution VARCHAR(100),
+Location VARCHAR(100),
+Degree VARCHAR(100),
+IssuanceDate DATE,
+StartDate DATE,
+EndDate DATE,
+Provisional BOOLEAN,
+ServiceSpecialties VARCHAR(max),
+Comment VARCHAR(max),
+InsuranceCompany VARCHAR(100),
+CoverageDescription VARCHAR(max),
+ExceptionExclusion VARCHAR(max),
+LiabilityLimits VARCHAR(max),
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+Status VARCHAR(100),
+AdminMemberID INTEGER,
+Reason VARCHAR(100),
+Programs VARCHAR(max),
+ProviderPOC INTEGER,
+RenewalDate DATE,
+GenericDate1 DATE,
+GenericDate2 DATE,
+GenericDate3 DATE,
+GenericDate4 DATE,
+GenericText1 VARCHAR(max),
+GenericText2 VARCHAR(max),
+GenericDropDown1 VARCHAR(100),
+GenericDropDown2 VARCHAR(100),
+EducationType VARCHAR(max)
+);
+
+CREATE TABLE HISDailyServiceSchedule (
+DailyServiceScheduleID INTEGER NOT NULL,
+ServiceScheduleID INTEGER NOT NULL,
+DayOfWeek VARCHAR(10) NOT NULL,
+NumVisitsPerDay INTEGER NOT NULL,
+NumOfDays INTEGER NOT NULL,
+TotalNumOfVisits INTEGER NOT NULL,
+TotalNumOfUnits INTEGER NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+ALTER TABLE HISDailyServiceSchedule ADD FOREIGN KEY (UserStamp) REFERENCES Users(USERID);
+
+CREATE TABLE HISEFormImage (
+EFormImageID INTEGER NOT NULL,
+EFormType VARCHAR(100) NOT NULL,
+ChapterName VARCHAR(100) NOT NULL,
+ChapterEntityID INTEGER NOT NULL,
+PageName VARCHAR(100) NOT NULL,
+EntityID INTEGER NOT NULL,
+RecordSource VARCHAR(30),
+RecordSourceDetail VARCHAR(50),
+RecordSourceVer VARCHAR(10),
+Datetimestamp DATE NOT NULL,
+Userstamp INTEGER NOT NULL,
+CreatedBy INTEGER NOT NULL,
+EFormImage VARCHAR(max) NOT NULL
+);
+
+ALTER TABLE HISEFormImage ADD FOREIGN KEY (Userstamp) REFERENCES Users(USERID);
+
+ALTER TABLE HISEFormImage ADD FOREIGN KEY (CreatedBy) REFERENCES Users(USERID);
+
+CREATE TABLE HISEligibilityConfiguration (
+EligConfigID INTEGER NOT NULL,
+Priority INTEGER NOT NULL,
+GenericText1 VARCHAR(100),
+GenericText2 VARCHAR(100),
+GenericText3 VARCHAR(100),
+GenericText4 VARCHAR(100),
+GenericText5 VARCHAR(100),
+GenericText6 VARCHAR(300),
+IsEligibilityActive BOOLEAN
+);
+
+CREATE TABLE HISExperience (
+ExperienceID INTEGER NOT NULL,
+VendorID INTEGER NOT NULL,
+MemberID INTEGER,
+ExperienceType VARCHAR(100),
+Type VARCHAR(100),
+Employer VARCHAR(100),
+Trainer VARCHAR(100),
+TrainingName VARCHAR(100),
+Location VARCHAR(100),
+OutCome VARCHAR(100),
+Credits INTEGER,
+StartDate DATE,
+EndDate DATE,
+ExpirationDate DATE,
+Comment VARCHAR(max),
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+GroupNumber VARCHAR(1000),
+SessionStartTime DATE
+);
+
+CREATE TABLE HISExpungementIntake (
+ExpungementIntakeID INTEGER NOT NULL,
+FundCode VARCHAR(25),
+InqDateTime DATE,
+EntryDateTime DATE,
+Inquirysource VARCHAR(100),
+InqType VARCHAR(100),
+ReceivedByMemberID INTEGER,
+Confidential BOOLEAN,
+Status VARCHAR(100),
+IncidentDateTime DATE,
+IncidentLocation VARCHAR(100),
+County VARCHAR(100),
+Region VARCHAR(100),
+AbuseResult VARCHAR(max),
+IncidentNature VARCHAR(100),
+RiskToInvestigator VARCHAR(100),
+Disposition VARCHAR(100),
+ScreeningPriority VARCHAR(100),
+Queue VARCHAR(100),
+ScreeningMemberID INTEGER,
+Immediacy VARCHAR(100),
+Resolution VARCHAR(100),
+ResolutionDateTime DATE,
+AssignedToMemberID INTEGER,
+IncidentQueue VARCHAR(100),
+ReporterMandatetype VARCHAR(100),
+ReporterType VARCHAR(100),
+ReporterRelationship VARCHAR(100),
+VictimCounty VARCHAR(100),
+VictimRace VARCHAR(100),
+VictimEthnicity VARCHAR(100),
+VictimGender VARCHAR(100),
+VictimDOB DATE,
+VictimAgeAtIntake VARCHAR(20),
+VictimCurMaritalStatus VARCHAR(100),
+VictimResidencetype VARCHAR(100),
+VictimVulnerableCondition VARCHAR(100),
+AllegationType VARCHAR(100),
+AllegationSubType VARCHAR(max),
+PerpCounty VARCHAR(100),
+PerpRace VARCHAR(100),
+PerpEthnicity VARCHAR(100),
+PerpGender VARCHAR(100),
+PerpDOB DATE,
+PerpAgeAtIntake VARCHAR(20),
+PerpRelationship VARCHAR(100),
+InquiryID INTEGER,
+DataEntryInterval INTEGER,
+ReportInterval INTEGER,
+ResolutionInterval INTEGER,
+Userstamp INTEGER NOT NULL,
+datetimestamp DATE NOT NULL,
+ReportType2 VARCHAR(100)
+);
+
+CREATE TABLE HISExpungementInvestigation (
+ExpungementInvestigationID INTEGER NOT NULL,
+Incidentid INTEGER,
+InvestigatorMemberid INTEGER,
+IncidentQueue VARCHAR(100),
+ReportType VARCHAR(100),
+ReportDatetime DATE,
+Immediacy VARCHAR(100),
+FirstContactDatetime DATE,
+ActualContactDatetime DATE,
+DueDatetime DATE,
+CompletionDatetime DATE,
+Result VARCHAR(100),
+Status VARCHAR(100),
+Incidentdatetime DATE,
+Location VARCHAR(100),
+County VARCHAR(100),
+Region VARCHAR(100),
+Abuseresult VARCHAR(max),
+Incidentnature VARCHAR(100),
+ReporterCity VARCHAR(100),
+ReporterState VARCHAR(100),
+ReporterZipcode VARCHAR(10),
+ReporterCounty VARCHAR(100),
+ReporterMandatetype VARCHAR(100),
+VictimCity VARCHAR(100),
+VictimState VARCHAR(100),
+VictimZipcode VARCHAR(10),
+VictimCounty VARCHAR(100),
+VictimGender VARCHAR(100),
+VictimRace VARCHAR(100),
+VictimEthnicity VARCHAR(100),
+VictimDOB DATE,
+VictimAgeAtIntake VARCHAR(20),
+VictimLegalStatus VARCHAR(100),
+VictimCurMaritalStatus VARCHAR(100),
+VictimResidenceType VARCHAR(100),
+VulnerableCondition VARCHAR(100),
+AllegationType VARCHAR(100),
+AllegationSubType VARCHAR(max),
+Determination VARCHAR(100),
+DeterminationDate DATE,
+Outcome VARCHAR(100),
+AllegationStatus VARCHAR(100),
+PerpParticipantID INTEGER,
+PerpCity VARCHAR(100),
+PerpState VARCHAR(100),
+PerpZipCode VARCHAR(10),
+PerpCounty VARCHAR(100),
+PerpAgeAtIntake VARCHAR(20),
+PerpGender VARCHAR(100),
+PerpRace VARCHAR(100),
+PerpEthnicity VARCHAR(100),
+PerpDOB DATE,
+PerpRelationship VARCHAR(100),
+PerpDetermination VARCHAR(100),
+PerpDeterminationDate DATE,
+FundCode VARCHAR(25),
+EndDate DATE,
+ReportFaceToFaceInterval INTEGER,
+FaceToFaceActualInterval INTEGER,
+ReportDeterminationInterval INTEGER,
+DeterminationActualInterval INTEGER,
+Userstamp INTEGER NOT NULL,
+datetimestamp DATE NOT NULL,
+OriginalIntakeID INTEGER,
+ReportType2 VARCHAR(100)
+);
+
+CREATE TABLE HISExpungementInvestigationNote (
+ExpungementInvestigationNoteID INTEGER NOT NULL,
+Incidentid INTEGER,
+NoteID INTEGER,
+NoteDate DATE,
+NoteType VARCHAR(100),
+NoteSubtype VARCHAR(100),
+NoteByMemberID INTEGER,
+Status VARCHAR(100),
+ParticipantContactType VARCHAR(100),
+Userstamp INTEGER NOT NULL,
+datetimestamp DATE NOT NULL
+);
+
+CREATE TABLE HISFileLog (
+HISFileLog INTEGER NOT NULL,
+FileName VARCHAR(250),
+FileType VARCHAR(10),
+FileStatus VARCHAR(20),
+TransactionID VARCHAR(9),
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE HISHour (
+HourID INTEGER NOT NULL,
+HourTypeID INTEGER NOT NULL,
+DayOfWeek VARCHAR(10) NOT NULL,
+StartTime DATE,
+EndTime DATE,
+24Hrs BOOLEAN,
+DateTimeStamp DATE NOT NULL,
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE HISHourType (
+HourTypeID INTEGER NOT NULL,
+Type VARCHAR(100),
+Note VARCHAR(max),
+ChapterName VARCHAR(100) NOT NULL,
+ChapterEntityID INTEGER NOT NULL,
+PageName VARCHAR(100) NOT NULL,
+PageEntityID INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+UserStamp INTEGER NOT NULL,
+GenericDropDown1 VARCHAR(100),
+GenericDropDown2 VARCHAR(100),
+GenericText1 VARCHAR(max),
+GenericText2 VARCHAR(max),
+GenericDate1 DATE,
+GenericDate2 DATE,
+Active BOOLEAN
+);
+
+CREATE TABLE HISIncidentInquiry (
+IncidentInquiryID INTEGER NOT NULL,
+IncidentID INTEGER NOT NULL,
+InquiryID INTEGER NOT NULL,
+Original BOOLEAN NOT NULL,
+Datetimestamp DATE NOT NULL,
+Userstamp INTEGER NOT NULL,
+CreatedOn DATE NOT NULL,
+CreatedBy INTEGER NOT NULL,
+Comment VARCHAR(max)
+);
+
+ALTER TABLE HISIncidentInquiry ADD FOREIGN KEY (Userstamp) REFERENCES Users(USERID);
+
+ALTER TABLE HISIncidentInquiry ADD FOREIGN KEY (CreatedBy) REFERENCES Users(USERID);
+
+CREATE TABLE HISIncidentLink (
+IncidentLinkID INTEGER NOT NULL,
+IncidentID INTEGER NOT NULL,
+LinkedIncidentID INTEGER NOT NULL,
+Datetimestamp DATE NOT NULL,
+Userstamp INTEGER NOT NULL,
+CreatedOn DATE NOT NULL,
+CreatedBy INTEGER NOT NULL,
+Comment VARCHAR(max)
+);
+
+ALTER TABLE HISIncidentLink ADD FOREIGN KEY (Userstamp) REFERENCES Users(USERID);
+
+ALTER TABLE HISIncidentLink ADD FOREIGN KEY (CreatedBy) REFERENCES Users(USERID);
+
+CREATE TABLE HISInquiryLink (
+InquiryLinkID INTEGER NOT NULL,
+InquiryID INTEGER NOT NULL,
+LinkedInquiryID INTEGER NOT NULL,
+Datetimestamp DATE NOT NULL,
+Userstamp INTEGER NOT NULL,
+CreatedOn DATE NOT NULL,
+CreatedBy INTEGER NOT NULL,
+Comment VARCHAR(max),
+Original BOOLEAN NOT NULL
+);
+
+ALTER TABLE HISInquiryLink ADD FOREIGN KEY (Userstamp) REFERENCES Users(USERID);
+
+ALTER TABLE HISInquiryLink ADD FOREIGN KEY (CreatedBy) REFERENCES Users(USERID);
+
+CREATE TABLE HISInquiryReferral (
+InquiryReferralID INTEGER NOT NULL,
+InquiryID INTEGER NOT NULL,
+VendorID INTEGER NOT NULL,
+ReferralDate DATE NOT NULL,
+MemberID INTEGER NOT NULL,
+Comment VARCHAR(max),
+ExcludeFromReport BOOLEAN NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE HISInquiryReferralService (
+InquiryReferralServiceID INTEGER NOT NULL,
+InquiryReferralID INTEGER NOT NULL,
+VServiceID INTEGER NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE HISIntegration (
+IntegrationID INTEGER NOT NULL,
+Type VARCHAR(15),
+Name VARCHAR(100),
+DateTimeStamp DATE NOT NULL,
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE HISIntegrationParameter (
+IntegrationParameterID INTEGER NOT NULL,
+IntegrationID INTEGER,
+ParameterName VARCHAR(255),
+ParameterType VARCHAR(20),
+ParameterValue VARCHAR(max),
+DateTimeStamp DATE NOT NULL,
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE HISIntegrationTransaction (
+HISIntegrationTransactionID INTEGER NOT NULL,
+IntegrationID INTEGER NOT NULL,
+StartTime DATE NOT NULL,
+EndTime DATE,
+Status VARCHAR(100) NOT NULL,
+TransactionType VARCHAR(100),
+Inbound BOOLEAN NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+ALTER TABLE HISIntegrationTransaction ADD FOREIGN KEY (IntegrationID) REFERENCES HISIntegration(IntegrationID);
+
+CREATE TABLE HISIntegrationTransactionDetail (
+HISIntegrationTransactionDetailID INTEGER,
+HISIntegrationTransactionID INTEGER,
+HISIntegrationTransactionFileID INTEGER,
+EntityName VARCHAR(256),
+EntityID INTEGER,
+ExternalEntityID VARCHAR(256),
+ExternalStatus VARCHAR(100),
+AdditionalDetail VARCHAR(max),
+Processed BOOLEAN,
+DateTimeStamp DATE,
+Hash VARCHAR(max)
+);
+
+CREATE TABLE HISIntegrationTransactionError (
+HISIntegrationTransactionErrorID INTEGER NOT NULL,
+HISIntegrationTransactionID INTEGER NOT NULL,
+HISIntegrationTransactionDetailID INTEGER,
+ErrorDescription VARCHAR(max),
+ErrorCode VARCHAR(10),
+ErrorSeverity INTEGER,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE HISIntegrationTransactionFile (
+HISIntegrationTransactionFileID INTEGER NOT NULL,
+HISIntegrationTransactionID INTEGER NOT NULL,
+FileName VARCHAR(256) NOT NULL,
+FilePath VARCHAR(max) NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE HISMaxActiveSession (
+MaxActiveSessionID INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+MaxActiveSession INTEGER NOT NULL,
+MachineName VARCHAR(200) NOT NULL,
+InstanceName VARCHAR(200) NOT NULL
+);
+
+CREATE TABLE HISMCIExport (
+MCIExportID INTEGER NOT NULL,
+PeopleID INTEGER,
+MCI_EntityID VARCHAR(100),
+DateTimeStamp DATE,
+ToPeopleID INTEGER,
+RetryCount INTEGER,
+MciTask VARCHAR(100)
+);
+
+CREATE TABLE HISMedicationAdministration (
+HISMedicationAdministrationID INTEGER NOT NULL,
+MEDICATIONREVIEWID INTEGER NOT NULL,
+AdministrationDate DATE NOT NULL,
+ProviderID INTEGER,
+AdministeredBy INTEGER,
+MedAdministered VARCHAR(100),
+ReasonNotAdministered VARCHAR(100),
+Explanation VARCHAR(500),
+Notes VARCHAR(1000),
+SourceOfRecord VARCHAR(30),
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+AdministrationTime DATE NOT NULL,
+EmarOrderReference VARCHAR(100),
+EmarUserReference VARCHAR(150),
+ScheduledDate DATE,
+ScheduledTime DATE
+);
+
+CREATE TABLE HISNeedAssessment (
+NeedAssessmentID INTEGER NOT NULL,
+NeedID INTEGER NOT NULL,
+AssessmentDetReviewID INTEGER,
+AssessmentTable VARCHAR(200),
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+ALTER TABLE HISNeedAssessment ADD FOREIGN KEY (NeedID) REFERENCES Need(NeedID);
+
+ALTER TABLE HISNeedAssessment ADD FOREIGN KEY (UserStamp) REFERENCES Users(USERID);
+
+CREATE TABLE HISOfflineConsumer (
+OfflineID INTEGER NOT NULL,
+CaseNo INTEGER NOT NULL,
+UserID INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE HISParticipant (
+ParticipantID INTEGER,
+PeopleID INTEGER,
+Datetimestamp DATE,
+EntityName VARCHAR(20),
+EntityID INTEGER,
+ContactType VARCHAR(100),
+EstimatedAge VARCHAR(20),
+CaregiverType VARCHAR(500),
+RelationshipToIncident VARCHAR(100),
+VictimAccess VARCHAR(100),
+DirectionsToHome VARCHAR(4000),
+AtResidence VARCHAR(100),
+VulnerableCondition VARCHAR(max),
+AnonymousReport BOOLEAN,
+MandateType VARCHAR(100),
+Occupation VARCHAR(100),
+WaivesConfidentiality VARCHAR(100),
+Userstamp INTEGER,
+CreatedOn DATE,
+Relationship VARCHAR(100),
+CreatedBy INTEGER,
+PersonType VARCHAR(100),
+RecordSource VARCHAR(30),
+RecordSourceDetail VARCHAR(50),
+RecordSourceVer VARCHAR(10),
+ReadOnly BOOLEAN,
+Confidential BOOLEAN,
+ReferralSource VARCHAR(100),
+DOB DATE,
+DOBEstimated BOOLEAN,
+DOD DATE,
+WebSite VARCHAR(100),
+Gender VARCHAR(100),
+Salutation VARCHAR(20),
+Suffix VARCHAR(10),
+Title VARCHAR(50),
+HairColor VARCHAR(100),
+EyeColor VARCHAR(100),
+Weight VARCHAR(20),
+Height VARCHAR(20),
+IdentifyingMarks VARCHAR(500),
+Race VARCHAR(max),
+ETHNICITYLOOKUP VARCHAR(100),
+CITIZENSHIP VARCHAR(100),
+ASIANLOOKUP VARCHAR(100),
+LATINOLOOKUP VARCHAR(100),
+PACIFICISLANDER VARCHAR(100),
+RELIGION VARCHAR(100),
+SPIRITUALORIENTATION VARCHAR(20),
+CHURCHMEMBER BOOLEAN,
+CHURCH VARCHAR(50),
+PARISHLOOKUP VARCHAR(100),
+PLANGUAGE VARCHAR(100),
+SLANGUAGE VARCHAR(100),
+InterpreterNeeded BOOLEAN,
+HispanicOrigin BOOLEAN,
+INDIANBLOOD VARCHAR(100),
+TRIBE VARCHAR(50),
+CountryOfOrigin VARCHAR(100),
+BIRTHPLACE VARCHAR(100),
+CurMaritalStatus VARCHAR(100),
+HOH BOOLEAN,
+FAMILYSIZE INTEGER,
+RESIDENCETYPE VARCHAR(100),
+RESCOUNTY VARCHAR(100),
+PAYCOUNTY VARCHAR(100),
+LEGALCOUNTY VARCHAR(100),
+LegalStatus VARCHAR(max),
+Comment VARCHAR(max),
+GenericText1 VARCHAR(500),
+GenericText2 VARCHAR(500),
+GenericText3 VARCHAR(500),
+GenericDropDown1 VARCHAR(500),
+GenericDropDown2 VARCHAR(500),
+GenericDropDown3 VARCHAR(500),
+GenericDropDown4 VARCHAR(500),
+GenericDropDown5 VARCHAR(500),
+GenericDropDown6 VARCHAR(500),
+GenericDropDown7 VARCHAR(500),
+GenericDropDown8 VARCHAR(500),
+GenericDropDown9 VARCHAR(500),
+GenericDropDown10 VARCHAR(100),
+GenericDate1 DATE,
+GenericDate2 DATE,
+GenericDate3 DATE,
+GenericCheckbox1 BOOLEAN,
+GenericCheckbox2 BOOLEAN,
+GenericCheckbox3 BOOLEAN,
+GenericNumeric1 DECIMAL(9),
+GenericNumeric2 DECIMAL(9),
+GenericNumeric3 DECIMAL(9),
+ReporterType VARCHAR(100),
+HelpWithAccess VARCHAR(100),
+TimeToContact VARCHAR(1000),
+AtRiskFromPerp VARCHAR(100),
+Whereabouts VARCHAR(250),
+AccessToFunds VARCHAR(100),
+CapacityConsent VARCHAR(100),
+AgeAtIntake VARCHAR(20),
+ConsumerCall BOOLEAN,
+IncomeSource VARCHAR(max),
+TotalIncome DECIMAL(9),
+HealthCondition VARCHAR(500),
+HCBSRecipient VARCHAR(50),
+MultiRace VARCHAR(max),
+OtherCommMethod VARCHAR(500),
+NonVerbal BOOLEAN,
+LocationOfVictim VARCHAR(100),
+RelshipDescription VARCHAR(500),
+Notification BOOLEAN,
+SchoolName VARCHAR(50),
+IndividualsInHome VARCHAR(max),
+SchoolDistrict VARCHAR(50),
+PrimaryYN BOOLEAN,
+Employer VARCHAR(100),
+ContactPersonOnly BOOLEAN,
+Multirelationship VARCHAR(max),
+SexualOrientation VARCHAR(100),
+Transgender VARCHAR(100),
+DateIncidentKnown DATE,
+ReceivingServices VARCHAR(max),
+ReceivingServicesComments VARCHAR(max),
+ProviderID INTEGER,
+ProgramParticipation VARCHAR(max),
+PreviousVictim VARCHAR(500),
+LevelOfEducation VARCHAR(500),
+EmploymentStatus VARCHAR(100),
+CriminalBackgroundCheck VARCHAR(100),
+VeteranStatus VARCHAR(500),
+Searchable BOOLEAN,
+CaseNo INTEGER,
+RequestedServices VARCHAR(max),
+RecommendedServices VARCHAR(max),
+IncomeLevel VARCHAR(100),
+Disabilities VARCHAR(max),
+ADLScoreNAMRS INTEGER,
+IADLScoreNAMRS INTEGER,
+BehavioralScreening VARCHAR(max),
+LivingSettingStart VARCHAR(max),
+LivingSettingClose VARCHAR(max),
+DecisionMakerStart VARCHAR(max),
+DecisionMakerClose VARCHAR(max),
+ServicesStart VARCHAR(max),
+ServicesAPS VARCHAR(max),
+ServicesReferred VARCHAR(max),
+ServicesClose VARCHAR(max),
+CohabitationStart VARCHAR(100),
+CohabitationClose VARCHAR(100),
+PerpAssociationStart VARCHAR(100),
+PerpAssociationClose VARCHAR(100),
+PerpLegalRemedy VARCHAR(max),
+PeopleSearchExecutedBy VARCHAR(100),
+PeopleSearchExecutedDateTime DATE,
+PeopleSearchCancelBy VARCHAR(100),
+PeopleSearchCancelDateTime DATE,
+GenderIdentity VARCHAR(50),
+Pronouns VARCHAR(50),
+GenericText4 VARCHAR(500),
+GenericText5 VARCHAR(500),
+GenericText6 VARCHAR(500),
+GenericText7 VARCHAR(500),
+GenericText8 VARCHAR(500),
+GenericText9 VARCHAR(500),
+GenericText10 VARCHAR(500),
+GenericText11 VARCHAR(500),
+GenericText13 VARCHAR(max),
+GenericText14 VARCHAR(max),
+GenericText15 VARCHAR(max)
+);
+
+ALTER TABLE HISParticipant ADD FOREIGN KEY (PeopleID) REFERENCES HISPeople(PeopleID);
+
+ALTER TABLE HISParticipant ADD FOREIGN KEY (Userstamp) REFERENCES Users(USERID);
+
+ALTER TABLE HISParticipant ADD FOREIGN KEY (ProviderID) REFERENCES Vendors(VendorID);
+
+CREATE TABLE HISParticipantAddress (
+ParticipantAddressID INTEGER,
+ParticipantID INTEGER,
+CreatedOn DATE,
+DateTimeStamp DATE,
+Userstamp INTEGER,
+CreatedBy INTEGER,
+RecordSource VARCHAR(30),
+RecordSourceDetail VARCHAR(50),
+RecordSourceVer VARCHAR(10),
+StartDate DATE,
+EndDate DATE,
+Active BOOLEAN,
+PrimaryYN BOOLEAN,
+Comment VARCHAR(max),
+AddressType VARCHAR(100),
+AddressCategory VARCHAR(100),
+AddressValid BOOLEAN,
+AddressMailable BOOLEAN,
+Street VARCHAR(100),
+Street2 VARCHAR(100),
+City VARCHAR(30),
+State VARCHAR(100),
+StateAbrev VARCHAR(2),
+ZipCode VARCHAR(10),
+PostalCode VARCHAR(30),
+FipsCode DECIMAL(5),
+CensusTract VARCHAR(7),
+District VARCHAR(100),
+County VARCHAR(100),
+Country VARCHAR(100),
+CountryAbrev VARCHAR(2),
+GenericText1 VARCHAR(255),
+GenericText2 VARCHAR(255),
+GenericDropDown1 VARCHAR(100),
+GenericDropDown2 VARCHAR(100),
+GenericDate1 DATE,
+GenericDate2 DATE,
+GenericCheckbox1 BOOLEAN,
+GenericCheckbox2 BOOLEAN,
+GenericNumeric1 DECIMAL(9),
+GenericNumeric2 DECIMAL(9),
+Display BOOLEAN,
+AddressValidDate DATE,
+GPSLocation VARCHAR(50),
+DescriptiveAddress VARCHAR(4000),
+Rural VARCHAR(100)
+);
+
+ALTER TABLE HISParticipantAddress ADD FOREIGN KEY (ParticipantID) REFERENCES HISParticipant(ParticipantID);
+
+ALTER TABLE HISParticipantAddress ADD FOREIGN KEY (CreatedBy) REFERENCES Users(USERID);
+
+ALTER TABLE HISParticipantAddress ADD FOREIGN KEY (Userstamp) REFERENCES Users(USERID);
+
+CREATE TABLE HISParticipantEmail (
+ParticipantEmailID INTEGER NOT NULL,
+ParticipantID INTEGER NOT NULL,
+CreatedOn DATE NOT NULL,
+Datetimestamp DATE NOT NULL,
+Userstamp INTEGER NOT NULL,
+CreatedBy INTEGER NOT NULL,
+EmailType VARCHAR(100) NOT NULL,
+EmailCategory VARCHAR(100),
+EmailValid BOOLEAN NOT NULL,
+EmailUsable BOOLEAN NOT NULL,
+Email VARCHAR(100) NOT NULL,
+RecordSource VARCHAR(30),
+RecordSourceDetail VARCHAR(50),
+RecordSourceVer VARCHAR(10),
+Active BOOLEAN NOT NULL,
+PrimaryYN BOOLEAN NOT NULL,
+StartDate DATE,
+EndDate DATE,
+Comment VARCHAR(max),
+Display BOOLEAN NOT NULL
+);
+
+ALTER TABLE HISParticipantEmail ADD FOREIGN KEY (ParticipantID) REFERENCES HISParticipant(ParticipantID);
+
+ALTER TABLE HISParticipantEmail ADD FOREIGN KEY (CreatedBy) REFERENCES Users(USERID);
+
+ALTER TABLE HISParticipantEmail ADD FOREIGN KEY (Userstamp) REFERENCES Users(USERID);
+
+CREATE TABLE HISParticipantIdentifier (
+ParticipantIdentifierID INTEGER,
+ParticipantID INTEGER,
+CreatedOn DATE,
+Datetimestamp DATE,
+Userstamp INTEGER,
+CreatedBy INTEGER,
+IdentifierType VARCHAR(100),
+IdentifierValue VARCHAR(50),
+IdentifierFormat VARCHAR(30),
+IdentifierLoc VARCHAR(30),
+RecordSource VARCHAR(30),
+RecordSourceDetail VARCHAR(50),
+RecordSourceVer VARCHAR(10),
+Active BOOLEAN,
+PrimaryYN BOOLEAN,
+StartDate DATE,
+EndDate DATE,
+Comment VARCHAR(max),
+Display BOOLEAN
+);
+
+ALTER TABLE HISParticipantIdentifier ADD FOREIGN KEY (ParticipantID) REFERENCES HISParticipant(ParticipantID);
+
+ALTER TABLE HISParticipantIdentifier ADD FOREIGN KEY (CreatedBy) REFERENCES Users(USERID);
+
+ALTER TABLE HISParticipantIdentifier ADD FOREIGN KEY (Userstamp) REFERENCES Users(USERID);
+
+CREATE TABLE HISParticipantName (
+ParticipantNameID INTEGER,
+ParticipantID INTEGER,
+CreatedOn DATE,
+CreatedBy INTEGER,
+Datetimestamp DATE,
+Userstamp INTEGER,
+NameType VARCHAR(100),
+FIRSTNAME VARCHAR(30),
+LASTNAME VARCHAR(30),
+MIDDLENAME VARCHAR(30),
+RecordSource VARCHAR(30),
+RecordSourceDetail VARCHAR(50),
+RecordSourceVer VARCHAR(10),
+Active BOOLEAN,
+PrimaryYN BOOLEAN,
+StartDate DATE,
+EndDate DATE,
+Comment VARCHAR(max),
+Display BOOLEAN,
+Suffix VARCHAR(10)
+);
+
+ALTER TABLE HISParticipantName ADD FOREIGN KEY (ParticipantID) REFERENCES HISParticipant(ParticipantID);
+
+ALTER TABLE HISParticipantName ADD FOREIGN KEY (CreatedBy) REFERENCES Users(USERID);
+
+ALTER TABLE HISParticipantName ADD FOREIGN KEY (Userstamp) REFERENCES Users(USERID);
+
+CREATE TABLE HISParticipantPhone (
+ParticipantPhoneID INTEGER,
+ParticipantID INTEGER,
+CreatedOn DATE,
+Datetimestamp DATE,
+Userstamp INTEGER,
+CreatedBy INTEGER,
+PhoneType VARCHAR(100),
+PhoneCategory VARCHAR(100),
+PhoneValid BOOLEAN,
+PhoneCallable BOOLEAN,
+Phone VARCHAR(16),
+NewPhone VARCHAR(16),
+Extension VARCHAR(9),
+RecordSource VARCHAR(30),
+RecordSourceDetail VARCHAR(50),
+RecordSourceVer VARCHAR(10),
+Active BOOLEAN,
+PrimaryYN BOOLEAN,
+StartDate DATE,
+EndDate DATE,
+Comment VARCHAR(max),
+Display BOOLEAN
+);
+
+ALTER TABLE HISParticipantPhone ADD FOREIGN KEY (ParticipantID) REFERENCES HISParticipant(ParticipantID);
+
+ALTER TABLE HISParticipantPhone ADD FOREIGN KEY (CreatedBy) REFERENCES Users(USERID);
+
+ALTER TABLE HISParticipantPhone ADD FOREIGN KEY (Userstamp) REFERENCES Users(USERID);
+
+CREATE TABLE HISPeople (
+PeopleID INTEGER,
+OriginalPeopleID INTEGER,
+Caseno INTEGER,
+ContactID INTEGER,
+CreatedBy INTEGER,
+CreatedOn DATE,
+Userstamp INTEGER,
+Datetimestamp DATE,
+PersonType VARCHAR(100),
+RecordSource VARCHAR(30),
+RecordSourceDetail VARCHAR(50),
+RecordSourceVer VARCHAR(10),
+ReadOnly BOOLEAN,
+Confidential BOOLEAN,
+ReferralSource VARCHAR(100),
+DOB DATE,
+DOBEstimated BOOLEAN,
+DOD DATE,
+WebSite VARCHAR(100),
+Gender VARCHAR(100),
+Salutation VARCHAR(20),
+Suffix VARCHAR(10),
+Title VARCHAR(50),
+HairColor VARCHAR(100),
+EyeColor VARCHAR(100),
+Weight VARCHAR(20),
+Height VARCHAR(20),
+IdentifyingMarks VARCHAR(500),
+Race VARCHAR(max),
+ETHNICITYLOOKUP VARCHAR(100),
+CITIZENSHIP VARCHAR(100),
+ASIANLOOKUP VARCHAR(100),
+LATINOLOOKUP VARCHAR(100),
+PACIFICISLANDER VARCHAR(100),
+RELIGION VARCHAR(100),
+SPIRITUALORIENTATION VARCHAR(20),
+CHURCHMEMBER BOOLEAN,
+CHURCH VARCHAR(50),
+PARISHLOOKUP VARCHAR(100),
+PLANGUAGE VARCHAR(100),
+SLANGUAGE VARCHAR(100),
+InterpreterNeeded BOOLEAN,
+HispanicOrigin BOOLEAN,
+INDIANBLOOD VARCHAR(100),
+TRIBE VARCHAR(50),
+CountryOfOrigin VARCHAR(100),
+BIRTHPLACE VARCHAR(100),
+CurMaritalStatus VARCHAR(100),
+HOH BOOLEAN,
+FAMILYSIZE INTEGER,
+RESIDENCETYPE VARCHAR(100),
+RESCOUNTY VARCHAR(100),
+PAYCOUNTY VARCHAR(100),
+LEGALCOUNTY VARCHAR(100),
+LegalStatus VARCHAR(max),
+Comment VARCHAR(max),
+GenericText1 VARCHAR(500),
+GenericText2 VARCHAR(500),
+GenericText3 VARCHAR(500),
+GenericDropDown1 VARCHAR(500),
+GenericDropDown2 VARCHAR(500),
+GenericDropDown3 VARCHAR(500),
+GenericDropDown4 VARCHAR(500),
+GenericDropDown5 VARCHAR(500),
+GenericDropDown6 VARCHAR(500),
+GenericDropDown7 VARCHAR(500),
+GenericDropDown8 VARCHAR(500),
+GenericDropDown9 VARCHAR(500),
+GenericDropDown10 VARCHAR(100),
+GenericDate1 DATE,
+GenericDate2 DATE,
+GenericDate3 DATE,
+GenericCheckbox1 BOOLEAN,
+GenericCheckbox2 BOOLEAN,
+GenericCheckbox3 BOOLEAN,
+GenericNumeric1 DECIMAL(9),
+GenericNumeric2 DECIMAL(9),
+GenericNumeric3 DECIMAL(9),
+MemberID INTEGER,
+Searchable BOOLEAN,
+IncomeSource VARCHAR(max),
+TotalIncome DECIMAL(9),
+MultiRace VARCHAR(max),
+Occupation VARCHAR(100),
+Employer VARCHAR(100),
+SexualOrientation VARCHAR(100),
+Transgender VARCHAR(100),
+ProviderID INTEGER,
+NAMRSID VARCHAR(32),
+GenderIdentity VARCHAR(50),
+Pronouns VARCHAR(50),
+GenericText4 VARCHAR(500),
+GenericText5 VARCHAR(500),
+GenericText6 VARCHAR(500),
+GenericText7 VARCHAR(500),
+GenericText8 VARCHAR(500),
+GenericText9 VARCHAR(500),
+GenericText10 VARCHAR(500),
+GenericText11 VARCHAR(500),
+ReporterType VARCHAR(100),
+LivingSettingStart VARCHAR(max),
+BehavioralScreening VARCHAR(max),
+Disabilities VARCHAR(max),
+GenericText13 VARCHAR(max),
+GenericText14 VARCHAR(max),
+GenericText15 VARCHAR(max),
+LevelOfEducation VARCHAR(500),
+EmploymentStatus VARCHAR(100),
+IncomeLevel VARCHAR(100),
+VeteranStatus VARCHAR(500),
+ADLScoreNAMRS INTEGER,
+IADLScoreNAMRS INTEGER,
+LivingSettingClose VARCHAR(max),
+DecisionMakerStart VARCHAR(max),
+DecisionMakerClose VARCHAR(max),
+ServicesStart VARCHAR(max),
+ServicesAPS VARCHAR(max),
+ServicesReferred VARCHAR(max),
+ServicesClose VARCHAR(max),
+PreviousVictim VARCHAR(500),
+CohabitationStart VARCHAR(100),
+CohabitationClose VARCHAR(100),
+Relationship VARCHAR(100),
+PerpAssociationStart VARCHAR(100),
+PerpAssociationClose VARCHAR(100),
+PerpLegalRemedy VARCHAR(max),
+DirectionsToHome VARCHAR(4000),
+ReceivingServices VARCHAR(max)
+);
+
+ALTER TABLE HISPeople ADD FOREIGN KEY (ContactID) REFERENCES CONTACT(CONTACTID);
+
+ALTER TABLE HISPeople ADD FOREIGN KEY (Caseno) REFERENCES DEMOGRAPHICS(CASENO);
+
+ALTER TABLE HISPeople ADD FOREIGN KEY (CreatedBy) REFERENCES Users(USERID);
+
+ALTER TABLE HISPeople ADD FOREIGN KEY (Userstamp) REFERENCES Users(USERID);
+
+ALTER TABLE HISPeople ADD FOREIGN KEY (ProviderID) REFERENCES Vendors(VendorID);
+
+ALTER TABLE HISPeople ADD FOREIGN KEY (MemberID) REFERENCES WORKERS(MEMBERID);
+
+CREATE TABLE HISPeopleAddress (
+PeopleAddressID INTEGER,
+PeopleID INTEGER,
+CreatedBy INTEGER,
+CreatedOn DATE,
+Userstamp INTEGER,
+DateTimeStamp DATE,
+RecordSource VARCHAR(30),
+RecordSourceDetail VARCHAR(50),
+RecordSourceVer VARCHAR(10),
+StartDate DATE,
+EndDate DATE,
+Active BOOLEAN,
+PrimaryYN BOOLEAN,
+Comment VARCHAR(max),
+AddressType VARCHAR(100),
+AddressCategory VARCHAR(100),
+AddressValid BOOLEAN,
+AddressMailable BOOLEAN,
+Street VARCHAR(100),
+Street2 VARCHAR(100),
+City VARCHAR(30),
+State VARCHAR(100),
+StateAbrev VARCHAR(2),
+ZipCode VARCHAR(10),
+PostalCode VARCHAR(30),
+FipsCode VARCHAR(15),
+CensusTract VARCHAR(7),
+District VARCHAR(100),
+County VARCHAR(100),
+Country VARCHAR(100),
+CountryAbrev VARCHAR(2),
+GenericText1 VARCHAR(255),
+GenericText2 VARCHAR(255),
+GenericDropDown1 VARCHAR(100),
+GenericDropDown2 VARCHAR(100),
+GenericDate1 DATE,
+GenericDate2 DATE,
+GenericCheckbox1 BOOLEAN,
+GenericCheckbox2 BOOLEAN,
+GenericNumeric1 DECIMAL(9),
+GenericNumeric2 DECIMAL(9),
+Display BOOLEAN,
+AddressValidDate DATE,
+GPSLocation VARCHAR(50),
+DescriptiveAddress VARCHAR(4000),
+Rural VARCHAR(100)
+);
+
+ALTER TABLE HISPeopleAddress ADD FOREIGN KEY (PeopleID) REFERENCES HISPeople(PeopleID);
+
+ALTER TABLE HISPeopleAddress ADD FOREIGN KEY (CreatedBy) REFERENCES Users(USERID);
+
+ALTER TABLE HISPeopleAddress ADD FOREIGN KEY (Userstamp) REFERENCES Users(USERID);
+
+CREATE TABLE HISPeopleEmail (
+PeopleEmailID INTEGER,
+PeopleID INTEGER,
+CreatedBy INTEGER,
+CreatedOn DATE,
+Userstamp INTEGER,
+Datetimestamp DATE,
+RecordSource VARCHAR(30),
+RecordSourceDetail VARCHAR(50),
+RecordSourceVer VARCHAR(10),
+Active BOOLEAN,
+PrimaryYN BOOLEAN,
+StartDate DATE,
+EndDate DATE,
+Comment VARCHAR(max),
+EmailType VARCHAR(100),
+EmailCategory VARCHAR(100),
+EmailValid BOOLEAN,
+EmailUsable BOOLEAN,
+Email VARCHAR(100),
+Display BOOLEAN
+);
+
+ALTER TABLE HISPeopleEmail ADD FOREIGN KEY (PeopleID) REFERENCES HISPeople(PeopleID);
+
+ALTER TABLE HISPeopleEmail ADD FOREIGN KEY (CreatedBy) REFERENCES Users(USERID);
+
+ALTER TABLE HISPeopleEmail ADD FOREIGN KEY (Userstamp) REFERENCES Users(USERID);
+
+CREATE TABLE HISPeopleIdentifier (
+PeopleIdentifierID INTEGER,
+PeopleID INTEGER,
+CreatedBy INTEGER,
+CreatedOn DATE,
+Userstamp INTEGER,
+Datetimestamp DATE,
+RecordSource VARCHAR(30),
+RecordSourceDetail VARCHAR(50),
+RecordSourceVer VARCHAR(10),
+Active BOOLEAN,
+PrimaryYN BOOLEAN,
+StartDate DATE,
+EndDate DATE,
+Comment VARCHAR(max),
+IdentifierType VARCHAR(100),
+IdentifierValue VARCHAR(50),
+IdentifierFormat VARCHAR(30),
+IdentifierLoc VARCHAR(30),
+Display BOOLEAN
+);
+
+ALTER TABLE HISPeopleIdentifier ADD FOREIGN KEY (PeopleID) REFERENCES HISPeople(PeopleID);
+
+ALTER TABLE HISPeopleIdentifier ADD FOREIGN KEY (CreatedBy) REFERENCES Users(USERID);
+
+ALTER TABLE HISPeopleIdentifier ADD FOREIGN KEY (Userstamp) REFERENCES Users(USERID);
+
+CREATE TABLE HISPeopleImage (
+PeopleImageID INTEGER NOT NULL,
+PeopleID INTEGER,
+ImageFile VARCHAR(max),
+ImageName VARCHAR(100),
+UserStamp INTEGER,
+DateTimeStamp DATE,
+Comment VARCHAR(255),
+ThumbnailFile VARCHAR(max),
+PageUploadedFrom VARCHAR(50)
+);
+
+CREATE TABLE HISPeopleName (
+PeopleNameID INTEGER,
+PeopleID INTEGER,
+CreatedBy INTEGER,
+CreatedOn DATE,
+Userstamp INTEGER,
+Datetimestamp DATE,
+RecordSource VARCHAR(30),
+RecordSourceDetail VARCHAR(50),
+RecordSourceVer VARCHAR(10),
+Active BOOLEAN,
+PrimaryYN BOOLEAN,
+StartDate DATE,
+EndDate DATE,
+Comment VARCHAR(max),
+NameType VARCHAR(100),
+FIRSTNAME VARCHAR(30),
+LASTNAME VARCHAR(30),
+MIDDLENAME VARCHAR(30),
+Display BOOLEAN
+);
+
+ALTER TABLE HISPeopleName ADD FOREIGN KEY (PeopleID) REFERENCES HISPeople(PeopleID);
+
+ALTER TABLE HISPeopleName ADD FOREIGN KEY (CreatedBy) REFERENCES Users(USERID);
+
+ALTER TABLE HISPeopleName ADD FOREIGN KEY (Userstamp) REFERENCES Users(USERID);
+
+CREATE TABLE HISPeoplePhone (
+PeoplePhoneID INTEGER,
+PeopleID INTEGER,
+CreatedBy INTEGER,
+CreatedOn DATE,
+Userstamp INTEGER,
+Datetimestamp DATE,
+RecordSource VARCHAR(30),
+RecordSourceDetail VARCHAR(50),
+RecordSourceVer VARCHAR(10),
+Active BOOLEAN,
+PrimaryYN BOOLEAN,
+StartDate DATE,
+EndDate DATE,
+Comment VARCHAR(max),
+PhoneType VARCHAR(100),
+PhoneCategory VARCHAR(100),
+PhoneValid BOOLEAN,
+PhoneCallable BOOLEAN,
+Phone VARCHAR(16),
+NewPhone VARCHAR(16),
+Extension VARCHAR(9),
+Display BOOLEAN
+);
+
+ALTER TABLE HISPeoplePhone ADD FOREIGN KEY (PeopleID) REFERENCES HISPeople(PeopleID);
+
+ALTER TABLE HISPeoplePhone ADD FOREIGN KEY (CreatedBy) REFERENCES Users(USERID);
+
+ALTER TABLE HISPeoplePhone ADD FOREIGN KEY (Userstamp) REFERENCES Users(USERID);
+
+CREATE TABLE HISPhone (
+PhoneID INTEGER,
+PhoneType VARCHAR(100),
+PhoneDescription VARCHAR(100),
+Primary BOOLEAN,
+PhoneNumber VARCHAR(16),
+Extension VARCHAR(9),
+StartDate DATE,
+EndDate DATE,
+Active BOOLEAN,
+UserStamp INTEGER,
+DateTimeStamp DATE,
+GenericDropDown1 VARCHAR(100),
+GenericDropDown2 VARCHAR(100),
+GenericText1 VARCHAR(max),
+GenericText2 VARCHAR(max),
+GenericDate1 DATE,
+GenericDate2 DATE,
+PageName VARCHAR(100),
+PageEntityID INTEGER,
+ChapterName VARCHAR(100),
+ChapterEntityID INTEGER,
+Comment VARCHAR(max),
+PhoneFieldLocation VARCHAR(255)
+);
+
+CREATE TABLE HISPlace (
+PlaceID INTEGER NOT NULL,
+ZipCode VARCHAR(10) NOT NULL,
+FipsCode VARCHAR(5),
+City VARCHAR(100),
+District VARCHAR(100),
+Region VARCHAR(100),
+County VARCHAR(100),
+State VARCHAR(100) NOT NULL,
+StateAbrev VARCHAR(2) NOT NULL,
+Country VARCHAR(100),
+CountryAbrev VARCHAR(2),
+Active BOOLEAN NOT NULL,
+RecordSource VARCHAR(30),
+RecordSourceDetail VARCHAR(50),
+RecordSourceVer VARCHAR(10),
+RecordSourceID INTEGER,
+Imported BOOLEAN,
+DateTimeStamp DATE NOT NULL,
+Userstamp INTEGER,
+Latitude DECIMAL(9),
+Longitude DECIMAL(9),
+InquiryQueue VARCHAR(100),
+IncidentQueue VARCHAR(100),
+AreaCode VARCHAR(90),
+CityType VARCHAR(2),
+CityAliasAbbreviation VARCHAR(26),
+CityAliasName VARCHAR(70),
+TimeZone VARCHAR(4),
+Elevation INTEGER,
+CountyFIPS VARCHAR(10),
+DaylightSaving VARCHAR(2),
+Rural VARCHAR(100),
+RUCACode VARCHAR(50)
+);
+
+ALTER TABLE HISPlace ADD FOREIGN KEY (Userstamp) REFERENCES Users(USERID);
+
+CREATE TABLE HISPlannedServiceAssessment (
+PlannedServiceAssessmentID INTEGER NOT NULL,
+PlanServiceID INTEGER NOT NULL,
+AssessmentSuggestedServiceID INTEGER NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+ALTER TABLE HISPlannedServiceAssessment ADD FOREIGN KEY (PlanServiceID) REFERENCES PLANNEDSERVICES(PLANSERVICEID);
+
+ALTER TABLE HISPlannedServiceAssessment ADD FOREIGN KEY (UserStamp) REFERENCES Users(USERID);
+
+CREATE TABLE HISPremiumPayment (
+PremiumPaymentID INTEGER NOT NULL,
+PremiumPaymentBatchID INTEGER NOT NULL,
+AssignedNumber VARCHAR(80) NOT NULL,
+CaseNo INTEGER,
+LastName VARCHAR(50) NOT NULL,
+SecID VARCHAR(80) NOT NULL,
+InsurancePolicyNo VARCHAR(50) NOT NULL,
+TCN VARCHAR(15) NOT NULL,
+AmountPaid VARCHAR(8) NOT NULL,
+AmountBilled VARCHAR(8),
+FromDate DATE NOT NULL,
+ToDate DATE,
+ConsolidatedInvoiceNo VARCHAR(50)
+);
+
+ALTER TABLE HISPremiumPayment ADD FOREIGN KEY (CaseNo) REFERENCES DEMOGRAPHICS(CASENO);
+
+CREATE TABLE HISPremiumPaymentAdjustment (
+PremiumPaymentAdjustmentID INTEGER NOT NULL,
+PremiumPaymentID INTEGER NOT NULL,
+AdjustmentAmount VARCHAR(8) NOT NULL,
+ReasonCode VARCHAR(2) NOT NULL
+);
+
+CREATE TABLE HISPremiumPaymentBatch (
+PremiumPaymentBatchID INTEGER NOT NULL,
+TransactionHandleCode VARCHAR(1),
+Amount VARCHAR(8),
+CreditDebit VARCHAR(1),
+PaymentMethodCode VARCHAR(3),
+OriginatingCompanyID VARCHAR(10),
+PaymentDate DATE,
+PayorID INTEGER,
+FileName VARCHAR(100),
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+FileStatus VARCHAR(100),
+Active BOOLEAN NOT NULL
+);
+
+ALTER TABLE HISPremiumPaymentBatch ADD FOREIGN KEY (PayorID) REFERENCES Payors(PayorID);
+
+CREATE TABLE HISPushConfigTracker (
+HISPushConfigTrackerID INTEGER NOT NULL,
+PlanServiceID INTEGER NOT NULL,
+AuthServiceID INTEGER NOT NULL,
+PushConfigID INTEGER,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+Units DECIMAL(9),
+MaxAmount DECIMAL(9),
+StartDate DATE,
+EndDate DATE
+);
+
+CREATE TABLE HISRECURRINGENROLLMENT (
+RecurringEnrollID INTEGER NOT NULL,
+EnrollID INTEGER NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+StartDate DATE NOT NULL,
+EndDate DATE,
+Disposition VARCHAR(100) NOT NULL,
+DispositionDate DATE NOT NULL,
+Generic1 VARCHAR(100),
+Generic2 VARCHAR(100),
+Generic3 VARCHAR(100),
+GenericDate1 DATE,
+GenericDate2 DATE
+);
+
+ALTER TABLE HISRECURRINGENROLLMENT ADD FOREIGN KEY (EnrollID) REFERENCES ENROLLMENTS(ENROLLID);
+
+ALTER TABLE HISRECURRINGENROLLMENT ADD FOREIGN KEY (UserStamp) REFERENCES Users(USERID);
+
+CREATE TABLE HISReferral (
+ReferralID INTEGER NOT NULL,
+EntityID INTEGER NOT NULL,
+EntityName VARCHAR(20) NOT NULL,
+VendorID VARCHAR(200) NOT NULL,
+ReferralDate DATE NOT NULL,
+MemberID INTEGER NOT NULL,
+Comment VARCHAR(max),
+ExcludeFromReport BOOLEAN NOT NULL,
+IsExternal BOOLEAN NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE HISReferralService (
+ReferralServiceID INTEGER NOT NULL,
+ReferralID INTEGER NOT NULL,
+VServiceID VARCHAR(200) NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE HISRule (
+RuleID INTEGER NOT NULL,
+RulePolicyID INTEGER NOT NULL,
+RuleName VARCHAR(100) NOT NULL,
+Description VARCHAR(1000)
+);
+
+CREATE TABLE HISRuleParameter (
+RuleParameterID INTEGER NOT NULL,
+RuleID INTEGER NOT NULL,
+ParameterName VARCHAR(200) NOT NULL,
+ParameterValue VARCHAR(200),
+DefaultValue VARCHAR(200),
+Description VARCHAR(200)
+);
+
+CREATE TABLE HISRulePolicy (
+RulePolicyID INTEGER NOT NULL,
+PolicyName VARCHAR(50) NOT NULL,
+PolicyVersion VARCHAR(50),
+Description VARCHAR(1000),
+OrgName VARCHAR(200)
+);
+
+CREATE TABLE HISScreenQuestionCondition (
+ScreenQuestionConditionID INTEGER NOT NULL,
+SourceScaleID INTEGER NOT NULL,
+TriggerScaleID INTEGER NOT NULL,
+Value VARCHAR(400) NOT NULL,
+Action VARCHAR(15),
+ACTIVE INTEGER,
+DATETIMESTAMP DATE NOT NULL,
+UserStamp INTEGER NOT NULL,
+Ranking INTEGER
+);
+
+ALTER TABLE HISScreenQuestionCondition ADD FOREIGN KEY (UserStamp) REFERENCES Users(USERID);
+
+CREATE TABLE HISServiceArea (
+ServiceAreaID INTEGER,
+Unrestricted BOOLEAN,
+State VARCHAR(max),
+Region VARCHAR(max),
+County VARCHAR(max),
+City VARCHAR(max),
+ZipCode VARCHAR(max),
+ChapterEntityID INTEGER,
+ChapterName VARCHAR(100),
+PageEntityID INTEGER,
+PageName VARCHAR(100),
+UserStamp INTEGER,
+DateTimeStamp DATE
+);
+
+CREATE TABLE HISServiceCodeTaxonomy (
+ServiceCodeTaxonomyID INTEGER NOT NULL,
+ServiceID INTEGER NOT NULL,
+TaxonomyID INTEGER NOT NULL,
+Active BOOLEAN NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+ALTER TABLE HISServiceCodeTaxonomy ADD FOREIGN KEY (UserStamp) REFERENCES Users(USERID);
+
+ALTER TABLE HISServiceCodeTaxonomy ADD FOREIGN KEY (TaxonomyID) REFERENCES HISTaxonomy(TaxonomyID);
+
+ALTER TABLE HISServiceCodeTaxonomy ADD FOREIGN KEY (ServiceID) REFERENCES SERVICECODES(SERVICEID);
+
+CREATE TABLE HISServiceSchedule (
+ServiceScheduleID INTEGER NOT NULL,
+EntityID INTEGER NOT NULL,
+EntityName VARCHAR(255) NOT NULL,
+AllocationType VARCHAR(100) NOT NULL,
+Frequency INTEGER NOT NULL,
+UnitsPerVisit DECIMAL(9) NOT NULL,
+NumberOfVisits INTEGER,
+TotalNumberOfVisits INTEGER,
+AmountPerVisit DECIMAL(9) NOT NULL,
+ServiceScheduleSummary VARCHAR(max),
+UnitsAllocated INTEGER NOT NULL,
+AmountAllocated DECIMAL(9) NOT NULL,
+Comment VARCHAR(max),
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+CopiedFromServiceScheduleID INTEGER
+);
+
+ALTER TABLE HISServiceSchedule ADD FOREIGN KEY (UserStamp) REFERENCES Users(USERID);
+
+CREATE TABLE HISTaxonomy (
+TaxonomyID INTEGER,
+ParentTaxonomyID INTEGER,
+Code VARCHAR(255),
+Name VARCHAR(255),
+Definition VARCHAR(3000),
+Facet VARCHAR(100),
+Comments VARCHAR(1000),
+BibliographicReference VARCHAR(2000),
+DateCreated DATE,
+Active BOOLEAN,
+UserStamp INTEGER,
+DateTimeStamp DATE
+);
+
+ALTER TABLE HISTaxonomy ADD FOREIGN KEY (ParentTaxonomyID) REFERENCES HISTaxonomy(TaxonomyID);
+
+ALTER TABLE HISTaxonomy ADD FOREIGN KEY (UserStamp) REFERENCES Users(USERID);
+
+CREATE TABLE HISTaxonomyExternalTerm (
+TaxonomyExternalTermID INTEGER NOT NULL,
+TaxonomyID INTEGER NOT NULL,
+System VARCHAR(100) NOT NULL,
+ExternalCode VARCHAR(100) NOT NULL,
+Name VARCHAR(255) NOT NULL,
+Active BOOLEAN NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+ALTER TABLE HISTaxonomyExternalTerm ADD FOREIGN KEY (TaxonomyID) REFERENCES HISTaxonomy(TaxonomyID);
+
+ALTER TABLE HISTaxonomyExternalTerm ADD FOREIGN KEY (UserStamp) REFERENCES Users(USERID);
+
+CREATE TABLE HISTaxonomyOldCode (
+TaxonomyOldCodeID INTEGER NOT NULL,
+TaxonomyID INTEGER NOT NULL,
+OldCode VARCHAR(255),
+Active BOOLEAN NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+ALTER TABLE HISTaxonomyOldCode ADD FOREIGN KEY (TaxonomyID) REFERENCES HISTaxonomy(TaxonomyID);
+
+ALTER TABLE HISTaxonomyOldCode ADD FOREIGN KEY (UserStamp) REFERENCES Users(USERID);
+
+CREATE TABLE HISTaxonomyRelatedConcept (
+TaxonomyRelatedConceptID INTEGER NOT NULL,
+TaxonomyID INTEGER NOT NULL,
+RelatedConcept VARCHAR(max),
+Active BOOLEAN NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+ALTER TABLE HISTaxonomyRelatedConcept ADD FOREIGN KEY (TaxonomyID) REFERENCES HISTaxonomy(TaxonomyID);
+
+ALTER TABLE HISTaxonomyRelatedConcept ADD FOREIGN KEY (UserStamp) REFERENCES Users(USERID);
+
+CREATE TABLE HISTaxonomySeeAlsoCode (
+TaxonomySeeAlsoCodeID INTEGER NOT NULL,
+TaxonomyID INTEGER NOT NULL,
+SeeAlsoTaxonomyID INTEGER NOT NULL,
+Active BOOLEAN NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+ALTER TABLE HISTaxonomySeeAlsoCode ADD FOREIGN KEY (TaxonomyID) REFERENCES HISTaxonomy(TaxonomyID);
+
+ALTER TABLE HISTaxonomySeeAlsoCode ADD FOREIGN KEY (UserStamp) REFERENCES Users(USERID);
+
+CREATE TABLE HISTaxonomyUseReference (
+TaxonomyUseReferenceID INTEGER,
+TaxonomyID INTEGER,
+UseReference VARCHAR(max),
+Active BOOLEAN,
+UserStamp INTEGER,
+DateTimeStamp DATE
+);
+
+ALTER TABLE HISTaxonomyUseReference ADD FOREIGN KEY (TaxonomyID) REFERENCES HISTaxonomy(TaxonomyID);
+
+ALTER TABLE HISTaxonomyUseReference ADD FOREIGN KEY (UserStamp) REFERENCES Users(USERID);
+
+CREATE TABLE HISTimer (
+TimerID INTEGER NOT NULL,
+StartTime DATE,
+EndTime DATE,
+RecordSource VARCHAR(50),
+GenericText1 VARCHAR(max),
+GenericText2 VARCHAR(max),
+UserStamp INTEGER,
+DateTimeStamp DATE,
+ChapterName VARCHAR(100) NOT NULL,
+ChapterEntityID INTEGER NOT NULL,
+PageName VARCHAR(100) NOT NULL,
+PageEntityID INTEGER NOT NULL,
+MemberID INTEGER NOT NULL
+);
+
+CREATE TABLE HISVendorDirectory (
+VendorDirectoryID INTEGER NOT NULL,
+VendorID INTEGER NOT NULL,
+PublishDirectory BOOLEAN,
+PublishWebsite BOOLEAN,
+ShortDescription VARCHAR(max),
+LongDescription VARCHAR(max),
+PrivateDescription VARCHAR(max),
+ImportNotes VARCHAR(max),
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+WRCPopulationServed VARCHAR(100)
+);
+
+CREATE TABLE HISWordMergeConfigPackage (
+WordMergeConfigPackageID INTEGER NOT NULL,
+WordMergeTemplateID INTEGER NOT NULL,
+PackageID INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+AppType VARCHAR(5),
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE ICAPDomain (
+ICAPDomainID INTEGER NOT NULL,
+AgeYear INTEGER,
+AgeMonth VARCHAR(25),
+SocialCommunication INTEGER,
+PersonalLivingSkill INTEGER,
+CommunityLivingSkill INTEGER,
+BroadIndependence INTEGER,
+DATETIMESTAMP DATE NOT NULL,
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE Incident (
+IncidentID INTEGER,
+FundCode VARCHAR(100),
+StartDate DATE,
+EndDate DATE,
+StartTime DATE,
+EndTime DATE,
+Type VARCHAR(100),
+Category VARCHAR(100),
+Location VARCHAR(100),
+LocationOther VARCHAR(100),
+Priority VARCHAR(100),
+DueDate DATE,
+CompletionDate DATE,
+Status VARCHAR(100),
+Result VARCHAR(100),
+Description VARCHAR(max),
+Conclusion VARCHAR(max),
+GenericDropDown1 VARCHAR(100),
+GenericDropDown2 VARCHAR(max),
+GenericDropDown3 VARCHAR(100),
+GenericDropDown4 VARCHAR(100),
+GenericText1 VARCHAR(max),
+MemberID INTEGER,
+DateTimeStamp DATE,
+UserStamp INTEGER,
+Immediacy VARCHAR(100),
+DueTime DATE,
+Confidential BOOLEAN,
+FirstContactDate DATE,
+FirstContactTime DATE,
+ActualContactDate DATE,
+ActualContactTime DATE,
+Agency VARCHAR(75),
+Street VARCHAR(100),
+Street2 VARCHAR(100),
+City VARCHAR(100),
+State VARCHAR(100),
+Zip VARCHAR(10),
+Phone VARCHAR(18),
+County VARCHAR(100),
+Region VARCHAR(100),
+AbuseResult VARCHAR(max),
+IncidentNature VARCHAR(100),
+LawInvolvement VARCHAR(100),
+LawAgencyVendorID INTEGER,
+LawNotifiedDate DATE,
+RiskToInvestigator VARCHAR(100),
+ExtensionRequested VARCHAR(100),
+ExtensionDate DATE,
+ExtensionComment VARCHAR(1000),
+LegalAction BOOLEAN,
+IncidentQueue VARCHAR(100),
+Comment VARCHAR(4000),
+ReportDate DATE,
+ReportTime DATE,
+ClosureReason VARCHAR(100),
+OngoingSrvsStatus VARCHAR(100),
+OngoingSrvsStartDate DATE,
+OngoingSrvsEndDate DATE,
+NiffiCriteria VARCHAR(max),
+NiffiComments VARCHAR(1000),
+Jurisdiction VARCHAR(100),
+DocsAttached BOOLEAN,
+PrimaryIncident BOOLEAN,
+SecondaryMemberID INTEGER,
+OngoingSrvComment VARCHAR(max),
+OngoingSrvRequestTermDate DATE,
+NiffiRequested VARCHAR(100),
+NiffiRequestedDate DATE,
+NiffiRequestedComments VARCHAR(max),
+CreationDateTime DATE,
+ReportName VARCHAR(50),
+ReportNumber VARCHAR(20),
+SendingDocs VARCHAR(100),
+CaseIdentifier VARCHAR(16),
+ProviderID INTEGER,
+ReportType2 VARCHAR(100),
+CrossReporting VARCHAR(max),
+F2FWaiverRequest VARCHAR(100),
+F2FWaiverRequestDate DATE,
+F2FWaiverRequestComment VARCHAR(4000),
+DateIncidentAssigned DATE,
+AddressValid BOOLEAN,
+AddressValidDate DATE,
+TertiaryMemberID INTEGER,
+InquiryResolutionDate DATE,
+InquiryResolutionTime DATE,
+NAMRSID VARCHAR(32),
+GenericWorker1 INTEGER,
+GenericWorker2 INTEGER,
+GenericWorker3 INTEGER,
+DateCrossReport DATE,
+FacilityID INTEGER,
+GenericDate1 DATE,
+GenericDate2 DATE,
+GenericDate3 DATE,
+FacilityReportDate DATE,
+FacilityReportTime DATE,
+AgencyID INTEGER,
+ProgramID INTEGER,
+SecondaryDueDate DATE,
+GenericText2 VARCHAR(500),
+GenericText3 VARCHAR(500)
+);
+
+ALTER TABLE Incident ADD FOREIGN KEY (TertiaryMemberID) REFERENCES WORKERS(MEMBERID);
+
+ALTER TABLE Incident ADD FOREIGN KEY (LawAgencyVendorID) REFERENCES Vendors(VendorID);
+
+ALTER TABLE Incident ADD FOREIGN KEY (MemberID) REFERENCES WORKERS(MEMBERID);
+
+CREATE TABLE IncidentAssociation (
+IncidentAssociationID INTEGER NOT NULL,
+IncidentID INTEGER NOT NULL,
+ChapterName VARCHAR(100) NOT NULL,
+ChapterEntityID INTEGER NOT NULL,
+PageName VARCHAR(100) NOT NULL,
+EntityID INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+UserStamp INTEGER NOT NULL
+);
+
+ALTER TABLE IncidentAssociation ADD FOREIGN KEY (IncidentID) REFERENCES Incident(IncidentID);
+
+CREATE TABLE IncidentDetReview (
+IncidentDetReviewID INTEGER NOT NULL,
+Assessment VARCHAR(50),
+Scale VARCHAR(255),
+Item VARCHAR(max),
+Score DECIMAL(9),
+Comments VARCHAR(max),
+YN INTEGER,
+LookupValue VARCHAR(50),
+ScaleID INTEGER NOT NULL,
+QuestionID VARCHAR(15),
+SecID VARCHAR(500),
+AssessID INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+UserStamp INTEGER NOT NULL
+);
+
+ALTER TABLE IncidentDetReview ADD FOREIGN KEY (AssessID) REFERENCES IncidentReview(AssessID);
+
+CREATE TABLE IncidentRecipient (
+IncidentRecipientID INTEGER NOT NULL,
+IncidentID INTEGER NOT NULL,
+MemberID INTEGER NOT NULL,
+NotifyDate DATE NOT NULL,
+ViewDate DATE,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+ALTER TABLE IncidentRecipient ADD FOREIGN KEY (IncidentID) REFERENCES Incident(IncidentID);
+
+ALTER TABLE IncidentRecipient ADD FOREIGN KEY (MemberID) REFERENCES WORKERS(MEMBERID);
+
+CREATE TABLE IncidentReview (
+AssessID INTEGER NOT NULL,
+Assessment VARCHAR(50),
+Review VARCHAR(100),
+NumDaysTilNext INTEGER,
+Score1 DECIMAL(9),
+Score2 DECIMAL(9),
+Rater INTEGER,
+Status VARCHAR(100),
+ReviewDate DATE,
+ApprovedBy INTEGER,
+ApproveDate DATE,
+ApproveUser VARCHAR(10),
+StartDate DATE,
+EndDate DATE,
+TriggerID INTEGER,
+TriggerPage VARCHAR(20),
+IncidentID INTEGER NOT NULL,
+ScreenDesignID INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+UserStamp INTEGER NOT NULL,
+ParticipantID INTEGER,
+InfoPathFormStatus INTEGER,
+ExpirationDate DATE,
+Expired BOOLEAN,
+InfoPathFormUserStamp INTEGER,
+InfoPathFormCheckOutDate DATE,
+ShowConsumer BOOLEAN
+);
+
+ALTER TABLE IncidentReview ADD FOREIGN KEY (IncidentID) REFERENCES Incident(IncidentID);
+
+CREATE TABLE INCOMERANGES (
+INCOMERANGEID DECIMAL(9) NOT NULL,
+LOWINCOME DECIMAL(9),
+HIGHINCOME DECIMAL(9),
+PERCENTOFTOTAL VARCHAR(8),
+MAXAMOUNT DECIMAL(9),
+PERCENTOFINCOME VARCHAR(8),
+FAMILYSIZE INTEGER
+);
+
+CREATE TABLE IndexCode (
+IndexCodeID INTEGER NOT NULL,
+IndexCode VARCHAR(10) NOT NULL,
+IndexDescription VARCHAR(100),
+SecondaryCode VARCHAR(100),
+AccountCode VARCHAR(100),
+Active BOOLEAN NOT NULL,
+DateTimestamp DATE NOT NULL,
+UserStamp INTEGER NOT NULL,
+Agencycode VARCHAR(30),
+Organization VARCHAR(30)
+);
+
+CREATE TABLE INQDOCDETAILS (
+INQDOCID INTEGER NOT NULL,
+SCALE VARCHAR(255),
+SCORE INTEGER,
+COMMENTS VARCHAR(max),
+ITEM VARCHAR(max),
+SCALEID INTEGER,
+LOOKUPVALUE VARCHAR(50),
+INQDOCDETAILID INTEGER NOT NULL,
+APPTYPE VARCHAR(5),
+DateTimestamp DATE NOT NULL,
+UserStamp INTEGER NOT NULL,
+SecID VARCHAR(500),
+QuestionID VARCHAR(15)
+);
+
+CREATE TABLE INQDocumentATION (
+INQDOCID INTEGER NOT NULL,
+INQUIRYID INTEGER,
+STATUS VARCHAR(100),
+DOCBY INTEGER,
+DOCDATE DATE,
+DATETIMESTAMP DATE NOT NULL,
+DOCSTARTTIME DATE,
+DOCENDTIME DATE,
+APPTYPE VARCHAR(5),
+ScreenDesignID INTEGER NOT NULL,
+UserStamp INTEGER NOT NULL,
+ParticipantID INTEGER,
+InfoPathFormStatus INTEGER,
+ShowConsumer BOOLEAN,
+FundCode VARCHAR(25),
+ExpirationDate DATE,
+Expired BOOLEAN,
+InfoPathFormUserStamp INTEGER,
+InfoPathFormCheckOutDate DATE,
+Agency INTEGER,
+ServiceProvider INTEGER,
+Program INTEGER
+);
+
+ALTER TABLE INQDocumentATION ADD FOREIGN KEY (Agency) REFERENCES Vendors(VendorID);
+
+ALTER TABLE INQDocumentATION ADD FOREIGN KEY (Program) REFERENCES Vendors(VendorID);
+
+ALTER TABLE INQDocumentATION ADD FOREIGN KEY (ServiceProvider) REFERENCES Vendors(VendorID);
+
+CREATE TABLE INQUIRY (
+INQUIRYID INTEGER,
+CASENO INTEGER,
+PROVIDERID INTEGER,
+INQDATE DATE,
+INQTIME DATE,
+CALLER VARCHAR(50),
+RECEIVEDBY INTEGER,
+INQDESCRIPTION VARCHAR(max),
+INQTYPE VARCHAR(100),
+STATUS VARCHAR(100),
+COMPLETEDATE DATE,
+DATETIMESTAMP DATE,
+ASSIGNEDTO INTEGER,
+FUNDCODE VARCHAR(25),
+INQGENERIC1 VARCHAR(100),
+INQGENERIC2 VARCHAR(100),
+INQGENERIC3 VARCHAR(100),
+INQGENERIC4 VARCHAR(max),
+CLASTNAME VARCHAR(30),
+CFIRSTNAME VARCHAR(30),
+CSTREET VARCHAR(100),
+CSTREET2 VARCHAR(100),
+CCITY VARCHAR(30),
+CSTATE VARCHAR(100),
+CZIP VARCHAR(10),
+CPHONE VARCHAR(50),
+RELATIONSHIP VARCHAR(50),
+RESOURCEID INTEGER,
+HOME VARCHAR(75),
+GENERICTEXT1 VARCHAR(75),
+SECID VARCHAR(15),
+TERID VARCHAR(50),
+FAMILYID VARCHAR(20),
+IMPORTFROM VARCHAR(50),
+AppType VARCHAR(5),
+Category VARCHAR(100),
+Disposition VARCHAR(100),
+ImageNumber VARCHAR(20),
+Resolution VARCHAR(max),
+ResolutionDate DATE,
+ResolutionTime DATE,
+TrackingNumber VARCHAR(20),
+Type VARCHAR(100),
+VendorNO VARCHAR(50),
+Notes VARCHAR(max),
+Queue VARCHAR(100),
+InquirySource VARCHAR(100),
+AuthorizedRep VARCHAR(100),
+DateReceived DATE,
+DateSent DATE,
+FEIN VARCHAR(10),
+UserStamp INTEGER,
+LASTNAME VARCHAR(30),
+FIRSTNAME VARCHAR(30),
+AGENCY VARCHAR(75),
+STREET VARCHAR(100),
+STREET2 VARCHAR(100),
+CITY VARCHAR(30),
+STATE VARCHAR(100),
+ZIP VARCHAR(10),
+PHONE VARCHAR(18),
+EXTENSION VARCHAR(7),
+DOB DATE,
+SSN VARCHAR(15),
+SIN VARCHAR(11),
+Generic1 VARCHAR(100),
+Generic2 VARCHAR(100),
+Generic3 VARCHAR(100),
+Generic4 VARCHAR(100),
+Gender VARCHAR(100),
+Ethnicity VARCHAR(100),
+Race VARCHAR(max),
+Education VARCHAR(100),
+Age VARCHAR(8),
+AddressValid BOOLEAN,
+EntryDate DATE,
+EntryTime DATE,
+ReportNumber VARCHAR(20),
+ReportName VARCHAR(50),
+Confidential BOOLEAN,
+IncidentDate DATE,
+IncidentTime DATE,
+IncidentLocation VARCHAR(100),
+County VARCHAR(100),
+Region VARCHAR(100),
+AbuseResult VARCHAR(max),
+IncidentNature VARCHAR(100),
+LawInvolvement VARCHAR(100),
+LawAgencyVendorID INTEGER,
+LawNotifiedDate DATE,
+RiskToInvestigator VARCHAR(100),
+CrossReporting VARCHAR(max),
+ScreeningPriority VARCHAR(100),
+ScreeningMemberID INTEGER,
+Immediacy VARCHAR(100),
+IncidentQueue VARCHAR(100),
+Comment VARCHAR(4000),
+Verbal BOOLEAN,
+RapeKitNeeded VARCHAR(100),
+ADRCActivities VARCHAR(max),
+FollowUpRequired BOOLEAN,
+UnmetNeed BOOLEAN,
+ReferredConsumer VARCHAR(100),
+PriorSRSInvolvement VARCHAR(max),
+ScreeningDate DATE,
+ScreeningTime DATE,
+NotifyReporter VARCHAR(100),
+NiffiCriteria VARCHAR(max),
+NiffiComments VARCHAR(1000),
+Jurisdiction VARCHAR(100),
+DateCrossReport DATE,
+ReportMadeTo VARCHAR(100),
+DocsAttached BOOLEAN,
+SendingDocs VARCHAR(100),
+ReportType2 VARCHAR(100),
+InqRouting BOOLEAN,
+InqRoutingQ1 VARCHAR(100),
+InqRoutingQ2 VARCHAR(100),
+InqRoutingQ3 VARCHAR(100),
+InqRoutingQ4 VARCHAR(100),
+InqRoutingQ5 VARCHAR(100),
+InqRoutingQ6 VARCHAR(100),
+RoutingID VARCHAR(16),
+AddressValidDate DATE,
+AgencyID INTEGER,
+ProgramID INTEGER,
+GenericWorker1 INTEGER,
+GenericWorker2 INTEGER,
+GenericWorker3 INTEGER,
+DueDate DATE,
+FacilityID INTEGER,
+FacilityReportDate DATE,
+FacilityReportTime DATE,
+GenericText2 VARCHAR(500),
+GenericText3 VARCHAR(500)
+);
+
+ALTER TABLE INQUIRY ADD FOREIGN KEY (LawAgencyVendorID) REFERENCES Vendors(VendorID);
+
+ALTER TABLE INQUIRY ADD FOREIGN KEY (AgencyID) REFERENCES Vendors(VendorID);
+
+ALTER TABLE INQUIRY ADD FOREIGN KEY (ProgramID) REFERENCES Vendors(VendorID);
+
+ALTER TABLE INQUIRY ADD FOREIGN KEY (ScreeningMemberID) REFERENCES WORKERS(MEMBERID);
+
+CREATE TABLE InquiryFormInstanceLink (
+InquiryFormInstanceLinkID INTEGER NOT NULL,
+InquiryID INTEGER NOT NULL,
+FormInstanceID VARCHAR(50) NOT NULL,
+Datetimestamp DATE NOT NULL,
+Userstamp INTEGER NOT NULL,
+CreatedOn DATE NOT NULL,
+CreatedBy INTEGER NOT NULL
+);
+
+CREATE TABLE INSURANCE (
+InsuranceID INTEGER NOT NULL,
+CASENO INTEGER NOT NULL,
+PAYORID INTEGER NOT NULL,
+EFFECTIVEDATE DATE NOT NULL,
+INSUREDNAME VARCHAR(50),
+INSUREDPHONE VARCHAR(16),
+POLICYNUMBER VARCHAR(25),
+GROUPNUMBER VARCHAR(50),
+MEMBERNUMBER VARCHAR(25),
+ACTIVE BOOLEAN NOT NULL,
+DATETIMESTAMP DATE NOT NULL,
+ENDDATE DATE,
+PAYERORDER INTEGER,
+COMMENTS VARCHAR(max),
+RELATIONSHIP VARCHAR(50),
+INSUREDSTREET VARCHAR(100),
+INSUREDCITY VARCHAR(30),
+INSUREDSTATE VARCHAR(100),
+INSUREDZIP VARCHAR(10),
+INSUREDGENDER VARCHAR(10),
+INSUREDDOB DATE,
+APPTYPE VARCHAR(5),
+ChargeAtVisit INTEGER,
+UserStamp INTEGER NOT NULL,
+LinkedAddress BOOLEAN
+);
+
+CREATE TABLE InterfaceImportSetup (
+InterfaceImportSetupID INTEGER NOT NULL,
+ImportType VARCHAR(100) NOT NULL,
+SetFundCodeTo VARCHAR(25),
+SetStatusTo VARCHAR(100),
+AllowableFundcode VARCHAR(max),
+AllowableStatus VARCHAR(max),
+AutoCalculateUnits BOOLEAN,
+AutoCalculateTotalCost BOOLEAN,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+InsertOpenCloseEnrollments BOOLEAN
+);
+
+CREATE TABLE InterfaceImportSetupFields (
+InterfaceImportSetupFieldsID INTEGER NOT NULL,
+InterfaceImportSetupID INTEGER NOT NULL,
+FieldName VARCHAR(255) NOT NULL,
+RequiredYN BOOLEAN NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE Intervention (
+InterventionID INTEGER NOT NULL,
+ObjectiveID INTEGER,
+NeedID INTEGER,
+InterventionCodeID INTEGER NOT NULL,
+InterventionText VARCHAR(max),
+InterventionType VARCHAR(50),
+RevisionDate DATE,
+CompletionDate DATE,
+StartDate DATE,
+TargetDate DATE,
+Status VARCHAR(100),
+Comments VARCHAR(max),
+Responsibility VARCHAR(50),
+ScaleID INTEGER,
+GenericDate1 DATE,
+GenericDate2 DATE,
+GenericDate3 DATE,
+GenericDropDown1 VARCHAR(100),
+GenericDropDown2 VARCHAR(100),
+GenericDropDown3 VARCHAR(100),
+GenericDropDown4 VARCHAR(100),
+GenericText1 VARCHAR(255),
+GenericText2 VARCHAR(255),
+GenericText3 VARCHAR(255),
+GenericText4 VARCHAR(255),
+GenericMemo1 VARCHAR(max),
+GenericMemo2 VARCHAR(max),
+DateTimeStamp DATE NOT NULL,
+UserStamp INTEGER NOT NULL,
+Progress VARCHAR(100)
+);
+
+ALTER TABLE Intervention ADD FOREIGN KEY (InterventionCodeID) REFERENCES InterventionCode(InterventionCodeID);
+
+ALTER TABLE Intervention ADD FOREIGN KEY (NeedID) REFERENCES Need(NeedID);
+
+ALTER TABLE Intervention ADD FOREIGN KEY (ObjectiveID) REFERENCES Objective(ObjectiveID);
+
+CREATE TABLE InterventionCode (
+InterventionCodeID INTEGER NOT NULL,
+Intervention VARCHAR(max),
+RequiresNamePrefix BOOLEAN NOT NULL,
+Active BOOLEAN NOT NULL,
+DateTimeStamp DATE NOT NULL,
+UserStamp INTEGER NOT NULL,
+StartDate DATE,
+EndDate DATE
+);
+
+CREATE TABLE InterventionCodeCategory (
+InterventionCodeCategoryID INTEGER NOT NULL,
+InterventionCodeID INTEGER NOT NULL,
+Category VARCHAR(100),
+DateTimeStamp DATE NOT NULL,
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE Inventory (
+InventoryID INTEGER NOT NULL,
+Cost DECIMAL(9),
+Category VARCHAR(100),
+Subcategory VARCHAR(100),
+Condition VARCHAR(100),
+SerialNumber VARCHAR(100),
+Description VARCHAR(1000),
+UnitName VARCHAR(100),
+Contact INTEGER,
+OfficeDelDate DATE,
+OfficeRecBy INTEGER,
+CaseNo INTEGER,
+ConsumerDelDate DATE,
+ConsumerDelBy INTEGER,
+Disposition VARCHAR(100),
+StatusDate DATE,
+RecoveryBy INTEGER,
+Location INTEGER,
+Comment VARCHAR(1000),
+DATETIMESTAMP DATE NOT NULL,
+Userstamp INTEGER,
+AppType VARCHAR(5) NOT NULL
+);
+
+ALTER TABLE Inventory ADD FOREIGN KEY (CaseNo) REFERENCES DEMOGRAPHICS(CASENO);
+
+ALTER TABLE Inventory ADD FOREIGN KEY (Location) REFERENCES Vendors(VendorID);
+
+ALTER TABLE Inventory ADD FOREIGN KEY (ConsumerDelBy) REFERENCES WORKERS(MEMBERID);
+
+ALTER TABLE Inventory ADD FOREIGN KEY (Contact) REFERENCES WORKERS(MEMBERID);
+
+ALTER TABLE Inventory ADD FOREIGN KEY (OfficeRecBy) REFERENCES WORKERS(MEMBERID);
+
+ALTER TABLE Inventory ADD FOREIGN KEY (RecoveryBy) REFERENCES WORKERS(MEMBERID);
+
+CREATE TABLE ISComboCodeLink (
+ISComboCodeLinkID INTEGER NOT NULL,
+PrimaryISComboCodeID INTEGER,
+MatchISComboCodeID INTEGER,
+StartDate DATE NOT NULL,
+EndDate DATE,
+Active BOOLEAN NOT NULL,
+Priority INTEGER,
+DATETIMESTAMP DATE NOT NULL,
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE ISComboCodes (
+ISComboCodeID INTEGER NOT NULL,
+SELECTR INTEGER,
+STATECODE VARCHAR(5),
+Active BOOLEAN NOT NULL,
+FundCode VARCHAR(25),
+SOStateCode VARCHAR(50),
+StartDate DATE,
+EndDate DATE,
+ReportOrder INTEGER,
+PayorID INTEGER NOT NULL,
+DateTimestamp DATE NOT NULL,
+AppType VARCHAR(5),
+UserStamp INTEGER NOT NULL,
+ISOPriority INTEGER,
+IndexCodeID INTEGER NOT NULL,
+SubObjectCodeID INTEGER NOT NULL,
+FIPSCODE VARCHAR(100),
+MMIS BOOLEAN NOT NULL,
+ExportToGL BOOLEAN NOT NULL,
+DebitAccount VARCHAR(50),
+CreditAccount VARCHAR(50)
+);
+
+ALTER TABLE ISComboCodes ADD FOREIGN KEY (IndexCodeID) REFERENCES IndexCode(IndexCodeID);
+
+ALTER TABLE ISComboCodes ADD FOREIGN KEY (PayorID) REFERENCES Payors(PayorID);
+
+ALTER TABLE ISComboCodes ADD FOREIGN KEY (SubObjectCodeID) REFERENCES SubObjectCode(SubObjectCodeID);
+
+CREATE TABLE ISOBudget (
+ISOBudgetID INTEGER NOT NULL,
+ISComboCodeID INTEGER NOT NULL,
+FiscalYear INTEGER NOT NULL,
+BudgetType VARCHAR(100),
+BudgetAmount VARCHAR(8),
+BalanceForward VARCHAR(8),
+StartDate DATE,
+EndDate DATE,
+LevelOfEnforcement VARCHAR(100),
+Active BOOLEAN NOT NULL,
+DateTimeStamp DATE NOT NULL,
+UserStamp INTEGER NOT NULL,
+AmountEncumbered VARCHAR(8),
+RemainingBalance VARCHAR(8)
+);
+
+ALTER TABLE ISOBudget ADD FOREIGN KEY (ISComboCodeID) REFERENCES ISComboCodes(ISComboCodeID);
+
+CREATE TABLE Jacket (
+JacketID INTEGER NOT NULL,
+CaseNo INTEGER NOT NULL,
+OpenID INTEGER,
+OpenDate DATE NOT NULL,
+JacketNo VARCHAR(100),
+Type VARCHAR(100),
+Worker INTEGER,
+Status VARCHAR(100),
+DetentionStatus VARCHAR(500),
+LegalStatus VARCHAR(100),
+CourtProcStatus VARCHAR(100),
+CourtDecision VARCHAR(100),
+CourtDecisionDate DATE,
+Judge1 VARCHAR(100),
+Judge2 VARCHAR(100),
+GenericDate1 DATE,
+GenericDate2 DATE,
+GenericText1 VARCHAR(2000),
+GenericText2 VARCHAR(2000),
+GenericDropDown1 VARCHAR(100),
+GenericDropDown2 VARCHAR(100),
+DateTimestamp DATE NOT NULL,
+UserStamp INTEGER NOT NULL,
+LegalStatusDate DATE
+);
+
+ALTER TABLE Jacket ADD FOREIGN KEY (CaseNo) REFERENCES DEMOGRAPHICS(CASENO);
+
+ALTER TABLE Jacket ADD FOREIGN KEY (OpenID) REFERENCES OPENCLOSE(OPENID);
+
+CREATE TABLE JUVCOURTREVIEW (
+JUVCID DECIMAL(9) NOT NULL,
+CASENO INTEGER NOT NULL,
+REVIEW VARCHAR(100),
+NUMDAYSTILNEXT INTEGER,
+NUMCRIMINALCHARGES INTEGER,
+NUMDIVERTEDCRIMINAL INTEGER,
+NUMPETCHINS INTEGER,
+NUMDIVCHINS INTEGER,
+NUMPROBVIOLATIONS INTEGER,
+TXORDERED INTEGER,
+TxConditionof VARCHAR(100),
+NUMFELONIES INTEGER,
+NUMARRESTS INTEGER,
+NUMMISDEMEANORS INTEGER,
+NUMLEGALACTIVITIES INTEGER,
+REVIEWDATE DATE,
+CURRENTREVIEW INTEGER,
+DATETIMESTAMP DATE,
+STATUS VARCHAR(100),
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE LegacyAuthService (
+ActualID INTEGER NOT NULL,
+LegacyID VARCHAR(100) NOT NULL,
+DateTimeStamp DATE NOT NULL,
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE LegacyAuthServicePayment (
+ActualID INTEGER NOT NULL,
+LegacyID VARCHAR(100) NOT NULL,
+DateTimeStamp DATE NOT NULL,
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE LinkedFundCodes (
+LinkedFundCodeID INTEGER NOT NULL,
+ParentFundCode VARCHAR(25) NOT NULL,
+ChildFundCode VARCHAR(25) NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+AppType VARCHAR(5) NOT NULL,
+AllowConcurrency BOOLEAN
+);
+
+ALTER TABLE LinkedFundCodes ADD FOREIGN KEY (ParentFundCode) REFERENCES SITE(FUNDCODE);
+
+ALTER TABLE LinkedFundCodes ADD FOREIGN KEY (ChildFundCode) REFERENCES SITE(FUNDCODE);
+
+CREATE TABLE LinkLegacy (
+LinkLegacyId INTEGER NOT NULL,
+TableName VARCHAR(50) NOT NULL,
+LegacyId VARCHAR(50) NOT NULL,
+ActualId INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+UserStamp INTEGER NOT NULL
+);
+
+ALTER TABLE LinkLegacy ADD FOREIGN KEY (UserStamp) REFERENCES Users(USERID);
+
+CREATE TABLE LookupCodeSetup (
+PrimaryLookupID INTEGER NOT NULL,
+PrimaryLookupCode INTEGER NOT NULL,
+SecondaryLookupID INTEGER NOT NULL,
+SecondaryLookupCode INTEGER NOT NULL,
+Active INTEGER,
+DateTimeStamp DATE NOT NULL,
+AppType VARCHAR(5),
+LookupCodeSetupID INTEGER NOT NULL,
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE LOOKUPCODESMAST (
+LOOKUPID INTEGER NOT NULL,
+LOOKUPCODE INTEGER NOT NULL,
+LOOKUPDESC VARCHAR(300),
+LOOKUPSECID VARCHAR(max),
+SELECTR INTEGER,
+ACTIVE INTEGER,
+SORTORDER INTEGER,
+DateTimeStamp DATE NOT NULL,
+AppType VARCHAR(5),
+TwoPartReadOnly INTEGER,
+LookupCodesMastID INTEGER NOT NULL,
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE LOOKUPIDNAMESMAST (
+LOOKUPID INTEGER NOT NULL,
+LOOKUPIDDESC VARCHAR(45) NOT NULL,
+LOOKUPEXPLAINED VARCHAR(175),
+FIELDSIZE INTEGER,
+DateTimeStamp DATE NOT NULL,
+AppType VARCHAR(5),
+PackageID INTEGER NOT NULL,
+SystemRequired BOOLEAN,
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE MatchPercent (
+MatchPercentID INTEGER NOT NULL,
+FiscalYear INTEGER NOT NULL,
+FundCode VARCHAR(25) NOT NULL,
+BudgetType VARCHAR(100),
+StateLocalPercent DECIMAL(9),
+FederalPercent DECIMAL(9),
+FundCodeBudget VARCHAR(8),
+DATETIMESTAMP DATE NOT NULL,
+UserStamp INTEGER NOT NULL,
+StartDate DATE,
+EndDate DATE,
+FYAttribute1 VARCHAR(50),
+FYAttribute2 VARCHAR(50)
+);
+
+ALTER TABLE MatchPercent ADD FOREIGN KEY (FundCode) REFERENCES SITE(FUNDCODE);
+
+CREATE TABLE Mci_CountyScreenLookups (
+Id INTEGER NOT NULL,
+ScreenLookUp VARCHAR(70) NOT NULL,
+Code INTEGER NOT NULL,
+Active INTEGER NOT NULL,
+DateTimestamp DATE NOT NULL
+);
+
+CREATE TABLE Mci_CountyScreenLookupsHistory (
+HistoryID INTEGER NOT NULL,
+Id INTEGER,
+ScreenLookUp VARCHAR(70),
+Code INTEGER,
+Active INTEGER,
+DateTimestamp DATE,
+HDeleted BOOLEAN,
+HDateTimeStamp DATE,
+HAppName VARCHAR(128)
+);
+
+CREATE TABLE Mci_MartialStatusScreenLookups (
+Id INTEGER NOT NULL,
+ScreenLookUp VARCHAR(70) NOT NULL,
+Code VARCHAR(10) NOT NULL,
+Active INTEGER NOT NULL,
+DateTimestamp DATE NOT NULL
+);
+
+CREATE TABLE Mci_MartialStatusScreenLookupsHistory (
+HistoryID INTEGER NOT NULL,
+Id INTEGER,
+ScreenLookUp VARCHAR(70),
+Code VARCHAR(10),
+Active INTEGER,
+DateTimestamp DATE,
+HDeleted BOOLEAN,
+HDateTimeStamp DATE,
+HAppName VARCHAR(128)
+);
+
+CREATE TABLE Mci_RaceScreenLookups (
+Id INTEGER NOT NULL,
+ScreenLookUp VARCHAR(70) NOT NULL,
+Code VARCHAR(10) NOT NULL,
+Active INTEGER NOT NULL,
+DateTimestamp DATE NOT NULL
+);
+
+CREATE TABLE Mci_RaceScreenLookupsHistory (
+HistoryID INTEGER NOT NULL,
+Id INTEGER,
+ScreenLookUp VARCHAR(70),
+Code VARCHAR(10),
+Active INTEGER,
+DateTimestamp DATE,
+HDeleted BOOLEAN,
+HDateTimeStamp DATE,
+HAppName VARCHAR(128)
+);
+
+CREATE TABLE Mci_StateScreenLookups (
+Id INTEGER NOT NULL,
+ScreenLookUp VARCHAR(70) NOT NULL,
+Code VARCHAR(10) NOT NULL,
+Active INTEGER NOT NULL,
+DateTimestamp DATE NOT NULL
+);
+
+CREATE TABLE Mci_StateScreenLookupsHistory (
+HistoryID INTEGER NOT NULL,
+Id INTEGER,
+ScreenLookUp VARCHAR(70),
+Code VARCHAR(10),
+Active INTEGER,
+DateTimestamp DATE,
+HDeleted BOOLEAN,
+HDateTimeStamp DATE,
+HAppName VARCHAR(128)
+);
+
+CREATE TABLE MEDICATIONREVIEW (
+MEDICATIONREVIEWID INTEGER NOT NULL,
+MEDICATION VARCHAR(100),
+STARTDATE DATE,
+ENDDATE DATE,
+DOSAGE VARCHAR(500),
+COMMENTS VARCHAR(max),
+STATUS VARCHAR(100),
+MEDMANAGEMENTBY DECIMAL(9),
+DATETIMESTAMP DATE NOT NULL,
+FREQUENCY VARCHAR(50),
+ROUTEADMIN VARCHAR(50),
+MEDMANAGER VARCHAR(50),
+DISPENSE1 VARCHAR(100),
+DISPENSE2 VARCHAR(100),
+DISPENSE3 VARCHAR(100),
+DISPENSE4 VARCHAR(100),
+PHYSICIANPHONE VARCHAR(16),
+PHYSICIANSTREET VARCHAR(100),
+PHYSICIANCITY VARCHAR(30),
+PHYSICIANSTATE VARCHAR(100),
+PHYSICIANZIPCODE VARCHAR(10),
+ASPRESCRIBED VARCHAR(100),
+PRESCRIBEDBY VARCHAR(75),
+AppType VARCHAR(5),
+UserStamp INTEGER NOT NULL,
+OpenID INTEGER,
+EnrollID INTEGER,
+ParentEntity VARCHAR(256),
+InfoPathFormUserStamp INTEGER,
+InfoPathFormCheckOutDate DATE,
+InfoPathFormStatus VARCHAR(100),
+ChapterName VARCHAR(20) NOT NULL,
+ChapterEntityID INTEGER NOT NULL,
+PageName VARCHAR(20) NOT NULL,
+PageEntityID INTEGER NOT NULL,
+Gentext1 VARCHAR(100),
+Gentext2 VARCHAR(100),
+Gentext3 VARCHAR(100),
+Gentext4 VARCHAR(100),
+Gentext5 VARCHAR(100),
+ParticipantID INTEGER,
+FundCode VARCHAR(25),
+MedsObtained VARCHAR(100),
+MailOrder VARCHAR(100),
+Packaging VARCHAR(100),
+AssistanceType VARCHAR(100),
+MedicationAssistance VARCHAR(100),
+MedUnit VARCHAR(100),
+Strength VARCHAR(100),
+PRN BOOLEAN,
+DispenseTime1 DATE,
+DispenseTime2 DATE,
+DispenseTime3 DATE,
+DispenseTime4 DATE,
+DispenseTime5 DATE,
+DispenseTime6 DATE,
+OtherMedication VARCHAR(100),
+doctor_lastname VARCHAR(25),
+doctor_firstname VARCHAR(15),
+doctor_title VARCHAR(10),
+doctor_suffix VARCHAR(10),
+ndccode VARCHAR(100),
+duration VARCHAR(100),
+SendToEmar VARCHAR(100),
+ScheduleTime7 DATE,
+ScheduleTime8 DATE,
+ScheduleTime9 DATE,
+ScheduleTime10 DATE,
+ScheduleTime11 DATE,
+ScheduleTime12 DATE
+);
+
+ALTER TABLE MEDICATIONREVIEW ADD FOREIGN KEY (EnrollID) REFERENCES ENROLLMENTS(ENROLLID);
+
+ALTER TABLE MEDICATIONREVIEW ADD FOREIGN KEY (OpenID) REFERENCES OPENCLOSE(OPENID);
+
+CREATE TABLE MEDICATIONS (
+MEDICATION VARCHAR(100) NOT NULL,
+URL VARCHAR(255),
+NDCCode VARCHAR(100),
+Active BOOLEAN
+);
+
+CREATE TABLE MEETINGDATES (
+TEAM VARCHAR(15) NOT NULL,
+MDATE DATE NOT NULL,
+LOCATION VARCHAR(50),
+MEETINGTYPE VARCHAR(25),
+MEETINGSTATUS VARCHAR(15)
+);
+
+CREATE TABLE MEETINGRELATEDPERSONS (
+TEAM VARCHAR(15) NOT NULL,
+DATE_R DATE NOT NULL,
+TIME DATE NOT NULL,
+CASENO DECIMAL(9) NOT NULL,
+RELATEDID DECIMAL(9) NOT NULL,
+DATETIMESTAMP DATE,
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE MEETINGTIMES (
+TEAM VARCHAR(15) NOT NULL,
+MDATE DATE NOT NULL,
+TIME DATE NOT NULL,
+CASENO DECIMAL(9),
+REASONFORMEETING VARCHAR(25),
+NEXTMEETINGDATE DATE,
+REMARKS VARCHAR(175),
+DATETIMESTAMP DATE,
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE MEMBERREVIEWS (
+MEMBERREVIEWID INTEGER NOT NULL,
+MEMBERID DECIMAL(9),
+ITEM VARCHAR(max),
+DUEDATE DATE,
+REQUIRED INTEGER,
+COMMENTS VARCHAR(max),
+APPTYPE VARCHAR(5),
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE Menu (
+MenuID INTEGER NOT NULL,
+ParentMenuID INTEGER,
+Menu VARCHAR(255) NOT NULL,
+SortBy INTEGER NOT NULL,
+MenuTypeID INTEGER NOT NULL,
+AccessLevel INTEGER NOT NULL,
+MenuCommandArgument VARCHAR(50),
+NavigateUrl VARCHAR(300),
+TargetPageName VARCHAR(255),
+LookId VARCHAR(50),
+LeftIcon VARCHAR(50),
+LeftIconHover VARCHAR(50),
+RightIcon VARCHAR(50),
+RightIconHover VARCHAR(50),
+AppendPageLabel BOOLEAN NOT NULL,
+PrefixPageLabel BOOLEAN NOT NULL,
+UNIQUEID VARCHAR(16) NOT NULL,
+ORIGINALID VARCHAR(16) NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+Visible BOOLEAN
+);
+
+CREATE TABLE MenuType (
+MenuTypeID INTEGER NOT NULL,
+Label VARCHAR(50) NOT NULL,
+StandardMenuCommand INTEGER NOT NULL,
+UNIQUEID VARCHAR(16) NOT NULL,
+ORIGINALID VARCHAR(16) NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE MetadataUtility (
+MetadataUtilityID INTEGER NOT NULL,
+UniqueID VARCHAR(16) NOT NULL,
+OperacaoType VARCHAR(10) NOT NULL,
+ImportedUniqueID VARCHAR(16),
+DBuser VARCHAR(256) NOT NULL,
+Userstamp VARCHAR(100),
+Datetimestamp DATE NOT NULL,
+ServerName VARCHAR(100),
+DatabaseName VARCHAR(100),
+FilePath VARCHAR(800)
+);
+
+CREATE TABLE Monitors (
+MonitorID INTEGER NOT NULL,
+FundCode VARCHAR(25) NOT NULL,
+MemberID DECIMAL(9) NOT NULL,
+VendorID DECIMAL(9),
+Role VARCHAR(100),
+StartDate DATE NOT NULL,
+EndDate DATE,
+DateTimeStamp DATE NOT NULL,
+AppType VARCHAR(5) NOT NULL,
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE MONTHCODES (
+FUNDCODE VARCHAR(25) NOT NULL,
+MONTHNO INTEGER NOT NULL,
+MONTHNAME VARCHAR(10) NOT NULL,
+MONTHORDER INTEGER NOT NULL,
+QUARTER INTEGER,
+SELECTR INTEGER,
+DateTimeStamp DATE,
+AppType VARCHAR(50),
+MONTHCODEID INTEGER NOT NULL,
+SITEID INTEGER,
+UserStamp INTEGER NOT NULL
+);
+
+ALTER TABLE MONTHCODES ADD FOREIGN KEY (SITEID) REFERENCES SITE(SITEID);
+
+CREATE TABLE MONTHLYDATES (
+FUNDCODE VARCHAR(25) NOT NULL,
+FISCALYEAR INTEGER NOT NULL,
+MONTHNO INTEGER NOT NULL,
+STARTMONTH DATE,
+ENDMONTH DATE,
+WEEKS VARCHAR(8),
+BEDDAYS INTEGER,
+WEEKDAYS INTEGER,
+MON INTEGER,
+TUE INTEGER,
+WED INTEGER,
+THUR INTEGER,
+FRI INTEGER,
+SAT INTEGER,
+SUN INTEGER,
+DateTimeStamp DATE,
+AppType VARCHAR(5),
+MONTHLYDATEID INTEGER NOT NULL,
+SITEID INTEGER,
+UserStamp INTEGER NOT NULL
+);
+
+ALTER TABLE MONTHLYDATES ADD FOREIGN KEY (SITEID) REFERENCES SITE(SITEID);
+
+CREATE TABLE MONTHLYEXP (
+FUNDCODE VARCHAR(25) NOT NULL,
+FIPSCODE VARCHAR(3) NOT NULL,
+FYEAR INTEGER NOT NULL,
+MONTHNUM INTEGER NOT NULL,
+INDEXCODE VARCHAR(10) NOT NULL,
+SUBOBJECT VARCHAR(10) NOT NULL,
+EXPENDITURE DECIMAL(9),
+HAREXPENDITURE DECIMAL(9),
+UNDUPCOUNT INTEGER,
+REFUNDS DECIMAL(9),
+LOCALBUDGET DECIMAL(9),
+STATEBUDGET DECIMAL(9)
+);
+
+CREATE TABLE MONTHLYEXPENSES (
+EXPENSEID DECIMAL(9) NOT NULL,
+CASENO DECIMAL(9),
+FAMILYID VARCHAR(20),
+REPORTMONTH INTEGER,
+FYEAR INTEGER,
+RECEIPTDATE DATE,
+EXPENSETYPE VARCHAR(50),
+EXPAMOUNT DECIMAL(9),
+COMMENTS VARCHAR(max),
+STATUS VARCHAR(100),
+PROOF INTEGER,
+DATETIMESTAMP DATE,
+PAYMONTH INTEGER,
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE MONTHLYINCOME (
+INCOMEID DECIMAL(9) NOT NULL,
+REPORTMONTH INTEGER,
+FYEAR INTEGER,
+CASENO DECIMAL(9),
+FAMILYID VARCHAR(20),
+RECEIPTDATE DATE,
+INCOMESOURCE VARCHAR(50),
+INCOMESOURCEDESC VARCHAR(175),
+GROSSAMOUNT DECIMAL(9),
+DATEMONEYRECEIVED DATE,
+NUMHRSWORKED VARCHAR(8),
+CHANGENEXTMONTH INTEGER,
+COMMENTS VARCHAR(max),
+STATUS VARCHAR(100),
+PROOF INTEGER,
+DATETIMESTAMP DATE,
+PAYMONTH INTEGER,
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE MRDDWaitList (
+MRDDWaitListID INTEGER NOT NULL,
+CaseNo INTEGER NOT NULL,
+ResidentialAppDate DATE,
+ResidentialCriticalScore INTEGER,
+ResidentialDisposition INTEGER,
+ResidentialDispositionDate DATE,
+NeedResidentialService BOOLEAN,
+DayAppDate DATE,
+DayCriticalScore INTEGER,
+DayDisposition INTEGER,
+DayDispositionDate DATE,
+NeedDayService BOOLEAN,
+SupportAppDate DATE,
+SupportCriticalScore INTEGER,
+SupportDisposition INTEGER,
+SupportDispositionDate DATE,
+NeedSupportService BOOLEAN,
+Status VARCHAR(100),
+GlobalScore INTEGER,
+TieBreaker DATE,
+Rank INTEGER,
+DateTimeStamp DATE NOT NULL,
+UserStamp INTEGER NOT NULL,
+WorkQueue VARCHAR(100),
+WorkQueueDate DATE,
+ApplicationDate DATE,
+ICAPScore INTEGER,
+DenyInElig BOOLEAN,
+DenyLOC BOOLEAN,
+DenyResponse BOOLEAN,
+DenyOther BOOLEAN,
+PendElig BOOLEAN,
+PendCritInc BOOLEAN,
+PendCritError BOOLEAN,
+PendCritExp BOOLEAN,
+PendAddInfo BOOLEAN,
+PendOther BOOLEAN,
+Explanation VARCHAR(400),
+GenericText1 VARCHAR(50),
+GenericText2 VARCHAR(50),
+GenericText3 VARCHAR(50),
+GenericText4 VARCHAR(50)
+);
+
+ALTER TABLE MRDDWaitList ADD FOREIGN KEY (CaseNo) REFERENCES DEMOGRAPHICS(CASENO);
+
+CREATE TABLE MyWorkLink (
+MyWorkLinkID INTEGER NOT NULL,
+Link VARCHAR(500) NOT NULL,
+LinkDescription VARCHAR(100) NOT NULL,
+SortOrder INTEGER,
+RoleID VARCHAR(max),
+DateTimeStamp DATE NOT NULL,
+UserStamp INTEGER NOT NULL,
+LastUpdatedBy INTEGER,
+LastUpdatedDateTime DATE
+);
+
+ALTER TABLE MyWorkLink ADD FOREIGN KEY (UserStamp) REFERENCES Users(USERID);
+
+CREATE TABLE NAPISExportMapping (
+NAPISExportMappingID INTEGER NOT NULL,
+VServiceID INTEGER NOT NULL,
+ServiceCodeISOID INTEGER NOT NULL,
+NAPISTitle3E VARCHAR(100),
+NAPISSC VARCHAR(100),
+NAPISFS VARCHAR(100),
+NAPISMC VARCHAR(100),
+NAPISUT VARCHAR(100),
+NAPISUF DECIMAL(9),
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE Need (
+NeedID INTEGER NOT NULL,
+PlanID INTEGER,
+NeedCodeID INTEGER NOT NULL,
+NeedText VARCHAR(max),
+RevisionDate DATE,
+CompletionDate DATE,
+Status VARCHAR(100),
+PrimaryNeed BOOLEAN NOT NULL,
+ScaleID INTEGER,
+GenericDate1 DATE,
+GenericDate2 DATE,
+GenericDate3 DATE,
+GenericDropDown1 VARCHAR(100),
+GenericDropDown2 VARCHAR(100),
+GenericDropDown3 VARCHAR(100),
+GenericDropDown4 VARCHAR(45),
+GenericText1 VARCHAR(255),
+GenericText2 VARCHAR(255),
+GenericText3 VARCHAR(255),
+GenericText4 VARCHAR(255),
+GenericMemo1 VARCHAR(max),
+GenericMemo2 VARCHAR(max),
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+Progress VARCHAR(100)
+);
+
+ALTER TABLE Need ADD FOREIGN KEY (NeedCodeID) REFERENCES NeedCode(NeedCodeID);
+
+CREATE TABLE NeedCode (
+NeedCodeID INTEGER NOT NULL,
+NeedCode VARCHAR(2000) NOT NULL,
+Need VARCHAR(max),
+RequiresNamePrefix BOOLEAN NOT NULL,
+Response VARCHAR(50),
+ScaleID INTEGER,
+Active BOOLEAN NOT NULL,
+DateTimeStamp DATE NOT NULL,
+UserStamp INTEGER NOT NULL,
+StartDate DATE,
+EndDate DATE,
+Type VARCHAR(100)
+);
+
+CREATE TABLE NeedCodeCategory (
+NeedCodeCategoryID INTEGER NOT NULL,
+NeedCodeID INTEGER NOT NULL,
+Category VARCHAR(100),
+DateTimeStamp DATE NOT NULL,
+UserStamp INTEGER NOT NULL
+);
+
+ALTER TABLE NeedCodeCategory ADD FOREIGN KEY (NeedCodeID) REFERENCES NeedCode(NeedCodeID);
+
+CREATE TABLE NeedCodeFundCode (
+NeedCodeFundCodeID INTEGER NOT NULL,
+NeedCodeID INTEGER NOT NULL,
+FundCode VARCHAR(25),
+SiteID INTEGER,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+ALTER TABLE NeedCodeFundCode ADD FOREIGN KEY (NeedCodeID) REFERENCES NeedCode(NeedCodeID);
+
+CREATE TABLE NeedCodeType (
+NeedCodeTypeID INTEGER NOT NULL,
+NeedCodeID INTEGER NOT NULL,
+Type VARCHAR(100),
+DateTimeStamp DATE NOT NULL,
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE NEXTCHECK (
+NEXTCHECKNO VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE NEXTNOS (
+NEXTID VARCHAR(10) NOT NULL,
+NEXTNUM DECIMAL(9)
+);
+
+CREATE TABLE NOTES (
+NoteID INTEGER NOT NULL,
+NOTETYPE VARCHAR(100),
+NOTEDATE DATE,
+DATECOMPLETED DATE,
+GenericText3 VARCHAR(1000),
+NoteBy INTEGER,
+PHONE VARCHAR(16),
+STATUS VARCHAR(100),
+NOTES VARCHAR(max),
+DATETIMESTAMP DATE NOT NULL,
+FUNDCODE VARCHAR(25),
+DESCRIPTION VARCHAR(max),
+GenericText4 VARCHAR(1000),
+GenericText5 VARCHAR(1000),
+GenericText1 VARCHAR(1000)
+);
+
+CREATE TABLE NOTES (
+GenericText2 VARCHAR(1000),
+GenericDropDown3 VARCHAR(100),
+GenericDropDown4 VARCHAR(100),
+VendorID INTEGER,
+AppType VARCHAR(5),
+NoteSubType VARCHAR(100),
+TabType VARCHAR(100),
+GenericDate1 DATE,
+GenericDate2 DATE,
+GenericDropDown1 VARCHAR(100),
+GenericDropDown2 VARCHAR(100),
+Confidential BOOLEAN,
+UserStamp INTEGER NOT NULL,
+ChapterName VARCHAR(100) NOT NULL,
+ChapterEntityID INTEGER NOT NULL,
+PageName VARCHAR(100) NOT NULL,
+EntityID INTEGER NOT NULL,
+ParticipantID INTEGER,
+ContactDate DATE
+);
+
+CREATE TABLE NOTES (
+ContactTime DATE,
+InfoPathFormStatus BOOLEAN,
+InfoPathFormUserStamp INTEGER,
+InfoPathFormCheckOutDate DATE,
+RoutingNote BOOLEAN,
+StartDate DATE,
+EndDate DATE,
+StartTime DATE,
+EndTime DATE,
+ExternalNoteBy INTEGER,
+AgencyID INTEGER,
+ServiceProviderID INTEGER,
+ExternalNoteStatus VARCHAR(100),
+ShowConsumer BOOLEAN,
+Duration DECIMAL(9),
+GenericDropDown5 VARCHAR(100),
+GenericDropDown6 VARCHAR(100),
+GenericDropDown7 VARCHAR(100)
+);
+
+CREATE TABLE NOTES (
+NoteSource VARCHAR(500)
+);
+
+ALTER TABLE NOTES ADD FOREIGN KEY (ExternalNoteBy) REFERENCES CONTACT(CONTACTID);
+
+ALTER TABLE NOTES ADD FOREIGN KEY (ParticipantID) REFERENCES HISParticipant(ParticipantID);
+
+ALTER TABLE NOTES ADD FOREIGN KEY (AgencyID) REFERENCES Vendors(VendorID);
+
+ALTER TABLE NOTES ADD FOREIGN KEY (ServiceProviderID) REFERENCES Vendors(VendorID);
+
+CREATE TABLE NotesDocuments (
+NotesDocumentsID INTEGER,
+Description TEXT,
+Document TEXT,
+ContentType TEXT,
+ContentLength INTEGER,
+FileName TEXT,
+NoteID INTEGER,
+PageName TEXT,
+ChapterName TEXT,
+UserStamp INTEGER,
+ParentPageID INTEGER,
+DateTimeStamp DATE,
+ElectronicFileQueue BOOLEAN,
+RoutingFaxNumber TEXT,
+RoutingRecipientName TEXT,
+RoutingTransmissionID TEXT,
+RoutingCategory TEXT,
+RoutingSentDateTime DATE,
+RoutingDetail TEXT,
+RoutingRetryCount INTEGER,
+RoutingType TEXT,
+RoutingMailAddress TEXT,
+LastDatePrinted DATE,
+LastPrintedBy INTEGER,
+InstanceGuid TEXT,
+Category TEXT,
+ImageType VARCHAR(YES)
+);
+
+ALTER TABLE NotesDocuments ADD FOREIGN KEY (NoteID) REFERENCES NOTES(NoteID);
+
+CREATE TABLE NotesDocumentsPrintQueue (
+AttachmentPrintID INTEGER NOT NULL,
+JobID INTEGER,
+ChapterName VARCHAR(100),
+ChapterEntityID INTEGER,
+PageName VARCHAR(100) NOT NULL,
+PageEntityID INTEGER NOT NULL,
+NoteID INTEGER,
+NoteDocumentsID INTEGER,
+FileName VARCHAR(255),
+UserStamp INTEGER NOT NULL,
+DATETIMESTAMP DATE NOT NULL,
+PrintStatus VARCHAR(100),
+StatusMessage VARCHAR(250)
+);
+
+CREATE TABLE NOTESRECIPIENTS (
+NOTESRECIPIENTSID INTEGER NOT NULL,
+NOTESTATUS VARCHAR(15),
+DATESENT DATE,
+DATEREAD DATE,
+NOTEID INTEGER,
+RECEIVERID DECIMAL(9),
+APPTYPE VARCHAR(5),
+SignedDate DATE,
+SignedDocument DECIMAL(9),
+DateTimestamp DATE NOT NULL,
+UserStamp INTEGER NOT NULL,
+FaxNumber VARCHAR(16),
+RecipientName VARCHAR(100),
+TransmissionID VARCHAR(50),
+DeliveryMethod VARCHAR(100),
+Detail VARCHAR(max),
+RetryCount INTEGER,
+RoutingType VARCHAR(50),
+EmailAddress VARCHAR(100),
+MailingAddress VARCHAR(400),
+Agency VARCHAR(75),
+Status VARCHAR(100),
+CreateDate DATE,
+VendorID INTEGER,
+RecipientType VARCHAR(100),
+Comments VARCHAR(1000),
+IncludeNoteSummary BOOLEAN,
+FaxCover VARCHAR(100),
+TrackingId VARCHAR(1000)
+);
+
+CREATE TABLE NotesRecipientsDocuments (
+NotesRecipientsDocID INTEGER NOT NULL,
+NotesRecipientID INTEGER NOT NULL,
+NotesDocumentID INTEGER NOT NULL,
+Userstamp INTEGER,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE OAAPSExportMapping (
+OAAPSExportMappingID INTEGER NOT NULL,
+VServiceID INTEGER NOT NULL,
+ServiceCodeISOID INTEGER NOT NULL,
+OAAPSTitle3E VARCHAR(100),
+OAAPSSC VARCHAR(100),
+OAAPSFS VARCHAR(100),
+OAAPSMC VARCHAR(100),
+OAAPSUT VARCHAR(100),
+OAAPSUF DECIMAL(9),
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+OAAPSSE VARCHAR(100),
+OAAPSCaregiverType VARCHAR(200)
+);
+
+CREATE TABLE Objective (
+ObjectiveID INTEGER NOT NULL,
+GoalID INTEGER,
+NeedID INTEGER,
+ObjectiveCodeID INTEGER NOT NULL,
+ObjectiveText VARCHAR(max),
+RevisionDate DATE,
+CompletionDate DATE,
+StartDate DATE,
+TargetDate DATE,
+Status VARCHAR(100),
+Comments VARCHAR(max),
+Responsibility VARCHAR(50),
+ScaleID INTEGER,
+GenericDate1 DATE,
+GenericDate2 DATE,
+GenericDate3 DATE,
+GenericDropDown1 VARCHAR(100),
+GenericDropDown2 VARCHAR(100),
+GenericDropDown3 VARCHAR(100),
+GenericDropDown4 VARCHAR(45),
+GenericText1 VARCHAR(1000),
+GenericText2 VARCHAR(1000),
+GenericText3 VARCHAR(1000),
+GenericText4 VARCHAR(1000),
+GenericMemo1 VARCHAR(max),
+GenericMemo2 VARCHAR(max),
+DateTimeStamp DATE NOT NULL,
+UserStamp INTEGER NOT NULL,
+Progress VARCHAR(100)
+);
+
+ALTER TABLE Objective ADD FOREIGN KEY (GoalID) REFERENCES Goal(GoalID);
+
+ALTER TABLE Objective ADD FOREIGN KEY (NeedID) REFERENCES Need(NeedID);
+
+ALTER TABLE Objective ADD FOREIGN KEY (ObjectiveCodeID) REFERENCES ObjectiveCode(ObjectiveCodeID);
+
+CREATE TABLE ObjectiveCode (
+ObjectiveCodeID INTEGER NOT NULL,
+Objective VARCHAR(max),
+RequiresNamePrefix BOOLEAN NOT NULL,
+Active BOOLEAN NOT NULL,
+DateTimeStamp DATE NOT NULL,
+UserStamp INTEGER NOT NULL,
+StartDate DATE,
+EndDate DATE
+);
+
+CREATE TABLE ObjectiveCodeCategory (
+ObjectiveCodeCategoryID INTEGER NOT NULL,
+ObjectiveCodeID INTEGER NOT NULL,
+Category VARCHAR(100),
+DateTimeStamp DATE NOT NULL,
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE OBJECTIVEPROGRAMS (
+OBJECTIVEID DECIMAL(9) NOT NULL,
+VENDORID DECIMAL(9) NOT NULL
+);
+
+CREATE TABLE OGACTIVITIES (
+OGACTIVITYID DECIMAL(9) NOT NULL,
+OGACTMONTHNO INTEGER,
+OGMAINTID DECIMAL(9),
+CASENO DECIMAL(9),
+WORKTYPE VARCHAR(50),
+WORKHOURS VARCHAR(8),
+DATETIMESTAMP DATE,
+APPTYPE VARCHAR(5),
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE OGMAINT (
+OGMAINTID INTEGER NOT NULL,
+CASENO INTEGER NOT NULL,
+FUNDCODE VARCHAR(25),
+VENDORID INTEGER NOT NULL,
+ENTITLEMENT DECIMAL(9),
+PERSALLOW DECIMAL(9),
+WAGES DECIMAL(9),
+SSI DECIMAL(9),
+RECOUPMENT DECIMAL(9),
+OTHER1 DECIMAL(9),
+OTHER2 DECIMAL(9),
+CHECKAMOUNT DECIMAL(9),
+DATETIMESTAMP DATE NOT NULL,
+ACTIONDATE DATE,
+EFFECTIVEDATE DATE,
+STOPDATE DATE,
+ACTIONCODE VARCHAR(50),
+CURRENTPO VARCHAR(15),
+INDEXCODE VARCHAR(10),
+SUBOBJECT VARCHAR(10),
+PAYEENAME VARCHAR(75),
+STREET VARCHAR(100),
+STREET2 VARCHAR(100),
+CITY VARCHAR(30),
+STATE VARCHAR(100),
+ZIP VARCHAR(10),
+VETERANBENEFITS DECIMAL(9),
+SOCIALSECURITY DECIMAL(9),
+CIVILSERVICE DECIMAL(9),
+VSERVICEID INTEGER,
+COMMENTS VARCHAR(max),
+LOCAL DECIMAL(9),
+TYPE VARCHAR(100),
+FIRSTAUTH DECIMAL(9),
+SECONDAUTH DECIMAL(9),
+THIRDAUTH DECIMAL(9),
+FIRSTAUTHDATE DATE,
+SECONDAUTHDATE DATE,
+THIRDAUTHDATE DATE,
+FYR INTEGER,
+PAYMONTH INTEGER,
+FAMILYTYPE VARCHAR(50),
+PGMVOUCHERNO VARCHAR(50),
+EXPECTEDTERMDATE DATE,
+PROJAMT VARCHAR(8),
+SERVICETYPE INTEGER,
+UserStamp INTEGER NOT NULL,
+VENDFUNDID INTEGER NOT NULL
+);
+
+ALTER TABLE OGMAINT ADD FOREIGN KEY (CASENO) REFERENCES DEMOGRAPHICS(CASENO);
+
+ALTER TABLE OGMAINT ADD FOREIGN KEY (UserStamp) REFERENCES Users(USERID);
+
+ALTER TABLE OGMAINT ADD FOREIGN KEY (VENDFUNDID) REFERENCES VENDFUNDCODES(VENDFUNDID);
+
+CREATE TABLE OGSERVICES (
+OGMAINTID DECIMAL(9) NOT NULL,
+FY VARCHAR(4) NOT NULL,
+MONTHNO INTEGER NOT NULL,
+VSERVICEID DECIMAL(9) NOT NULL,
+FUNDCODE VARCHAR(25),
+FIPSCODE VARCHAR(3),
+PO INTEGER,
+PCOST DECIMAL(9),
+AMOUNT DECIMAL(9),
+UNITS INTEGER,
+CHECKNO VARCHAR(15),
+CHECKDATE DATE,
+DATETIMESTAMP DATE,
+CHECKPRINTED INTEGER,
+SELECTR INTEGER,
+INDEXCODE VARCHAR(10),
+SUBOBJECT VARCHAR(10),
+TYPE VARCHAR(50),
+LOCAL DECIMAL(9),
+FIRSTAUTH DECIMAL(9),
+SECONDAUTH DECIMAL(9),
+THIRDAUTH DECIMAL(9),
+FIRSTAUTHDATE DATE,
+SECONDAUTHDATE DATE,
+THIRDAUTHDATE DATE,
+APPTYPE VARCHAR(5),
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE OPENCLOSE (
+OPENID INTEGER NOT NULL,
+CASENO INTEGER NOT NULL,
+DATAENTRYDATE DATE,
+REFERRALDATE DATE,
+OPENDATE DATE,
+REFERREDBY DECIMAL(9),
+REFERRALSOURCE VARCHAR(100),
+FIRSTCONTACT DATE,
+CLOSEDATE DATE,
+GOALSMET VARCHAR(25),
+CURRENTOPEN INTEGER,
+OPENREASON VARCHAR(max),
+CLOSEREASON VARCHAR(100),
+RESULTS VARCHAR(max),
+FINSETTLED INTEGER,
+DISPOSITION VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE OPENCLOSE (
+GENERIC1 VARCHAR(50),
+GENERIC2 VARCHAR(50),
+GENERICDATE1 DATE,
+GENERICYN1 INTEGER,
+GENERIC3 DECIMAL(9),
+GENERIC4 VARCHAR(50),
+GENERICDATE2 DATE,
+GENERICYN2 INTEGER,
+FUNDCODE VARCHAR(25) NOT NULL,
+DATETIMESTAMP DATE NOT NULL,
+PRIMARYWORKERID INTEGER,
+SECONDWORKERID INTEGER,
+GENERICCURRENCY DECIMAL(9),
+REFNAME VARCHAR(50),
+REFTITLE VARCHAR(50),
+REFAGENCY VARCHAR(50),
+REFSTREET VARCHAR(100),
+REFSTREET2 VARCHAR(100),
+REFCITY VARCHAR(30),
+REFSTATE VARCHAR(100),
+REFZIPCODE VARCHAR(11),
+REFHPHONE VARCHAR(16),
+REFWPHONE VARCHAR(16),
+REFEPHONE VARCHAR(16),
+REFFAX VARCHAR(16),
+REFEMAIL VARCHAR(75),
+INTERVIEWDATE DATE,
+REFPOTLSERVICES VARCHAR(75),
+REFSOURCETYPE VARCHAR(50),
+COUNTRY VARCHAR(25),
+REFPRIREASON VARCHAR(100),
+REFSECREASON VARCHAR(100),
+REFTERREASONS VARCHAR(100),
+REFTIME DATE,
+PRISERVICEREQ VARCHAR(100),
+SECSERVICEREQ VARCHAR(100),
+TERSERVICEREQ VARCHAR(100),
+CURRPAYERAPP INTEGER,
+ALLOTTEDUNITS VARCHAR(15),
+ANTLENGTHSRV VARCHAR(25),
+FIRSTCONTACTTIME DATE,
+OPENTIME DATE,
+DISPOSITIONDATE DATE,
+APPTYPE VARCHAR(5),
+GENERIC5 VARCHAR(100),
+GENERIC6 VARCHAR(100),
+GENERIC7 VARCHAR(50),
+NDDATETIMESTAMP DATE,
+NEWDISPOSITION VARCHAR(25),
+LinkedOpenID INTEGER,
+CaseID INTEGER,
+RefAgency2 VARCHAR(50),
+REFQUATREASON VARCHAR(60),
+REFQUINREASON VARCHAR(60)
+);
+
+CREATE TABLE OPENCLOSE (
+UserStamp INTEGER NOT NULL,
+PA600Date DATE,
+LOCADateSent DATE,
+LOCADateReceived DATE,
+LOCAEligibility VARCHAR(100),
+LOCALengthCare VARCHAR(100),
+PCDateSent DATE,
+PCDateReceived DATE,
+PCEligibility VARCHAR(100),
+PCLengthCare VARCHAR(100),
+ManageOwnCare VARCHAR(100),
+ReasonLOCA VARCHAR(100),
+ReasonPC VARCHAR(100),
+LOCARouting VARCHAR(100),
+QualifyingICD9 VARCHAR(100),
+HomeVisitDate DATE,
+PA600ReceivedDate DATE,
+EstTransitionDate DATE
+);
+
+CREATE TABLE OPENCLOSE (
+DelayedEnrollment VARCHAR(100),
+CAOProvider INTEGER,
+0192SentDate DATE,
+0192ReceivedDate DATE,
+0192Applicant BOOLEAN,
+GuardianshipAssignment VARCHAR(100),
+GuardianshipApptStatus VARCHAR(100),
+GuardianshipType VARCHAR(100),
+LettersReceivedStatus VARCHAR(100),
+LettersReceivedDate DATE,
+OrdersReceivedStatus VARCHAR(100),
+OrdersReceivedDate DATE,
+DateOathTaken DATE,
+OathPerson INTEGER,
+CountyOathTaken VARCHAR(100),
+Region VARCHAR(100),
+EMAR BOOLEAN,
+TypeOfExit VARCHAR(300),
+EmploymentOutcomeAtExit VARCHAR(300),
+PrimaryOccupationAtExit DECIMAL(5),
+HourlyWageAtExit DECIMAL(9),
+HoursWorkedInaWeekAtExit DECIMAL(5),
+MonthlyPublicSupportAtExit VARCHAR(max),
+MedicalInsuranceCoverageAtExit VARCHAR(max)
+);
+
+CREATE TABLE OtherPayer (
+OtherPayerID INTEGER NOT NULL,
+PayerName VARCHAR(100) NOT NULL,
+Address1 VARCHAR(100) NOT NULL,
+Address2 VARCHAR(100),
+City VARCHAR(30) NOT NULL,
+State VARCHAR(100) NOT NULL,
+Zip VARCHAR(11) NOT NULL,
+Phone VARCHAR(16),
+Fax VARCHAR(16),
+Type VARCHAR(100),
+COBPaidAmount VARCHAR(8) NOT NULL,
+Comment VARCHAR(max),
+COBPatientResponsibilityAmount VARCHAR(8) NOT NULL,
+ClaimID INTEGER NOT NULL,
+AdjustmentCodeID INTEGER,
+PayerID INTEGER NOT NULL,
+PayerControlNumber INTEGER,
+COBDiscountAmount VARCHAR(8) NOT NULL,
+COBApprovedAmount VARCHAR(8) NOT NULL,
+COBPerDayLimitAmount VARCHAR(8) NOT NULL,
+COBTaxAmount VARCHAR(8) NOT NULL,
+COBTotalBeforeTaxAmount VARCHAR(8) NOT NULL,
+COBCoveredAmount VARCHAR(8) NOT NULL,
+COBPatientPaidAmount VARCHAR(8) NOT NULL,
+PayerIdentificationCodeQualifier VARCHAR(100) NOT NULL,
+PayerIdentificationCode VARCHAR(30) NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+ALTER TABLE OtherPayer ADD FOREIGN KEY (PayerID) REFERENCES Payors(PayorID);
+
+CREATE TABLE OutboundBatch (
+OutboundBatchID INTEGER NOT NULL,
+FileType VARCHAR(15),
+ISAControlNumber VARCHAR(10),
+ISADate DATE,
+ISATime VARCHAR(4),
+ISASenderID VARCHAR(15),
+ISAReceiverID VARCHAR(15),
+GroupControlNumber VARCHAR(10),
+DateTimeStamp DATE NOT NULL,
+OutboundBatchFileName VARCHAR(255),
+DateTimeTransmittal DATE,
+FundCode VARCHAR(5),
+UserStamp INTEGER NOT NULL,
+ExportType VARCHAR(100),
+AgencyID INTEGER,
+Description VARCHAR(100),
+EarliestDate DATE,
+LatestDate DATE,
+CreatedDate DATE,
+Status VARCHAR(100),
+NumberOfItems INTEGER,
+CreatedBy INTEGER
+);
+
+CREATE TABLE OutboundBatch_AssessDetReview (
+OutboundBatch_AssessDetReviewID INTEGER NOT NULL,
+OutboundBatch_AssessReviewID INTEGER NOT NULL,
+SCALE VARCHAR(255),
+ITEM VARCHAR(max),
+SCORE DECIMAL(9),
+COMMENTS VARCHAR(max),
+YN INTEGER,
+SCALEID DECIMAL(9) NOT NULL,
+LOOKUPVALUE VARCHAR(50),
+QUESTIONID VARCHAR(15),
+SECID VARCHAR(500),
+DateTimeStamp DATE NOT NULL,
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE OutboundBatch_AssessReview (
+OutboundBatch_AssessReviewID INTEGER NOT NULL,
+ExportID INTEGER NOT NULL,
+ASSESSID INTEGER NOT NULL,
+ParentEntityID INTEGER,
+AssessChapter VARCHAR(255) NOT NULL,
+AssessPage VARCHAR(255) NOT NULL,
+CASENO INTEGER,
+FUNDCODE VARCHAR(25),
+REVIEW VARCHAR(100),
+RATER DECIMAL(9),
+Status VARCHAR(100),
+ScreenDesignID INTEGER NOT NULL,
+Agency INTEGER,
+ValidStatus VARCHAR(100),
+ValidError VARCHAR(255),
+CreatedBy INTEGER,
+DateTimeStamp DATE NOT NULL,
+UserStamp INTEGER NOT NULL,
+Postfix VARCHAR(2)
+);
+
+CREATE TABLE Page (
+PageID INTEGER,
+ChapterID INTEGER,
+ParentPageID INTEGER,
+PageTypeID INTEGER,
+Label VARCHAR(255),
+PageName VARCHAR(255),
+AccessLevel INTEGER,
+SortBy INTEGER,
+Visible BOOLEAN,
+UserRequired BOOLEAN,
+IsDefault BOOLEAN,
+DateTimeStamp DATE,
+AppType VARCHAR(5),
+SystemRequired BOOLEAN,
+IsAdvancedSearchTemplate BOOLEAN,
+HarmonyHelpID INTEGER,
+UserHelpID INTEGER,
+DisplayInTab BOOLEAN,
+UseInWFW BOOLEAN,
+IsChapterHeader BOOLEAN,
+IsWFWCallPage BOOLEAN,
+ShowInGroupSetup BOOLEAN,
+UserStamp INTEGER,
+UNIQUEID VARCHAR(16),
+ORIGINALID VARCHAR(16),
+PageSetID INTEGER
+);
+
+ALTER TABLE Page ADD FOREIGN KEY (PageSetID) REFERENCES PageSet(PageSetID);
+
+CREATE TABLE PageControl (
+PageControlID INTEGER NOT NULL,
+PageID INTEGER NOT NULL,
+UserControlID INTEGER NOT NULL,
+Label VARCHAR(255),
+ControlOrder INTEGER NOT NULL,
+Visible BOOLEAN NOT NULL,
+InsertSPName VARCHAR(255),
+UpdateSPName VARCHAR(255),
+FetchSPName VARCHAR(255),
+DeleteSPName VARCHAR(255),
+HistorySPName VARCHAR(255),
+HistoryIndexSPName VARCHAR(255),
+PrimaryKeyName VARCHAR(255),
+OraclePackage VARCHAR(255),
+SectionRepeatDirection INTEGER NOT NULL,
+SectionRepeatColumns INTEGER,
+CssClass VARCHAR(50),
+StatusField VARCHAR(100),
+UNIQUEID VARCHAR(16) NOT NULL,
+ORIGINALID VARCHAR(16) NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE PageControlEventService (
+PageControlEventServiceID INTEGER,
+PageControlID INTEGER,
+EventServiceID INTEGER,
+UNIQUEID VARCHAR(16),
+ORIGINALID VARCHAR(16),
+UserStamp INTEGER,
+DateTimeStamp DATE
+);
+
+CREATE TABLE PageControlProperty (
+PageControlPropertyID INTEGER NOT NULL,
+PageControlID INTEGER NOT NULL,
+PropertyName VARCHAR(100) NOT NULL,
+PropertyValue VARCHAR(7000) NOT NULL,
+UseOnPostback BOOLEAN NOT NULL,
+UseReflection BOOLEAN NOT NULL,
+UNIQUEID VARCHAR(16) NOT NULL,
+ORIGINALID VARCHAR(16) NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE PageFlyOutMenu (
+PageFlyOutMenuID INTEGER NOT NULL,
+MenuID INTEGER NOT NULL,
+PageID INTEGER NOT NULL,
+UNIQUEID VARCHAR(16) NOT NULL,
+ORIGINALID VARCHAR(16) NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE PageMenu (
+PageMenuID INTEGER NOT NULL,
+MenuID INTEGER NOT NULL,
+PageID INTEGER NOT NULL,
+UNIQUEID VARCHAR(16) NOT NULL,
+ORIGINALID VARCHAR(16) NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+Visible BOOLEAN,
+ApplyToGroup BOOLEAN,
+SortBy INTEGER NOT NULL
+);
+
+CREATE TABLE PageProperty (
+PagePropertyID INTEGER NOT NULL,
+PageID INTEGER NOT NULL,
+PropertyName VARCHAR(100) NOT NULL,
+PropertyValue VARCHAR(7000) NOT NULL,
+UseOnPostback BOOLEAN NOT NULL,
+UseReflection BOOLEAN NOT NULL,
+UNIQUEID VARCHAR(16) NOT NULL,
+ORIGINALID VARCHAR(16) NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE PageReportMenu (
+PageReportMenuID INTEGER NOT NULL,
+RepID INTEGER NOT NULL,
+PageName VARCHAR(255),
+ChapterName VARCHAR(255),
+SortBy INTEGER NOT NULL,
+EntityType VARCHAR(100) NOT NULL,
+Label VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE PageSet (
+PageSetID INTEGER NOT NULL,
+ChapterID INTEGER NOT NULL,
+Label VARCHAR(255),
+SortBy INTEGER,
+UNIQUEID VARCHAR(16) NOT NULL,
+ORIGINALID VARCHAR(16) NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE PageType (
+PageTypeID INTEGER NOT NULL,
+Label VARCHAR(255) NOT NULL,
+IsChapterLayoutTemplate BOOLEAN NOT NULL,
+UNIQUEID VARCHAR(16) NOT NULL,
+ORIGINALID VARCHAR(16) NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE PageWordMergeDocsMenu (
+PageWordMergeDocsMenuID INTEGER NOT NULL,
+DocID INTEGER,
+PageName VARCHAR(255),
+ChapterName VARCHAR(255),
+SortBy INTEGER NOT NULL,
+EntityType VARCHAR(100) NOT NULL,
+Label VARCHAR(255) NOT NULL,
+ScreenDesignID INTEGER,
+WordMergeTemplateID INTEGER NOT NULL
+);
+
+CREATE TABLE PayerBenefit (
+PayerBenefitID DECIMAL(9) NOT NULL,
+PayerID DECIMAL(9) NOT NULL,
+BenefitName VARCHAR(64) NOT NULL,
+CopayAmount VARCHAR(8) NOT NULL,
+AmountFormat VARCHAR(16) NOT NULL,
+StartDate DATE NOT NULL,
+EndDate DATE NOT NULL,
+Active INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+AppType VARCHAR(5) NOT NULL,
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE PAYMENTS (
+PAYMENTID INTEGER NOT NULL,
+CLAIMID DECIMAL(9),
+PAYERNUM DECIMAL(9),
+PAYERID DECIMAL(9),
+PAYERPAID DECIMAL(9),
+PAYDATE DATE,
+COMMENTS VARCHAR(max),
+DATETIMESTAMP DATE,
+TYPEPAY VARCHAR(50),
+PAIDBY VARCHAR(50),
+APPTYPE VARCHAR(5),
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE PAYMENTSRECEIVED (
+PAYMENTID INTEGER NOT NULL,
+CASENO INTEGER NOT NULL,
+FISCALYEAR INTEGER NOT NULL,
+MONTHNO VARCHAR(100),
+PAYMENTSOURCE VARCHAR(100),
+PAIDAMOUNT DECIMAL(9),
+CHECKNO VARCHAR(25),
+DATEPAID DATE,
+INDEXCODE VARCHAR(10),
+SUBOBJECT VARCHAR(10),
+DATETIMESTAMP DATE,
+COMMENTS VARCHAR(max),
+FUNDCODE VARCHAR(25),
+FIPSCODE VARCHAR(3),
+STATUS VARCHAR(100),
+PAYMETHOD VARCHAR(100),
+RECEIPTNO VARCHAR(25),
+TRANTYPE VARCHAR(50),
+APPTYPE VARCHAR(5),
+STARTDATE DATE,
+ENDDATE DATE,
+GenericDate1 DATE,
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE PayorFundCode (
+PayorFundCodeID INTEGER NOT NULL,
+PAYORID INTEGER NOT NULL,
+FUNDCODE VARCHAR(25) NOT NULL,
+ACTIVE BOOLEAN NOT NULL,
+EFFECTIVEDATE DATE NOT NULL,
+ENDDATE DATE,
+DATETIMESTAMP DATE NOT NULL,
+AppType VARCHAR(5),
+UserStamp INTEGER NOT NULL
+);
+
+ALTER TABLE PayorFundCode ADD FOREIGN KEY (PAYORID) REFERENCES Payors(PayorID);
+
+CREATE TABLE Payors (
+PayorID INTEGER NOT NULL,
+PayorName VARCHAR(75) NOT NULL,
+PayorStreet VARCHAR(100),
+PayorStreet2 VARCHAR(100),
+PayorCity VARCHAR(30),
+PayorState VARCHAR(100),
+PayorZip VARCHAR(10),
+PayorComments VARCHAR(max),
+PayorContact VARCHAR(50),
+PayorPhone VARCHAR(16),
+AccountID VARCHAR(25),
+PayorType VARCHAR(15) NOT NULL,
+ActiveYN BOOLEAN NOT NULL,
+PayorNumber DECIMAL(9),
+PayerAuthNumberRequired INTEGER,
+DateTimeStamp DATE NOT NULL,
+AppType VARCHAR(5),
+UserStamp INTEGER NOT NULL,
+StartDate DATE,
+EndDate DATE,
+PayorOrder INTEGER,
+PayorQualifier VARCHAR(3)
+);
+
+ALTER TABLE Payors ADD FOREIGN KEY (PayorType) REFERENCES PayorTypes(PAYORTYPE);
+
+CREATE TABLE PAYORSERVICES (
+PAYORSERVICEID INTEGER NOT NULL,
+PAYORID INTEGER,
+VSERVICEID INTEGER,
+STARTDATE DATE,
+ENDDATE DATE,
+PRIMARYPAYOR INTEGER,
+UNITCOST DECIMAL(9),
+SECONDARYCODE VARCHAR(50),
+EXCLUDEYN INTEGER,
+AppType VARCHAR(5),
+DateTimeStamp DATE,
+License VARCHAR(50),
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE PayorTypes (
+PayorTypeID INTEGER NOT NULL,
+PAYORTYPE VARCHAR(15) NOT NULL,
+BILLFREQ VARCHAR(100),
+CLAIMFORM DECIMAL(9),
+APPTYPE VARCHAR(5),
+Active BOOLEAN NOT NULL,
+DateTimeStamp DATE NOT NULL,
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE Permission (
+PermissionID INTEGER NOT NULL,
+Permission VARCHAR(255) NOT NULL,
+SystemPermission BOOLEAN NOT NULL,
+UNIQUEID VARCHAR(16) NOT NULL,
+ORIGINALID VARCHAR(16) NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE PLANACTIVITIES (
+PlanActivityID DECIMAL(9) NOT NULL,
+PlanActivity VARCHAR(255),
+Objective DECIMAL(9),
+ActivityType VARCHAR(255),
+APPTYPE VARCHAR(5),
+Active INTEGER,
+RequiresNamePrefix INTEGER
+);
+
+CREATE TABLE PlanCode (
+PlanCodeID INTEGER NOT NULL,
+NeedCodeID INTEGER NOT NULL,
+GoalCodeID INTEGER,
+ObjectiveCodeID INTEGER,
+InterventionCodeID INTEGER,
+PlanCategory VARCHAR(100),
+Active BOOLEAN NOT NULL,
+DateTimeStamp DATE NOT NULL,
+UserStamp INTEGER NOT NULL,
+FundCode VARCHAR(max)
+);
+
+ALTER TABLE PlanCode ADD FOREIGN KEY (GoalCodeID) REFERENCES GoalCode(GoalCodeID);
+
+ALTER TABLE PlanCode ADD FOREIGN KEY (InterventionCodeID) REFERENCES InterventionCode(InterventionCodeID);
+
+ALTER TABLE PlanCode ADD FOREIGN KEY (NeedCodeID) REFERENCES NeedCode(NeedCodeID);
+
+ALTER TABLE PlanCode ADD FOREIGN KEY (ObjectiveCodeID) REFERENCES ObjectiveCode(ObjectiveCodeID);
+
+CREATE TABLE PlanDetReview (
+PlanDetReviewID INTEGER NOT NULL,
+Assessment VARCHAR(50),
+Scale VARCHAR(255),
+Item VARCHAR(max),
+Score DECIMAL(9),
+Comments VARCHAR(max),
+YN INTEGER,
+LookupValue VARCHAR(50),
+ScaleID INTEGER NOT NULL,
+QuestionID VARCHAR(15),
+SecID VARCHAR(15),
+AssessID INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+UserStamp INTEGER NOT NULL
+);
+
+ALTER TABLE PlanDetReview ADD FOREIGN KEY (AssessID) REFERENCES PlanReview(AssessID);
+
+CREATE TABLE PLANNEDSERVICES (
+PLANSERVICEID INTEGER NOT NULL,
+PLANID INTEGER,
+STARTDATE DATE,
+ENDDATE DATE,
+Cost DECIMAL(9),
+VendorID INTEGER,
+UNITCOST DECIMAL(9),
+UNITS DECIMAL(9),
+VServiceID INTEGER,
+COMMENTS VARCHAR(max),
+DATETIMESTAMP DATE NOT NULL,
+UserStamp INTEGER NOT NULL,
+ISComboCodeID INTEGER,
+AuthServiceID INTEGER,
+PayorID INTEGER,
+FiscalYear INTEGER,
+FundingSource VARCHAR(50),
+UnitsPer DECIMAL(9),
+MaxAmount DECIMAL(9),
+NumberOfPeriods DECIMAL(9),
+UnitsOfMeasure VARCHAR(25),
+GenericLookup1 VARCHAR(100),
+GenericCheckBox1 BOOLEAN,
+GenericCheckBox2 BOOLEAN,
+GenericText1 VARCHAR(5000),
+ServiceID INTEGER NOT NULL,
+BaseCost DECIMAL(9),
+UseServiceSchedule BOOLEAN,
+ConsumerLiability DECIMAL(5),
+ProvSelectionMethod VARCHAR(100),
+ProvSelectionDisposition VARCHAR(100),
+ProvSelectionReason VARCHAR(100),
+ProvSelectionReasonOther VARCHAR(max),
+GenericDate DATE,
+Status VARCHAR(100),
+UnitsFractional DECIMAL(9),
+COMMENTS_278 VARCHAR(264),
+AllowEVVDelivery BOOLEAN,
+EVVComments VARCHAR(500),
+GenericLookup2 VARCHAR(100),
+GenericLookup3 VARCHAR(100),
+GenericLookup4 VARCHAR(100),
+GenericLookup5 VARCHAR(100),
+ContractNumber VARCHAR(50),
+ProviderRateType VARCHAR(100),
+InternalProgram VARCHAR(100),
+ConsumerCounty VARCHAR(100),
+ServiceRatio VARCHAR(100),
+CopiedFromPlanServiceID INTEGER,
+GenericText2 VARCHAR(500),
+GenericText3 VARCHAR(500),
+InventoryID INTEGER
+);
+
+ALTER TABLE PLANNEDSERVICES ADD FOREIGN KEY (AuthServiceID) REFERENCES AuthServices(AuthServiceID);
+
+ALTER TABLE PLANNEDSERVICES ADD FOREIGN KEY (PayorID) REFERENCES Payors(PayorID);
+
+ALTER TABLE PLANNEDSERVICES ADD FOREIGN KEY (ServiceID) REFERENCES SERVICECODES(SERVICEID);
+
+ALTER TABLE PLANNEDSERVICES ADD FOREIGN KEY (VendorID) REFERENCES Vendors(VendorID);
+
+ALTER TABLE PLANNEDSERVICES ADD FOREIGN KEY (VServiceID) REFERENCES VENDORSERVICES(VSERVICEID);
+
+CREATE TABLE PlannedSvcsToAuthsPush (
+PlannedSvcsToAuthsPushID INTEGER NOT NULL,
+FUNDCODE VARCHAR(25) NOT NULL,
+ProgramID INTEGER NOT NULL,
+SplitBy VARCHAR(100) NOT NULL,
+SplitLogic VARCHAR(100) NOT NULL,
+PushLogic VARCHAR(100) NOT NULL,
+PopulateFY VARCHAR(100),
+AuthSvcsFor0 VARCHAR(100) NOT NULL,
+Active BOOLEAN,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+DefaultEDIStatus VARCHAR(100)
+);
+
+CREATE TABLE PlanOverridingRoles (
+PlanOverrideRoleID INTEGER NOT NULL,
+RoleName VARCHAR(255) NOT NULL,
+DateTimeStamp DATE NOT NULL,
+Active BOOLEAN NOT NULL,
+ProgramName VARCHAR(255)
+);
+
+CREATE TABLE PlanReview (
+AssessID INTEGER NOT NULL,
+Assessment VARCHAR(50),
+Review VARCHAR(100),
+NumDaysTilNext INTEGER,
+Score1 DECIMAL(9),
+Score2 DECIMAL(9),
+Rater INTEGER,
+LevelOfNeed INTEGER,
+SystemFactors VARCHAR(50),
+IndividualFactors VARCHAR(50),
+Status VARCHAR(100),
+Risks VARCHAR(50),
+ReviewDate DATE,
+ApprovedBy INTEGER,
+ApproveDate DATE,
+ApproveUser VARCHAR(10),
+StartDate DATE,
+EndDate DATE,
+Comments VARCHAR(max),
+TriggerID INTEGER,
+TriggerPage VARCHAR(20),
+EnrollID INTEGER,
+PlanID INTEGER,
+ScreenDesignID INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+UserStamp INTEGER NOT NULL,
+InfoPathFormStatus INTEGER,
+ExpirationDate DATE,
+Expired BOOLEAN
+);
+
+ALTER TABLE PlanReview ADD FOREIGN KEY (EnrollID) REFERENCES ENROLLMENTS(ENROLLID);
+
+ALTER TABLE PlanReview ADD FOREIGN KEY (ScreenDesignID) REFERENCES SCREENDESIGN(SCREENDESIGNID);
+
+CREATE TABLE PLANS (
+PLANID INTEGER NOT NULL,
+OPENDATE DATE,
+CLOSEDATE DATE,
+OPENREASON VARCHAR(max),
+CLOSEREASON VARCHAR(max),
+DATETIMESTAMP DATE,
+UserStamp INTEGER NOT NULL,
+OPENID INTEGER NOT NULL,
+WORKER INTEGER,
+ENROLLID INTEGER,
+STATUS VARCHAR(100),
+TARGETDATE DATE,
+GenericLookup1 VARCHAR(100),
+GenericLookup2 VARCHAR(100),
+GenericLookup3 VARCHAR(100)
+);
+
+CREATE TABLE PLANS (
+GenericText1 VARCHAR(max),
+GenericText2 VARCHAR(max),
+StartDate DATE,
+EndDate DATE,
+GenericCheckBox1 BOOLEAN,
+ChapterName VARCHAR(100) NOT NULL,
+ChapterEntityID INTEGER NOT NULL,
+PageName VARCHAR(100) NOT NULL,
+EntityID INTEGER,
+ParticipantID INTEGER,
+AgencyID INTEGER,
+ReasonForIgnoringValidation VARCHAR(255),
+Valid BOOLEAN,
+GenericDate1 DATE,
+GenericDate2 DATE,
+GenericDate3 DATE,
+SecondaryWorker INTEGER,
+CopiedFromPlanID INTEGER,
+PlanVersion INTEGER,
+PlanVersionDate DATE,
+PlanVersionTime DATE,
+RecordPlanVersionDate DATE,
+RecordPlanVersionTime DATE
+);
+
+ALTER TABLE PLANS ADD FOREIGN KEY (ENROLLID) REFERENCES ENROLLMENTS(ENROLLID);
+
+ALTER TABLE PLANS ADD FOREIGN KEY (OPENID) REFERENCES OPENCLOSE(OPENID);
+
+ALTER TABLE PLANS ADD FOREIGN KEY (AgencyID) REFERENCES Vendors(VendorID);
+
+ALTER TABLE PLANS ADD FOREIGN KEY (WORKER) REFERENCES WORKERS(MEMBERID);
+
+ALTER TABLE PLANS ADD FOREIGN KEY (SecondaryWorker) REFERENCES WORKERS(MEMBERID);
+
+CREATE TABLE PlanValidation (
+PlanValidationID INTEGER NOT NULL,
+PlanID INTEGER NOT NULL,
+UserID INTEGER,
+UserAction VARCHAR(200),
+Reason VARCHAR(max),
+DateTime DATE,
+Result VARCHAR(500),
+Program VARCHAR(255),
+AreaPlanReimbursementID INTEGER,
+AreaPlanID INTEGER,
+ChapterName VARCHAR(100),
+ChapterEntityID INTEGER,
+PageName VARCHAR(100),
+EntityID INTEGER
+);
+
+CREATE TABLE PlanVersion (
+PlanVersionID INTEGER NOT NULL,
+PlanID INTEGER NOT NULL,
+PlanVersion INTEGER NOT NULL,
+PlanVersionDateTime DATE,
+PlanHistoryID INTEGER,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+ALTER TABLE PlanVersion ADD FOREIGN KEY (UserStamp) REFERENCES Users(USERID);
+
+CREATE TABLE PlanVersionChildTable (
+PlanVersionChildTableID INTEGER NOT NULL,
+PlanVersionID INTEGER NOT NULL,
+TableName VARCHAR(150),
+TableEntityID INTEGER,
+TableHistoryID INTEGER,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+ALTER TABLE PlanVersionChildTable ADD FOREIGN KEY (UserStamp) REFERENCES Users(USERID);
+
+CREATE TABLE POREQUEST (
+PO INTEGER NOT NULL,
+CASENO DECIMAL(9),
+VENDORID DECIMAL(9),
+BEGINDATE DATE,
+ENDDATE DATE,
+FUNDCODE VARCHAR(25),
+FIPSCODE VARCHAR(15),
+MAXAMT VARCHAR(8),
+FYEAR INTEGER,
+DATETIMESTAMP DATE,
+POENCUMBEREDAMT DECIMAL(9),
+FIRSTAUTHORIZATION DECIMAL(9),
+SECONDAUTHORIZATION DECIMAL(9),
+THIRDAUTHORIZATION DECIMAL(9),
+FIRSTSIGNATURE VARCHAR(10),
+SECSIGNATURE VARCHAR(10),
+THIRDSIGNATURE VARCHAR(10),
+FIRSTDTS DATE,
+SECDTS DATE,
+THIRDDTS DATE,
+AUTHDATE DATE,
+CONTRACT_TYPE VARCHAR(25),
+REQUESTSTATUS VARCHAR(20),
+APPROVESTATUS VARCHAR(20),
+UNIT VARCHAR(10),
+COMMENTS VARCHAR(max),
+APPTYPE VARCHAR(5),
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE POServicesReasons (
+POServicesReasonsID INTEGER NOT NULL,
+LinkedTable VARCHAR(50) NOT NULL,
+LinkedKey INTEGER NOT NULL,
+ValidCodeFlag BOOLEAN,
+ReasonCode VARCHAR(100),
+ReasonText VARCHAR(max),
+FollowUpCode VARCHAR(100),
+Datetimestamp DATE NOT NULL,
+Userstamp INTEGER NOT NULL,
+AppType VARCHAR(5) NOT NULL
+);
+
+CREATE TABLE PrimaryOccupations (
+Code VARCHAR(20) NOT NULL,
+Title VARCHAR(200) NOT NULL
+);
+
+CREATE TABLE Privacy (
+PrivacyID INTEGER NOT NULL,
+OpenID INTEGER,
+PrivacyType VARCHAR(100),
+PrivacyConsent INTEGER,
+PrivacyROI VARCHAR(100),
+EffectiveDate DATE,
+ExpirationDate DATE,
+Status VARCHAR(100),
+RevokedDate DATE,
+RevokedBy INTEGER,
+RevokedReason VARCHAR(100),
+RevokedReasonDesc VARCHAR(max),
+GenericText1 VARCHAR(500),
+GenericText2 VARCHAR(500),
+GenericText3 VARCHAR(500),
+GenericLookup1 VARCHAR(100),
+GenericLookup2 VARCHAR(100),
+GenericLookup3 VARCHAR(100),
+GenericDate1 DATE,
+GenericDate2 DATE,
+GenericDate3 DATE,
+GenericWorker1 INTEGER,
+GenericWorker2 INTEGER,
+GenericWorker3 INTEGER,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+ALTER TABLE Privacy ADD FOREIGN KEY (OpenID) REFERENCES OPENCLOSE(OPENID);
+
+ALTER TABLE Privacy ADD FOREIGN KEY (PrivacyConsent) REFERENCES SCREENDESIGN(SCREENDESIGNID);
+
+ALTER TABLE Privacy ADD FOREIGN KEY (UserStamp) REFERENCES Users(USERID);
+
+ALTER TABLE Privacy ADD FOREIGN KEY (RevokedBy) REFERENCES WORKERS(MEMBERID);
+
+ALTER TABLE Privacy ADD FOREIGN KEY (GenericWorker1) REFERENCES WORKERS(MEMBERID);
+
+ALTER TABLE Privacy ADD FOREIGN KEY (GenericWorker2) REFERENCES WORKERS(MEMBERID);
+
+ALTER TABLE Privacy ADD FOREIGN KEY (GenericWorker3) REFERENCES WORKERS(MEMBERID);
+
+CREATE TABLE PrivacyDesignee (
+PrivacyDesigneeID INTEGER NOT NULL,
+PrivacyID INTEGER NOT NULL,
+DesigneeType VARCHAR(100),
+DesigneeVendorID INTEGER,
+DesigneeMemberID INTEGER,
+PermissionType VARCHAR(100),
+EffectiveDate DATE,
+ExpirationDate DATE,
+Status VARCHAR(100),
+RevokedDate DATE,
+RevokedBy INTEGER,
+RevokedReason VARCHAR(100),
+RevokedReasonDesc VARCHAR(max),
+GenericText1 VARCHAR(500),
+GenericText2 VARCHAR(500),
+GenericText3 VARCHAR(500),
+GenericLookup1 VARCHAR(100),
+GenericLookup2 VARCHAR(100),
+GenericLookup3 VARCHAR(100),
+GenericDate1 DATE,
+GenericDate2 DATE,
+GenericDate3 DATE,
+GenericWorker1 INTEGER,
+GenericWorker2 INTEGER,
+GenericWorker3 INTEGER,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+ALTER TABLE PrivacyDesignee ADD FOREIGN KEY (PrivacyID) REFERENCES Privacy(PrivacyID);
+
+ALTER TABLE PrivacyDesignee ADD FOREIGN KEY (UserStamp) REFERENCES Users(USERID);
+
+ALTER TABLE PrivacyDesignee ADD FOREIGN KEY (DesigneeVendorID) REFERENCES Vendors(VendorID);
+
+ALTER TABLE PrivacyDesignee ADD FOREIGN KEY (DesigneeMemberID) REFERENCES WORKERS(MEMBERID);
+
+ALTER TABLE PrivacyDesignee ADD FOREIGN KEY (GenericWorker1) REFERENCES WORKERS(MEMBERID);
+
+ALTER TABLE PrivacyDesignee ADD FOREIGN KEY (GenericWorker2) REFERENCES WORKERS(MEMBERID);
+
+ALTER TABLE PrivacyDesignee ADD FOREIGN KEY (GenericWorker3) REFERENCES WORKERS(MEMBERID);
+
+ALTER TABLE PrivacyDesignee ADD FOREIGN KEY (RevokedBy) REFERENCES WORKERS(MEMBERID);
+
+CREATE TABLE PrivacyDetReview (
+PrivacyDetReviewID INTEGER NOT NULL,
+AssessID INTEGER,
+Assessment VARCHAR(50),
+Scale VARCHAR(1000),
+ScaleID INTEGER,
+Item VARCHAR(100),
+SecID VARCHAR(15),
+QuestionID VARCHAR(15),
+UserStamp INTEGER,
+DateTimeStamp DATE
+);
+
+ALTER TABLE PrivacyDetReview ADD FOREIGN KEY (AssessID) REFERENCES PrivacyReview(AssessID);
+
+ALTER TABLE PrivacyDetReview ADD FOREIGN KEY (ScaleID) REFERENCES SCREENQUESTIONS(SCREENSCALEID);
+
+ALTER TABLE PrivacyDetReview ADD FOREIGN KEY (UserStamp) REFERENCES Users(USERID);
+
+CREATE TABLE PrivacyReview (
+AssessID INTEGER NOT NULL,
+PrivacyID INTEGER NOT NULL,
+ScreenDesignID INTEGER NOT NULL,
+Assessment VARCHAR(50) NOT NULL,
+Review VARCHAR(100),
+ReviewDate DATE,
+Rater INTEGER,
+Status VARCHAR(100),
+ApprovedBy INTEGER,
+ApprovedDate DATE,
+UserStamp INTEGER,
+DateTimeStamp DATE
+);
+
+ALTER TABLE PrivacyReview ADD FOREIGN KEY (PrivacyID) REFERENCES Privacy(PrivacyID);
+
+ALTER TABLE PrivacyReview ADD FOREIGN KEY (ScreenDesignID) REFERENCES SCREENDESIGN(SCREENDESIGNID);
+
+ALTER TABLE PrivacyReview ADD FOREIGN KEY (UserStamp) REFERENCES Users(USERID);
+
+ALTER TABLE PrivacyReview ADD FOREIGN KEY (Rater) REFERENCES WORKERS(MEMBERID);
+
+CREATE TABLE ProjectCodes (
+Project VARCHAR(5) NOT NULL,
+Index VARCHAR(10) NOT NULL,
+FiscalYear VARCHAR(4) NOT NULL,
+Active INTEGER
+);
+
+CREATE TABLE ProviderAdjustment (
+ProviderAdjustmentID INTEGER NOT NULL,
+VendorID INTEGER NOT NULL,
+AdjustmentDate DATE NOT NULL,
+Amount VARCHAR(8) NOT NULL,
+FundCode VARCHAR(25) NOT NULL,
+PayerID INTEGER NOT NULL,
+ISComboCodeID INTEGER NOT NULL,
+Status VARCHAR(100) NOT NULL,
+ValidationStatus VARCHAR(200),
+PVLogID INTEGER,
+VoucherDetailID INTEGER,
+SecondaryVoucherDetailID INTEGER,
+AdjustmentReason VARCHAR(100),
+AdjustmentIdentifier VARCHAR(30),
+AdjustmentDescription VARCHAR(100),
+835FileName VARCHAR(150),
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+PrimaryAmount VARCHAR(8),
+SecondaryAmount VARCHAR(8),
+Suppress BOOLEAN NOT NULL,
+PrimaryISComboCodeID INTEGER,
+RANumber VARCHAR(100),
+ProviderIdentifier VARCHAR(100)
+);
+
+CREATE TABLE ProviderGroupWorkers (
+ProviderGroupWorkersID INTEGER NOT NULL,
+MemberID INTEGER NOT NULL,
+VendorGroupID INTEGER NOT NULL,
+Active BOOLEAN NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+StartDate DATE,
+EndDate DATE
+);
+
+CREATE TABLE ProviderPackageLink (
+ProviderPackageLinkID INTEGER NOT NULL,
+LookupCodesMastID INTEGER NOT NULL,
+VendorID INTEGER NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE ProviderQueue (
+ProviderQueueID INTEGER NOT NULL,
+ProviderID INTEGER NOT NULL,
+ProviderNAME VARCHAR(500) NOT NULL
+);
+
+CREATE TABLE ProviderRotation (
+ProviderRotationID INTEGER NOT NULL,
+VendorID INTEGER NOT NULL,
+County VARCHAR(100),
+Category VARCHAR(100),
+Sort DATE NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE ProviderServiceCodePackage (
+ProviderServiceCodePackageID INTEGER NOT NULL,
+PackageID INTEGER NOT NULL,
+ServiceCodeUnitCostID INTEGER NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE PVExportFiles (
+PVExportFilesID INTEGER NOT NULL,
+FileName VARCHAR(100),
+SeqNumber INTEGER,
+FileType VARCHAR(50),
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE PVLog (
+PVLogID INTEGER NOT NULL,
+EOPDate DATE,
+Status VARCHAR(2000),
+StartTime DATE,
+Success BOOLEAN,
+DateTimeStamp DATE,
+UserStamp INTEGER,
+Printed BOOLEAN,
+PayerID INTEGER,
+MemberID INTEGER,
+FundCode VARCHAR(25),
+FiscalRegion VARCHAR(100),
+Deleted BOOLEAN NOT NULL
+);
+
+CREATE TABLE PWDSETTINGS (
+Expire INTEGER NOT NULL,
+DaysUntilExpires INTEGER NOT NULL,
+LoginsUntilExpires INTEGER NOT NULL,
+Lockout INTEGER NOT NULL,
+LockoutAttempts INTEGER NOT NULL,
+LENGTHREQUIRED INTEGER NOT NULL,
+LENGTH INTEGER NOT NULL,
+NumberOfUpperCase INTEGER NOT NULL,
+NumberOfNumbers INTEGER NOT NULL,
+ReUsePassword INTEGER NOT NULL,
+ReuseAfterDays INTEGER NOT NULL,
+PasswordAsUserName INTEGER NOT NULL,
+PWDSETTINGSID INTEGER NOT NULL,
+DATETIMESTAMP DATE,
+USERSTAMP INTEGER,
+NumberOfSpecials INTEGER,
+NumberOfLowercase INTEGER,
+LockoutDuration INTEGER,
+DaysPwdChangeReminder INTEGER
+);
+
+CREATE TABLE READYTOBILL (
+READYTOBILLID DECIMAL(9) NOT NULL,
+ACTIVITYID DECIMAL(9),
+PAYERID DECIMAL(9),
+AMOUNT DECIMAL(9),
+CLAIMID DECIMAL(9),
+DATETIMESTAMP DATE,
+APPTYPE VARCHAR(5),
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE ReasonsNotMet (
+ReasonNotMetID INTEGER NOT NULL,
+ReasonNotMetCode VARCHAR(10),
+ReasonNotMetDescription VARCHAR(max),
+Active BOOLEAN,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE ReformaEligiblity (
+MCOCarrierID VARCHAR(2),
+MBHOCarrierID VARCHAR(2),
+Region VARCHAR(2),
+Municipality VARCHAR(4),
+ContractNumber VARCHAR(9),
+DependentCode VARCHAR(2),
+IDCounter VARCHAR(7),
+LastName1 VARCHAR(30),
+LastName2 VARCHAR(30),
+FirstName VARCHAR(30),
+MiddleInitial VARCHAR(1),
+Sex VARCHAR(1),
+DateofBirth DATE,
+SocialSecurity VARCHAR(9),
+Address1 VARCHAR(100),
+Address2 VARCHAR(100),
+City VARCHAR(30),
+State VARCHAR(100),
+Zip VARCHAR(5),
+Zip2 VARCHAR(4),
+Phone VARCHAR(10),
+FamilyID VARCHAR(11),
+FamilyIDSuffix VARCHAR(2),
+EnrollmentFromDate VARCHAR(8),
+EnrollmentThroughDate VARCHAR(8),
+MemberPlan VARCHAR(10),
+PlanEffectiveDate VARCHAR(8),
+Copay VARCHAR(8),
+Deductible VARCHAR(8),
+PrimaryCareCenter VARCHAR(6),
+PCPID VARCHAR(10),
+PCPLicenseNumber VARCHAR(10),
+Medicare VARCHAR(2),
+HOHSSN VARCHAR(9),
+ReformaEligiblityID INTEGER NOT NULL
+);
+
+CREATE TABLE ReimbursementAdjustment (
+ReimbursementAdjustmentID INTEGER NOT NULL,
+ParentExpenseID INTEGER NOT NULL,
+AdjustmentCategory VARCHAR(100),
+AdjustmentAmount DECIMAL(9),
+AdjustmentType VARCHAR(150),
+AdjustmentDescription VARCHAR(500),
+CreatedBy INTEGER,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE ReimbursementAgencyLevelAdjustment (
+ReimbursementAgencyLevelAdjustmentID INTEGER,
+AreaPlanReimbursementID INTEGER,
+RefNumber VARCHAR(50),
+PayerID INTEGER,
+Description VARCHAR(500),
+ISComboCodeID INTEGER,
+Amount DECIMAL(9),
+AdjustmentReason VARCHAR(100),
+Comments VARCHAR(1000),
+UserStamp INTEGER,
+DateTimeStamp DATE
+);
+
+CREATE TABLE ReimbursementCorrection (
+ReimbursementCorrectionID INTEGER NOT NULL,
+AreaPlanBudgetID INTEGER NOT NULL,
+AreaPlanReimbursementID INTEGER NOT NULL,
+ServiceMonth DATE NOT NULL,
+ProgramID INTEGER NOT NULL,
+ServiceID INTEGER NOT NULL,
+ProviderID INTEGER NOT NULL,
+AreaPlanFundingSourceID INTEGER NOT NULL,
+PriorReimbursementID INTEGER,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE ReimbursementCorrectionProgramExpense (
+ReimbursementCorrectionProgramExpenseID INTEGER,
+ReimbursementCorrectionID INTEGER,
+AreaPlanAccountID INTEGER,
+PriorExpense DECIMAL(9),
+PriorAdjustment DECIMAL(9),
+CurrentExpense DECIMAL(9),
+DefaultReimbursement DECIMAL(9),
+UserStamp INTEGER,
+DateTimeStamp DATE
+);
+
+CREATE TABLE ReimbursementCorrectionRevenue (
+ReimbursementCorrectionRevenueID INTEGER NOT NULL,
+ReimbursementCorrectionID INTEGER NOT NULL,
+AreaPlanAccountID INTEGER NOT NULL,
+PriorAmount DECIMAL(9),
+CurrentAmount DECIMAL(9),
+DefaultReimbursement DECIMAL(9),
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE ReimbursementCorrectionServiceExpense (
+ReimbursementCorrectionServiceExpenseID INTEGER,
+ReimbursementCorrectionID INTEGER,
+AreaPlanAccountID INTEGER,
+PriorExpense DECIMAL(9),
+PriorAdjustment DECIMAL(9),
+CurrentExpense DECIMAL(9),
+UserStamp INTEGER,
+DateTimeStamp DATE
+);
+
+CREATE TABLE ReimbursementCurrentServiceMonth (
+ReimbursementCurrentServiceMonthID INTEGER NOT NULL,
+AreaPlanReimbursementID INTEGER NOT NULL,
+AreaPlanBudgetID INTEGER NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE ReimbursementProgramExpenses (
+ReimbursementProgramExpensesID INTEGER NOT NULL,
+ReimbursementCurrentServiceMonthID INTEGER NOT NULL,
+AreaPlanAccountID INTEGER NOT NULL,
+Amount DECIMAL(9) NOT NULL,
+DefaultReimbursement DECIMAL(9),
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE ReimbursementRevenue (
+ReimbursementRevenueID INTEGER NOT NULL,
+ReimbursementCurrentServiceMonthID INTEGER NOT NULL,
+AreaPlanAccountID INTEGER NOT NULL,
+Amount DECIMAL(9) NOT NULL,
+DefaultReimbursement DECIMAL(9),
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE ReimbursementServiceExpenses (
+ReimbursementServiceExpensesID INTEGER NOT NULL,
+ReimbursementCurrentServiceMonthID INTEGER NOT NULL,
+AreaPlanAccountID INTEGER NOT NULL,
+Amount DECIMAL(9),
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE RELATEREVIEW (
+RECID INTEGER NOT NULL,
+CASENO INTEGER NOT NULL,
+RELATIONSHIP VARCHAR(100),
+EMERGENCYCONTACT INTEGER,
+LEGALGUARDIAN INTEGER,
+COMMENTS VARCHAR(max),
+DATETIMESTAMP DATE NOT NULL,
+ASSISTANCE DECIMAL(9),
+EMERGPHONE VARCHAR(16),
+ALTERNATEID VARCHAR(15),
+EMPLOYER VARCHAR(50),
+INCOME VARCHAR(15),
+TYPEOFRESTRICTION VARCHAR(100),
+MEMBEROFHOUSEHOLD INTEGER,
+EDUCATIONALSTATUS VARCHAR(50),
+CURRPLACEMENT VARCHAR(50),
+LEGALSTATUS VARCHAR(50),
+HOSIPTALAFFILIATION VARCHAR(25),
+HARMONYID INTEGER,
+PARTICIPATING VARCHAR(50),
+RELGENERIC1 VARCHAR(50),
+RELGENERIC2 VARCHAR(50),
+RELGENERIC3 INTEGER,
+RELGENERIC4 INTEGER,
+RELGENERIC5 VARCHAR(100),
+RELGENERIC6 VARCHAR(100),
+FUNDCODE VARCHAR(25),
+Active INTEGER,
+AppType VARCHAR(5),
+TargetVendorID INTEGER,
+TabType VARCHAR(100),
+IsRelation BOOLEAN,
+BeginDate DATE,
+EndDate DATE,
+UserStamp INTEGER NOT NULL,
+CONTACTID INTEGER NOT NULL,
+GenericText1 VARCHAR(100),
+GenericText2 VARCHAR(100),
+GenericText3 VARCHAR(100),
+GenericDropDown1 VARCHAR(max),
+GenericDropDown2 VARCHAR(max),
+GenericDropDown3 VARCHAR(max),
+GenericDropDown4 VARCHAR(max),
+GenericDropDown5 VARCHAR(max),
+GenericDropDown6 VARCHAR(max),
+GenericDropDown7 VARCHAR(max),
+GenericDropDown8 VARCHAR(max),
+GenericDropDown9 VARCHAR(max),
+GenericDropDown10 VARCHAR(max),
+VendorID INTEGER,
+Multirelationship VARCHAR(max),
+InfoPathFormStatus BOOLEAN,
+InfoPathFormUserStamp INTEGER,
+InfoPathFormCheckOutDate DATE,
+PCRouting VARCHAR(100)
+);
+
+CREATE TABLE RemittanceRemark (
+RemittanceRemarkID INTEGER NOT NULL,
+Level VARCHAR(25) NOT NULL,
+Code VARCHAR(50) NOT NULL,
+Description VARCHAR(100),
+Active BOOLEAN NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE ReportLibrary (
+ReportLibraryID DECIMAL(9) NOT NULL,
+REPID DECIMAL(9) NOT NULL,
+CreationDate DATE,
+LastRevisionDate DATE,
+Revision INTEGER,
+Caseno INTEGER NOT NULL,
+DataTimeStamp DATE,
+AppType VARCHAR(5),
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE REPORTSECURITY (
+REPORTSECURITYID INTEGER NOT NULL,
+REPID INTEGER NOT NULL,
+REPGROUP VARCHAR(30) NOT NULL,
+AppType VARCHAR(5),
+DateTimeStamp DATE NOT NULL,
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE REPORTSETUP (
+REPID INTEGER NOT NULL,
+REPNAME VARCHAR(75),
+REPDESC VARCHAR(1000),
+REPFILE VARCHAR(400),
+REPACTIVE INTEGER,
+REPSCHEDULE VARCHAR(50),
+REPTYPE VARCHAR(50),
+REPCATEGORY VARCHAR(50),
+AppType VARCHAR(5),
+DateTimeStamp DATE NOT NULL,
+RepEngine VARCHAR(25) NOT NULL,
+UserStamp INTEGER NOT NULL,
+REPMENUTYPE VARCHAR(100),
+REPIMAGETYPE VARCHAR(100),
+SaveImage BOOLEAN NOT NULL,
+MaxRows INTEGER,
+IgnoreRptParameters BOOLEAN,
+UseProgramSearchControl BOOLEAN,
+SourceRepInstance VARCHAR(25),
+AttachReportToIncident BOOLEAN NOT NULL
+);
+
+CREATE TABLE Request (
+RequestID INTEGER NOT NULL,
+ServiceType VARCHAR(100),
+ReviewType VARCHAR(100),
+RequestType VARCHAR(100),
+RequestDate DATE,
+RequestTime DATE,
+RequestMethod VARCHAR(100),
+WorkQueue VARCHAR(100),
+Priority VARCHAR(100),
+Disposition VARCHAR(100),
+DispositionDate DATE,
+Status VARCHAR(100),
+StatusDate DATE,
+Vendorid INTEGER,
+SubmiterLast VARCHAR(100),
+SubmitterFirst VARCHAR(75),
+SubmitterPhone VARCHAR(16),
+SubmitterExtension VARCHAR(10),
+SubmitterFax VARCHAR(16),
+SubmitterAddress1 VARCHAR(100),
+SubmitterAddress2 VARCHAR(100),
+SubmitterCity VARCHAR(30),
+SubmitterState VARCHAR(3),
+SubmitterZip VARCHAR(10),
+Credentials VARCHAR(100),
+StartDate DATE,
+EndDate DATE,
+OpenID INTEGER,
+Caseno INTEGER,
+SecID VARCHAR(15),
+SSN VARCHAR(11),
+DOB DATE,
+LastName VARCHAR(30),
+FirstName VARCHAR(30),
+MiddleName VARCHAR(30),
+Age VARCHAR(8),
+Gender VARCHAR(100),
+MaritalStatus VARCHAR(100),
+Citizenship VARCHAR(100),
+LivingArrangements VARCHAR(100),
+Address1 VARCHAR(100),
+Address2 VARCHAR(100),
+City VARCHAR(30),
+State VARCHAR(3),
+Zip VARCHAR(10),
+County VARCHAR(100),
+Phone VARCHAR(16),
+Allergies VARCHAR(100),
+NKA VARCHAR(100),
+AllerigicReactions VARCHAR(100),
+Terminate BOOLEAN,
+TerminateDate DATE,
+TerminateReason VARCHAR(255),
+DateTimeStamp DATE,
+Comments VARCHAR(max),
+SubmitterTraceNumber VARCHAR(50),
+AppType VARCHAR(5),
+EmergencyFlag INTEGER,
+RelatedCauses INTEGER,
+DateAccident DATE,
+SpecialConsideration INTEGER,
+ReviewerAssigned INTEGER,
+DateAssigned DATE,
+LevelofCare VARCHAR(100),
+Diagnosis VARCHAR(10),
+ReceivedTime DATE,
+DataEntry DATE,
+EnteredBy INTEGER,
+LinkedToRequest INTEGER,
+OtherInsurance1 VARCHAR(10),
+OtherInsurance2 VARCHAR(10),
+ConsumerEligible INTEGER,
+DateMenstruation DATE,
+OnsetDate DATE,
+EstimatedDOB DATE,
+RequestDueDate DATE,
+SubmittedFlag INTEGER,
+SubmittedDate DATE,
+NoteID INTEGER,
+OriginalRequestID INTEGER,
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE ResubQOldSettingsBackup (
+PKID INTEGER NOT NULL,
+PageID INTEGER NOT NULL
+);
+
+CREATE TABLE Role (
+RoleID INTEGER,
+GroupID INTEGER,
+Role VARCHAR(1024),
+EnhancedADA BOOLEAN,
+DateTimestamp DATE,
+AccessLevel INTEGER,
+UserStamp INTEGER,
+UNIQUEID VARCHAR(16),
+ORIGINALID VARCHAR(16),
+TwoPartHarmony BOOLEAN,
+AllowCrossProgramAccess BOOLEAN,
+Active BOOLEAN,
+WorkQueue VARCHAR(100),
+SubmitWorkQueue VARCHAR(100),
+AllowCrossProgramSearch BOOLEAN,
+ShowDischargedClients BOOLEAN,
+InquiryEForm VARCHAR(30),
+SupervisorAuthApprovalLimit DECIMAL(9),
+IncidentQueue VARCHAR(100),
+AllowCheckOutToInfoPath BOOLEAN,
+ShowParticipatingFlag BOOLEAN,
+ReportGroup VARCHAR(100),
+ProviderAdjPermission VARCHAR(28),
+NoteTypePackage VARCHAR(100),
+PeopleSearchProgramAccess BOOLEAN,
+DisableSAMSPeopleSearch BOOLEAN,
+AgencyAdjPermission VARCHAR(100),
+ConsBudgetAdjPermission VARCHAR(100),
+PrivacyDesigneeProvPermissions VARCHAR(150)
+);
+
+ALTER TABLE Role ADD FOREIGN KEY (GroupID) REFERENCES Group(GroupID);
+
+CREATE TABLE Role_Reports (
+RoleReportID INTEGER NOT NULL,
+RoleID INTEGER NOT NULL,
+ReportID INTEGER NOT NULL,
+Zone VARCHAR(50) NOT NULL,
+SequenceOrder INTEGER NOT NULL
+);
+
+CREATE TABLE ROLECHAPTER (
+ROLECHAPTERID INTEGER NOT NULL,
+ROLEID INTEGER,
+CHAPTERID INTEGER,
+view BOOLEAN NOT NULL,
+Userstamp INTEGER NOT NULL,
+Datetimestamp DATE NOT NULL,
+UNIQUEID VARCHAR(16) NOT NULL,
+ORIGINALID VARCHAR(16)
+);
+
+ALTER TABLE ROLECHAPTER ADD FOREIGN KEY (CHAPTERID) REFERENCES Chapter(ChapterID);
+
+ALTER TABLE ROLECHAPTER ADD FOREIGN KEY (ROLEID) REFERENCES Role(RoleID);
+
+CREATE TABLE ROLEFIELDCONTROL (
+ROLEFIELDCONTROLID INTEGER NOT NULL,
+ROLEID INTEGER,
+FIELDCONTROLID INTEGER,
+EDIT BOOLEAN NOT NULL,
+ReadOnly BOOLEAN NOT NULL,
+Userstamp INTEGER NOT NULL,
+Datetimestamp DATE NOT NULL,
+UNIQUEID VARCHAR(16) NOT NULL,
+ORIGINALID VARCHAR(16)
+);
+
+ALTER TABLE ROLEFIELDCONTROL ADD FOREIGN KEY (FIELDCONTROLID) REFERENCES FieldControl(FieldControlID);
+
+ALTER TABLE ROLEFIELDCONTROL ADD FOREIGN KEY (ROLEID) REFERENCES Role(RoleID);
+
+CREATE TABLE ROLEFUNDCODE (
+ROLEFUNDCODEID INTEGER NOT NULL,
+ROLEID INTEGER,
+FUNDCODE VARCHAR(25),
+Userstamp INTEGER NOT NULL,
+Datetimestamp DATE NOT NULL,
+UNIQUEID VARCHAR(16) NOT NULL,
+ORIGINALID VARCHAR(16)
+);
+
+ALTER TABLE ROLEFUNDCODE ADD FOREIGN KEY (ROLEID) REFERENCES Role(RoleID);
+
+ALTER TABLE ROLEFUNDCODE ADD FOREIGN KEY (FUNDCODE) REFERENCES SITE(FUNDCODE);
+
+CREATE TABLE ROLEPAGE (
+ROLEPAGEID INTEGER NOT NULL,
+ROLEID INTEGER NOT NULL,
+PAGEID INTEGER NOT NULL,
+Edit BOOLEAN NOT NULL,
+Delete BOOLEAN NOT NULL,
+Add BOOLEAN NOT NULL,
+ReadOnly BOOLEAN NOT NULL,
+Userstamp INTEGER NOT NULL,
+Datetimestamp DATE NOT NULL,
+UNIQUEID VARCHAR(16) NOT NULL,
+ORIGINALID VARCHAR(16)
+);
+
+ALTER TABLE ROLEPAGE ADD FOREIGN KEY (PAGEID) REFERENCES Page(PageID);
+
+ALTER TABLE ROLEPAGE ADD FOREIGN KEY (ROLEID) REFERENCES Role(RoleID);
+
+CREATE TABLE RolePermission (
+RolePermissionID INTEGER NOT NULL,
+PermissionID INTEGER NOT NULL,
+RoleID INTEGER NOT NULL,
+UNIQUEID VARCHAR(16) NOT NULL,
+ORIGINALID VARCHAR(16) NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE Roster (
+RosterId VARCHAR(16) NOT NULL,
+MemberId INTEGER NOT NULL,
+Name VARCHAR(50) NOT NULL,
+Filters VARCHAR(max) NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE RosterConsumer (
+RosterId VARCHAR(16) NOT NULL,
+MemberId INTEGER NOT NULL,
+Consumers VARCHAR(max) NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE RPTPARAMETERS (
+PARAMID DECIMAL(9) NOT NULL,
+PARAMETERNAME VARCHAR(50),
+PARAMDESC VARCHAR(255),
+ACTIVE INTEGER
+);
+
+CREATE TABLE RPTSELPARAMETERS (
+RPTSELPARAMID DECIMAL(9) NOT NULL,
+RPTID DECIMAL(9),
+PARAMID DECIMAL(9)
+);
+
+CREATE TABLE RSAExportSubmissions (
+RSAExportSubmissionID INTEGER,
+1_ProgramYear VARCHAR(50),
+2_ProgramYearQuarter VARCHAR(50),
+3_Removed VARCHAR(50),
+4_AgencyCode VARCHAR(50),
+5_UniqueIdentifier VARCHAR(50),
+6_SocialSecurityNumber VARCHAR(50),
+7_DateOfApplication VARCHAR(50),
+8_DateOfBirth VARCHAR(50),
+9_Sex VARCHAR(50),
+10_AmericanIndianAlaskaNative VARCHAR(50),
+11_Asian VARCHAR(50),
+12_BlackAfricanAmerican VARCHAR(50),
+13_NativeHawaiianOtherPacificIslander VARCHAR(50),
+14_White VARCHAR(50),
+15_EthnicityHispanicLatino VARCHAR(50),
+16_Veteran VARCHAR(50),
+17_Removed VARCHAR(50),
+18_StatePostalCodeOfResidence VARCHAR(50),
+19_CountyFipsCode VARCHAR(50),
+20_ZipCode VARCHAR(50),
+21_SourceOfReferral VARCHAR(50),
+22_StudentWithaDisability VARCHAR(50),
+23_Removed VARCHAR(50),
+24_Removed VARCHAR(50),
+25_Removed VARCHAR(50),
+26_Removed VARCHAR(50),
+27_Removed VARCHAR(50),
+28_Removed VARCHAR(50),
+29_Removed VARCHAR(50),
+30_Removed VARCHAR(50),
+31_Removed VARCHAR(50),
+32_Removed VARCHAR(50),
+33_Removed VARCHAR(50),
+34_Removed VARCHAR(50),
+35_Removed VARCHAR(50),
+36_Removed VARCHAR(50),
+37_Removed VARCHAR(50),
+38_DateOfEligibilityDetermination VARCHAR(50),
+39_EligibilityDeterminationExtension VARCHAR(50),
+40_DateOfPlacementOnOOSWaitingList VARCHAR(50),
+41_DateOfExitFromOOSWaitingList VARCHAR(50),
+42_IndividualWithaDisability VARCHAR(50),
+43_PrimaryDisability VARCHAR(50),
+44_SecondaryDisability VARCHAR(50),
+45_SignificanceOfDisability VARCHAR(50),
+46_StartDateOfTrialWorkExperience VARCHAR(50),
+47_EndDateOfTrialWorkExperience VARCHAR(50),
+48_Removed VARCHAR(50),
+49_SupportedEmploymentGoalonCurrentIPE VARCHAR(50),
+50_EmploymentAtInitialIPE VARCHAR(50),
+51_PrimaryOccupationAtInitialIPE VARCHAR(50),
+52_HourlyWageAtInitialIPE VARCHAR(50),
+53_HoursWorkedInaWeekAtInitialIPE VARCHAR(50),
+54_Adult VARCHAR(50),
+55_AdultEducation VARCHAR(50),
+56_DislocatedWorker VARCHAR(50),
+57_JobCorps VARCHAR(50),
+58_VocationalRehabilitation VARCHAR(50),
+59_WagnerPeyserEmploymentService VARCHAR(50),
+60_Youth VARCHAR(50),
+61_YouthBuild VARCHAR(50),
+62_LongTermUnemployed VARCHAR(50),
+63_ExhaustingTANFwithin2Years VARCHAR(50),
+64_FosterCareYouth VARCHAR(50),
+65_HomelessIndividualHomelessChildrenAndYouthsOrRunawayYouth VARCHAR(50),
+66_ExOffender VARCHAR(50),
+67_LowIncome VARCHAR(50),
+68_EnglishLanguageLearner VARCHAR(50),
+69_BasicSkillsDeficientOrLowLevelsOfLiteracy VARCHAR(50),
+70_CulturalBarriers VARCHAR(50),
+71_SingleParent VARCHAR(50),
+72_DisplacedHomemaker VARCHAR(50),
+73_MigrantAndSeasonalFarmworker VARCHAR(50),
+74_StateDefinitionForAgeOfStudentsWithDisabilities VARCHAR(50),
+75_Removed VARCHAR(50),
+76_Removed VARCHAR(50),
+77_HighestElementaryOrSecondarySchoolGradeCompletedAtProgramEntry VARCHAR(50),
+78_EnrolledinSecondaryEducation VARCHAR(50),
+79_DateReceivedSpecialEducationCertificateofCompletion VARCHAR(50),
+80_Removed VARCHAR(50),
+81_DateAttainedSecondarySchoolDiploma VARCHAR(50),
+82_DateAttainedRecognizedSecondarySchoolEquivalency VARCHAR(50),
+83_Removed VARCHAR(50),
+84_EnrolledinPostsecondaryEducationorcareerortechnicaltraining VARCHAR(50),
+85_DateEnrolledDuringProgramParticipationInAnEducation VARCHAR(50),
+86_CompletedSomePostsecondaryEducationNoDegreeorCertificate VARCHAR(50),
+87_DateAttainedAssociateDegree VARCHAR(50),
+88_DateAttainedBachelorsDegree VARCHAR(50),
+89_DateAttainedMastersDegree VARCHAR(50),
+90_DateAttainedGraduateDegree VARCHAR(50),
+91_Removed VARCHAR(50),
+92_Removed VARCHAR(50),
+93_DateAttainedVocationalTechnicalLicense VARCHAR(50),
+94_DateAttainedVocationalTechnicalCertificateorCertification VARCHAR(50),
+95_DateAttainedOtherRecognizedCredential VARCHAR(50),
+96_StartDateofPreEmploymentTransitionServices VARCHAR(50),
+97_JobExplorationCounselingServiceProvidedbyVRAgencyStaff VARCHAR(50),
+98_JobExplorationCounselingServiceProvidedthroughVRAgencyPurchase VARCHAR(50),
+99_JobExplorationCounselingPurchasedServiceProviderType VARCHAR(50),
+100_JobExplorationCounselingVRProgramExpenditureForPurchasedService VARCHAR(50),
+101_Removed VARCHAR(50),
+102_Removed VARCHAR(50),
+103_WorkBasedLearningExperienceServiceProvidedbyVRAgencyStaff VARCHAR(50),
+104_WorkBasedLearningExperienceServiceProvidedthroughVRAgencyPurchase VARCHAR(50),
+105_WorkBasedLearningExperiencePurchasedServiceProviderType VARCHAR(50),
+106_WorkBasedLearningExperienceVRProgramExpenditureForPurchasedService VARCHAR(50),
+107_Removed VARCHAR(50),
+108_Removed VARCHAR(50),
+109_CounselingonEnrollmentOpportunitiesServiceProvidedbyVRAgencyStaff VARCHAR(50),
+110_CounselingonEnrollmentOpportunitiesServiceProvidedthroughVRAgencyPurchase VARCHAR(50),
+111_CounselingonEnrollmentOpportunitiesPurchasedServiceProviderType VARCHAR(50),
+112_CounselingOnEnrollmentOpportunitiesVRProgramExpenditureForPurchasedService VARCHAR(50),
+113_Removed VARCHAR(50),
+114_Removed VARCHAR(50),
+115_WorkplaceReadinessTrainingServiceProvidedbyVRAgencyStaff VARCHAR(50),
+116_WorkplaceReadinessTrainingServiceProvidedthroughVRAgencyPurchase VARCHAR(50),
+117_WorkplaceReadinessTrainingPurchasedServiceProviderType VARCHAR(50),
+118_WorkplaceReadinessTrainingVRProgramExpenditureForPurchasedService VARCHAR(50),
+119_Removed VARCHAR(50),
+120_Removed VARCHAR(50),
+121_InstructioninSelfAdvocacyServiceProvidedbyVRAgencyStaff VARCHAR(50),
+122_InstructioninSelfAdvocacyServiceProvidedthroughVRAgencyPurchase VARCHAR(50),
+123_InstructioninSelfAdvocacyPurchasedServiceProviderType VARCHAR(50),
+124_InstructionInSelfAdvocacyVRProgramExpenditureForPurchasedService VARCHAR(50),
+125_Removed VARCHAR(50),
+126_Removed VARCHAR(50),
+127_StartDateofInitialVRServiceOnOrAfterIPE VARCHAR(50),
+128_DateofMostRecentCareerService VARCHAR(50),
+129_Removed VARCHAR(50),
+130_GraduateCollegeorUniversityServiceProvidedThroughVRAgencyPurchase VARCHAR(50),
+131_GraduateCollegeorUniversityPurchasedServiceProviderType VARCHAR(50),
+132_GraduateCollegeorUniversityAmountofVRTitleIFundsExpended VARCHAR(50),
+133_Removed VARCHAR(50),
+134_GraduateCollegeorUniversityService VARCHAR(50),
+135_GraduateCollegeorUniversityComparableServiceProviderType VARCHAR(50),
+136_Removed VARCHAR(50),
+137_FourYearCollegeorUniversityTrainingServiceProvidedThroughVRAgencyPurchase VARCHAR(50),
+138_FourYearCollegeorUniversityTrainingPurchasedServiceProviderType VARCHAR(50),
+139_FourYearCollegeorUniversityTrainingAmountofVRFundsExpendedforServiceTitleI VARCHAR(50),
+140_Removed VARCHAR(50),
+141_FourYearCollegeorUniversityTrainingService VARCHAR(50),
+142_FourYearCollegeorUniversityTrainingComparableServicesandBenefitsProviderType VARCHAR(50),
+143_Removed VARCHAR(50),
+144_JuniororCommunityCollegeTrainingServiceProvidedthroughVRAgencyPurchase VARCHAR(50),
+145_JuniororCommunityCollegeTrainingPurchasedServiceProviderType VARCHAR(50),
+146_JuniororCommunityCollegeTrainingAmountofVRFundsExpendedforServiceTitleI VARCHAR(50),
+147_Removed VARCHAR(50),
+148_JuniororCommunityCollegeTrainingService VARCHAR(50),
+149_JuniororCommunityCollegeTrainingComparableServicesandBenefitsProviderType VARCHAR(50),
+150_OccupationalorVocationalTrainingServiceProvidedbyVRAgencyStaffinhouse VARCHAR(50),
+151_OccupationalorVocationalTrainingServiceProvidedthroughVRAgencyPurchase VARCHAR(50),
+152_OccupationalorVocationalTrainingPurchasedServiceProviderType VARCHAR(50),
+153_OccupationalorVocationalTrainingAmountofVRFundsExpendedforServiceTitleI VARCHAR(50),
+154_Removed VARCHAR(50),
+155_OccupationalorVocationalTrainingService VARCHAR(50),
+156_OccupationalorVocationalTrainingComparableServicesandBenefitsProviderType VARCHAR(50),
+157_OnTheJobTrainingServiceProvidedbyVRAgencyStaffinhouse VARCHAR(50),
+158_OnTheJobTrainingServiceProvidedthroughVRAgencyPurchase VARCHAR(50),
+159_OnTheJobTrainingPurchasedServiceProviderType VARCHAR(50),
+160_OnTheJobTrainingAmountofVRFundsExpendedforServiceTitleI VARCHAR(50),
+161_Removed VARCHAR(50),
+162_OnTheJobTrainingServiceProvidedbyComparableServicesandBenefitsProviders VARCHAR(50),
+163_OnTheJobTrainingComparableServicesandBenefitsProviderType VARCHAR(50),
+164_RegisteredApprenticeshipTrainingServiceProvidedthroughVRAgencyPurchase VARCHAR(50),
+165_RegisteredApprenticeshipTrainingPurchasedServiceProviderType VARCHAR(50),
+166_RegisteredApprenticeshipTrainingAmountofVRFundsExpendedforServiceTitleI VARCHAR(50),
+167_Removed VARCHAR(50),
+168_RegisteredApprenticeshipTrainingService VARCHAR(50),
+169_RegisteredApprenticeshipTrainingComparableServicesandBenefitsProviderType VARCHAR(50),
+170_BasicAcademicRemedialorLiteracyTrainingServiceProvidedbyVRAgencyStaffinhouse VARCHAR(50),
+171_BasicAcademicRemedialorLiteracyTrainingService VARCHAR(50),
+172_BasicAcademicRemedialorLiteracyTrainingPurchasedServiceProviderType VARCHAR(50),
+173_BasicAcademicRemedialorLiteracyTraining VARCHAR(50),
+174_Removed VARCHAR(50),
+175_BasicAcademicRemedialorLiteracyTrainingService VARCHAR(50),
+176_BasicAcademicRemedialorLiteracyTrainingComparableServices VARCHAR(50),
+177_JobReadinessTrainingServiceProvidedbyVRAgencyStaffinhouse VARCHAR(50),
+178_JobReadinessTrainingServiceProvidedthroughVRAgencyPurchase VARCHAR(50),
+179_JobReadinessTrainingServicePurchasedServiceProviderType VARCHAR(50),
+180_JobReadinessTrainingServiceAmountofVRFundsExpendedforServiceTitleI VARCHAR(50),
+181_Removed VARCHAR(50),
+182_JobReadinessTrainingServiceProvidedbyComparableServicesandBenefitsProviders VARCHAR(50),
+183_JobReadinessTrainingComparableServicesandBenefitsProviderType VARCHAR(50),
+184_DisabilityRelatedSkillsTrainingServiceProvidedbyVRAgencyStaffinhouse VARCHAR(50),
+185_DisabilityRelatedSkillsTrainingServiceProvidedthroughVRAgencyPurchase VARCHAR(50),
+186_DisabilityRelatedSkillsTrainingPurchasedServiceProviderType VARCHAR(50),
+187_DisabilityRelatedSkillsTrainingAmountofVRFundsExpendedforServiceTitleI VARCHAR(50),
+188_Removed VARCHAR(50),
+189_DisabilityRelatedSkillsTrainingService VARCHAR(50),
+190_DisabilityRelatedSkillsTrainingComparableServicesandBenefitsProviderType VARCHAR(50),
+191_MiscellaneousTrainingServiceProvidedbyVRAgencyStaffinhouse VARCHAR(50),
+192_MiscellaneousTrainingServiceProvidedthroughVRAgencyPurchase VARCHAR(50),
+193_MiscellaneousTrainingPurchasedServiceProviderType VARCHAR(50),
+194_MiscellaneousTrainingAmountofVRFundsExpendedforServiceTitleI VARCHAR(50),
+195_Removed VARCHAR(50),
+196_MiscellaneousTrainingServiceProvidedbyComparableServicesandBenefitsProviders VARCHAR(50),
+197_MiscellaneousTrainingComparableServicesandBenefitsProviderType VARCHAR(50),
+198_RandolphSheppardEntrepreneurialTrainingServiceProvidedbyVRAgencyStaffinhouse VARCHAR(50),
+199_ServiceProvidedthroughVRAgencyPurchase VARCHAR(50),
+200_RandolphSheppardEntrepreneurialTrainingPurchasedServiceProviderType VARCHAR(50),
+201_AmountofVRFundsExpendedforServiceTitleI VARCHAR(50),
+202_Removed VARCHAR(50),
+203_ServiceProvidedbyComparableServicesandBenefitsProviders VARCHAR(50),
+204_ComparableServicesandBenefitsProviderType VARCHAR(50),
+205_CustomizedTrainingServiceProvidedbyVRAgencyStaffinhouse VARCHAR(50),
+206_CustomizedTrainingServiceProvidedthroughVRAgencyPurchase VARCHAR(50),
+207_CustomizedTrainingPurchasedServiceProviderType VARCHAR(50),
+208_CustomizedTrainingAmountofVRFundsExpendedforServiceTitleI VARCHAR(50),
+209_Removed VARCHAR(50),
+210_CustomizedTrainingServiceProvidedbyComparableServicesandBenefitsProviders VARCHAR(50),
+211_CustomizedTrainingComparableServicesandBenefitsProviderType VARCHAR(50),
+212_AssessmentServiceProvidedByVRAgencyStaffInhouse VARCHAR(50),
+213_AssessmentServiceProvidedThroughVRAgencyPurchase VARCHAR(50),
+214_AssessmentPurchasedServiceProviderType VARCHAR(50),
+215_AssessmentAmountofVRFundsExpendedforService VARCHAR(50),
+216_Removed VARCHAR(50),
+217_AssessmentServiceProvidedByComparableServicesAndBenefitsProviders VARCHAR(50),
+218_AssessmentComparableServicesAndBenefitsProviderType VARCHAR(50),
+219_DiagnosisAndTreatmentOfImpairmentsServiceProvidedByVRAgencyStaffInhouse VARCHAR(50),
+220_DiagnosisAndTreatmentOfImpairmentsServiceProvidedThroughVRAgencyPurchase VARCHAR(50),
+221_DiagnosisAndTreatmentOfImpairmentsPurchasedServiceProviderType VARCHAR(50),
+222_DiagnosisandTreatmentofImpairmentsAmountofVRFundsExpendedforService VARCHAR(50),
+223_Removed VARCHAR(50),
+224_ProvidedByComparableServicesAndBenefitsProviders VARCHAR(50),
+225_DiagnosisAndTreatmentOfImpairmentsComparableServicesAndBenefitsProviderType VARCHAR(50),
+226_ServiceProvidedByVRAgencyStaffInhouse VARCHAR(50),
+227_ServiceProvidedByThroughVRAgencyPurchase VARCHAR(50),
+228_VocationalRehabilitationCounselingAndGuidancePurchasedServiceProviderType VARCHAR(50),
+229_GuidanceAmountofVRFundsExpendedforService VARCHAR(50),
+230_Removed VARCHAR(50),
+231_ServiceProvidedByComparableServiceAndBenefitsProviders VARCHAR(50),
+232_ServicesAndBenefitsProviderType VARCHAR(50),
+233_JobSearchAssistanceServiceProvidedByVRAgencyStaffInhouse VARCHAR(50),
+234_JobSearchAssistanceServiceProvidedThroughVRAgencyPurchase VARCHAR(50),
+235_JobSearchAssistancePurchasedServiceProviderType VARCHAR(50),
+236_JobSearchAssistanceAmountofVRFundsExpendedforService VARCHAR(50),
+237_Removed VARCHAR(50),
+238_JobSearchAssistanceServiceProvidedByComparableServicesAndBenefitsProviders VARCHAR(50),
+239_JobSearchAssistanceComparableServicesAndBenefitsProviderType VARCHAR(50),
+240_VRJobPlacementAssistanceAgencyStaffInhouse VARCHAR(50),
+241_JobPlacementAssistanceServiceProvidedThroughVRAgencyPurchase VARCHAR(50),
+242_JobPlacementAssistancePurchasedServiceProviderType VARCHAR(50),
+243_JobPlacementAssistanceAmountofVRFundsExpendedforService VARCHAR(50),
+244_Removed VARCHAR(50),
+245_JobPlacementAssistanceServiceProvidedByComparableServicesAndBenefitProviders VARCHAR(50),
+246_JobPlacementAssistanceComparableServicesAndBenefitsProviderType VARCHAR(50),
+247_ShortTermJobSupportsServiceProvidedByVRAgencyStaffInhouse VARCHAR(50),
+248_ShortTermJobSupportsServiceProvidedThroughVRAgencyPurchase VARCHAR(50),
+249_ShortTermJobSupportsPurchasedServiceProviderType VARCHAR(50),
+250_ShortTermJobSupportsAmountofVRFundsExpendedforService VARCHAR(50),
+251_Removed VARCHAR(50),
+252_ShortTermJobSupportsServiceProvidedByComparableServicesAndBenefitsProviders VARCHAR(50),
+253_ShortTermJobSupportsComparableServicesAndBenefitsProviderType VARCHAR(50),
+254_SupportedEmploymentServicesServiceProvidedByVRAgencyStaffInhouse VARCHAR(50),
+255_SupportedEmploymentServicesServiceProvidedThroughVRAgencyPurchase VARCHAR(50),
+256_SupportedEmploymentServicesPurchasedServiceProviderType VARCHAR(50),
+257_SupportedEmploymentServicesAmountofVRFundsExpendedforService VARCHAR(50),
+258_SupportedEmploymentServicesAmountofSEFundsExpendedforService VARCHAR(50),
+259_ComparableServicesAndBenefitsProviders VARCHAR(50),
+260_SupportedEmploymentServicesComparableServicesAndBenefitsProviderType VARCHAR(50),
+261_InformationAndReferralServicesServiceProvidedByVRAgencyStaffInhouse VARCHAR(50),
+262_InformationAndReferralServicesServiceProvidedThroughVRAgencyPurchase VARCHAR(50),
+263_InformationAndReferralServicesPurchasedServiceProviderType VARCHAR(50),
+264_InformationandReferralServicesAmountofVRFundsExpendedforService VARCHAR(50),
+265_Removed VARCHAR(50),
+266_ComparableServicesAndBenefitsProviders VARCHAR(50),
+267_InformationAndReferralServicesComparableServicesAndBenefitsProviderType VARCHAR(50),
+268_BenefitsCounselingServiceProvidedByVRAgencyStaffInhouse VARCHAR(50),
+269_BenefitsCounselingServiceProvidedThroughVRAgencyPurchase VARCHAR(50),
+270_BenefitsCounselingPurchasedServiceProviderType VARCHAR(50),
+271_BenefitsCounselingAmountofVRFundsExpendedforService VARCHAR(50),
+272_Removed VARCHAR(50),
+273_BenefitsCounselingServiceProvidedByComparableServicesAndBenefitsProviders VARCHAR(50),
+274_BenefitsCounselingComparableServicesAndBenefitsProviderType VARCHAR(50),
+275_CustomizedEmploymentServicesServiceProvidedByVRAgencyStaffInhouse VARCHAR(50),
+276_CustomizedEmploymentServicesServiceProvidedThroughVRAgencyPurchase VARCHAR(50),
+277_CustomizedEmploymentServicesPurchasedServiceProviderType VARCHAR(50),
+278_CustomizedEmploymentServicesAmountofVRFundsExpendedforService VARCHAR(50),
+279_CustomizedEmploymentServicesAmountofSEFundsExpendedforService VARCHAR(50),
+280_ComparableServicesAndBenefitsProviders VARCHAR(50),
+281_CustomizedEmploymentServicesComparableServicesAndBenefitsProviderType VARCHAR(50),
+282_ExtendedServicesServiceProvidedByVRAgencyStaffInhouse VARCHAR(50),
+283_ExtendedServicesServiceProvidedThroughVRAgencyPurchase VARCHAR(50),
+284_ExtendedServicesPurchasedServiceProviderType VARCHAR(50),
+285_ExtendedServicesAmountofVRFundsExpendedforService VARCHAR(50),
+286_ExtendedServicesAmountofSEFundsExpendedforService VARCHAR(50),
+287_TransportationDataElementsServiceProvidedbyVRAgencyStaffinhouse VARCHAR(50),
+288_TransportationDataElementsServiceProvidedthroughVRAgencyPurchase VARCHAR(50),
+289_TransportationDataElementsPurchasedServiceProviderType VARCHAR(50),
+290_TransportationDataElementsAmountofVRFundsExpendedforServiceTitleI VARCHAR(50),
+291_Removed VARCHAR(50),
+292_ComparableServicesandBenefitsProviders VARCHAR(50),
+293_TransportationDataElementsComparableServicesandBenefitsProviderType VARCHAR(50),
+294_MaintenanceServiceProvidedbyVRAgencyStaffinhouse VARCHAR(50),
+295_MaintenanceServiceProvidedthroughVRAgencyPurchase VARCHAR(50),
+296_MaintenancePurchasedServiceProviderType VARCHAR(50),
+297_MaintenanceAmountofVRFundsExpendedforServiceTitleI VARCHAR(50),
+298_Removed VARCHAR(50),
+299_MaintenanceServiceProvidedbyComparableServicesandBenefitsProviders VARCHAR(50),
+300_MaintenanceComparableServicesandBenefitsProviderType VARCHAR(50),
+301_RehabilitationTechnologyServiceProvidedbyVRAgencyStaffinhouse VARCHAR(50),
+302_RehabilitationTechnologyServiceProvidedthroughVRAgencyPurchase VARCHAR(50),
+303_RehabilitationTechnologyPurchasedServiceProviderType VARCHAR(50),
+304_RehabilitationTechnologyAmountofVRFundsExpendedforServiceTitleI VARCHAR(50),
+305_Removed VARCHAR(50),
+306_ComparableServicesandBenefitsProviders VARCHAR(50),
+307_RehabilitationTechnologyComparableServicesandBenefitsProviderType VARCHAR(50),
+308_PersonalAssistanceServicesServiceProvidedbyVRAgencyStaffinhouse VARCHAR(50),
+309_PersonalAssistanceServicesServiceProvidedthroughVRAgencyPurchase VARCHAR(50),
+310_PersonalAssistanceServicesPurchasedServiceProviderType VARCHAR(50),
+311_PersonalAssistanceServicesAmountofVRFundsExpendedforServiceTitleI VARCHAR(50),
+312_Removed VARCHAR(50),
+313_ComparableServicesandBenefitsProviders VARCHAR(50),
+314_PersonalAssistanceServicesComparableServicesandBenefitsProviderType VARCHAR(50),
+315_ServiceProvidedbyVRAgencyStaffinhouse VARCHAR(50),
+316_ServiceProvidedthroughVRAgencyPurchase VARCHAR(50),
+317_PurchasedServiceProviderType VARCHAR(50),
+318_AmountofVRFundsExpendedforServiceTitleI VARCHAR(50),
+319_Removed VARCHAR(50),
+320_ComparableServicesandBenefitsProviders VARCHAR(50),
+321_ComparableServicesandBenefitsProviderType VARCHAR(50),
+322_ReaderServicesServiceProvidedbyVRAgencyStaffinhouse VARCHAR(50),
+323_ReaderServicesServiceProvidedthroughVRAgencyPurchase VARCHAR(50),
+324_ReaderServicesPurchasedServiceProviderType VARCHAR(50),
+325_ReaderServicesAmountofVRFundsExpendedforServiceTitleI VARCHAR(50),
+326_Removed VARCHAR(50),
+327_ReaderServicesServiceProvidedbyComparableServicesandBenefitsProviders VARCHAR(50),
+328_ReaderServicesComparableServicesandBenefitsProviderType VARCHAR(50),
+329_InterpreterServicesServiceProvidedbyVRAgencyStaffinhouse VARCHAR(50),
+330_InterpreterServicesServiceProvidedthroughVRAgencyPurchase VARCHAR(50),
+331_InterpreterServicesPurchasedServiceProviderType VARCHAR(50),
+332_InterpreterServicesAmountofVRFundsExpendedforServiceTitleI VARCHAR(50),
+333_Removed VARCHAR(50),
+334_InterpreterServicesServiceProvidedbyComparableServicesandBenefitsProviders VARCHAR(50),
+335_InterpreterServicesComparableServicesandBenefitsProviderType VARCHAR(50),
+336_OtherServicesServiceProvidedbyVRAgencyStaffinhouse VARCHAR(50),
+337_OtherServicesServiceProvidedthroughVRAgencyPurchase VARCHAR(50),
+338_OtherServicesPurchasedServiceProviderType VARCHAR(50),
+339_OtherServicesAmountofVRFundsExpendedforServiceTitleI VARCHAR(50),
+340_Removed VARCHAR(50),
+341_OtherServicesServiceProvidedbyComparableServicesandBenefitsProviders VARCHAR(50),
+342_OtherServicesComparableServicesandBenefitsProviderType VARCHAR(50),
+343_MeasurableSkillGainsEducationalFunctionalLevel VARCHAR(50),
+344_MeasurableSkillGainsSecondary VARCHAR(50),
+345_MeasurableSkillGainsSecondaryorPostsecondaryTranscriptReportCard VARCHAR(50),
+346_MeasurableSkillGainsTrainingMilestone VARCHAR(50),
+347_MeasurableSkillGainsSkillsProgression VARCHAR(50),
+348_Removed VARCHAR(50),
+349_Removed VARCHAR(50),
+350_StartDateOfEmploymentInPrimaryOccupation VARCHAR(50),
+351_Removed VARCHAR(50),
+352_Removed VARCHAR(50),
+353_DateOfExit VARCHAR(50),
+354_TypeofExit VARCHAR(50),
+355_ReasonforProgramExit VARCHAR(50),
+356_EmploymentOutcomeatExit VARCHAR(50),
+357_PrimaryOccupationatExit VARCHAR(50),
+358_Removed VARCHAR(50),
+359_HourlyWageatExit VARCHAR(50),
+360_HoursWorkedinaWeekatExit VARCHAR(50),
+361_Removed VARCHAR(50),
+362_Removed VARCHAR(50),
+363_Removed VARCHAR(50),
+364_Removed VARCHAR(50),
+365_Removed VARCHAR(50),
+366_Removed VARCHAR(50),
+367_Removed VARCHAR(50),
+368_Removed VARCHAR(50),
+369_Removed VARCHAR(50),
+370_Removed VARCHAR(50),
+371_Removed VARCHAR(50),
+372_Removed VARCHAR(50),
+373_Removed VARCHAR(50),
+374_Removed VARCHAR(50),
+375_Removed VARCHAR(50),
+376_RecognizedPostsecondaryCredential VARCHAR(50),
+377_DateOfAttainmentOfPostExitRecognizedCredential VARCHAR(50),
+378_TypeOfRecognizedCredentialAttainedPostExit VARCHAR(50),
+379_EmploymentFirstQuarterAfterExitQuarter VARCHAR(50),
+380_Removed VARCHAR(50),
+381_Removed VARCHAR(50),
+382_Removed VARCHAR(50),
+383_EmploymentSecondQuarterAfterExitQuarter VARCHAR(50),
+384_Removed VARCHAR(50),
+385_QuarterlyWagesSecondQuarterAfterExitQuarter VARCHAR(50),
+386_EmploymentThirdQuarterAfterExitQuarter VARCHAR(50),
+387_Removed VARCHAR(50),
+388_Removed VARCHAR(50),
+389_EmploymentFourthQuarterAfterExitQuarter VARCHAR(50),
+390_Removed VARCHAR(50),
+391_Removed VARCHAR(50),
+392_FourthQuarterAfterExitQuarter VARCHAR(50),
+393_Removed VARCHAR(50),
+394_MonthlyPublicSupportAtApplication VARCHAR(50),
+395_MedicalInsuranceCoverageAtApplication VARCHAR(50),
+396_MonthlyPublicSupportatExit VARCHAR(50),
+397_MedicalInsuranceCoverageatExit VARCHAR(50),
+398_DateOfInitialIPE VARCHAR(50),
+399_IPEDevelopmentExtension VARCHAR(50),
+400_EnrolledinaRecognizedSecondarySchoolEquivalencyProgram VARCHAR(50),
+401_DateCompletedDuringProgramParticipationanEducation VARCHAR(50),
+402_WorkBasedLearningExperienceServiceProvidedbyVRAgencyStaffinhouse VARCHAR(50),
+403_WorkBasedLearningExperienceServiceProvidedthroughVRAgencyPurchase VARCHAR(50),
+404_WorkBasedLearningExperiencePurchasedServiceProviderType VARCHAR(50),
+405_WorkBasedLearningExperienceAmountofVRFundsExpendedforServiceTitleI VARCHAR(50),
+406_ComparableServicesandBenefitsProviders VARCHAR(50),
+407_WorkBasedLearningExperienceComparableServicesandBenefitsProviderType VARCHAR(50),
+Consumer_CaseNo INTEGER,
+EnrollID INTEGER,
+UserStamp INTEGER,
+DATETIMESTAMP DATE
+);
+
+CREATE TABLE RuleManager (
+RuleManagerID DECIMAL(9) NOT NULL,
+RuleName VARCHAR(50) NOT NULL,
+FundCode VARCHAR(25),
+Active INTEGER,
+MemberID INTEGER NOT NULL,
+StartDate DATE,
+EndDate DATE,
+Action VARCHAR(max),
+DateTimeStamp DATE,
+ApplyToFamilyMembers INTEGER,
+ResponseType INTEGER,
+VendorID INTEGER,
+APPTYPE VARCHAR(5),
+Disposition VARCHAR(100),
+RuleDescription VARCHAR(max),
+TableName VARCHAR(100),
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE RuleManagerDetail (
+RuleManagerDetailID DECIMAL(9) NOT NULL,
+RuleManagerID DECIMAL(9) NOT NULL,
+ScaleID INTEGER,
+ScreenDesignID INTEGER,
+TableName VARCHAR(50),
+FieldName VARCHAR(50),
+Question VARCHAR(max),
+Response VARCHAR(max),
+Operator VARCHAR(10),
+Formula VARCHAR(max),
+AppType VARCHAR(5)
+);
+
+CREATE TABLE SAN (
+SanID INTEGER NOT NULL,
+SanNo VARCHAR(50),
+CaseNo INTEGER NOT NULL,
+Fundcode VARCHAR(100),
+Type VARCHAR(100),
+Reason VARCHAR(100),
+Status VARCHAR(100),
+StatusSubmitted BOOLEAN,
+Description VARCHAR(100),
+PlanID INTEGER,
+FiscalYear VARCHAR(100),
+CreateDate DATE,
+SubmissionDate DATE,
+DueDate1 DATE,
+DueDate2 DATE,
+DueDate3 DATE,
+GenericLookup1 VARCHAR(100),
+GenericLookup2 VARCHAR(100),
+GenericLookup3 VARCHAR(100),
+GenericLookup4 VARCHAR(100),
+GenericLookup5 VARCHAR(100),
+GenericLookup6 VARCHAR(100),
+GenericLookup7 VARCHAR(100),
+GenericLookup8 VARCHAR(100),
+GenericText1 VARCHAR(8000),
+GenericText2 VARCHAR(8000),
+GenericText3 VARCHAR(8000),
+GenericText4 VARCHAR(8000),
+GenericText5 VARCHAR(8000),
+GenericDate1 DATE,
+GenericDate2 DATE,
+GenericDate3 DATE,
+GenericDate4 DATE,
+GenericDate5 DATE,
+GenericDate6 DATE,
+GenericDate7 DATE,
+GenericDate8 DATE,
+GenericDate9 DATE,
+GenericMultiSelect1 VARCHAR(max),
+GenericMultiSelect2 VARCHAR(max),
+GenericCheckBox1 BOOLEAN,
+GenericCheckBox2 BOOLEAN,
+Genericnumeric DECIMAL(9),
+ConsumerBudgetID INTEGER,
+LastRefresh VARCHAR(100),
+AlgorithmAmount DECIMAL(9),
+AmountEncumbered DECIMAL(9),
+AmountAuthorized DECIMAL(9),
+AmountUnencumbered DECIMAL(9),
+AmountUnAuthorized DECIMAL(9),
+AvailableBudget DECIMAL(9),
+AmountPaid DECIMAL(9),
+BudgetSource VARCHAR(500),
+Reqpropbudget DECIMAL(9),
+Reqpropbudgetincrease DECIMAL(9),
+Reqpropannualbudget DECIMAL(9),
+Reqpropannualincrease DECIMAL(9),
+ReqDifference DECIMAL(9),
+Rev1propbudget DECIMAL(9),
+Rev1propbudgetincrease DECIMAL(9),
+Rev1propannualbudget DECIMAL(9),
+Rev1propannualincrease DECIMAL(9),
+Rev1difference DECIMAL(9),
+Rev2propbudget DECIMAL(9),
+Rev2propbudgetincrease DECIMAL(9),
+Rev2propannualbudget DECIMAL(9),
+Rev2propannualincrease DECIMAL(9),
+Rev2difference DECIMAL(9),
+Rev1recommend VARCHAR(100),
+Rev1memberid INTEGER,
+Rev1recommenddate DATE,
+Rev1Recommendtime DATE,
+Rev1Comment1 VARCHAR(5000),
+Rev1Comment2 VARCHAR(5000),
+Rev2recommend VARCHAR(100),
+Rev2memberid INTEGER,
+Rev2recommenddate DATE,
+Rev2Recommendtime DATE,
+Rev2Comment1 VARCHAR(5000),
+Rev2Comment2 VARCHAR(5000),
+Decision VARCHAR(100),
+Decisionby INTEGER,
+Decisiondate DATE,
+Decisiontime DATE,
+Justification VARCHAR(100),
+Approvedbudget VARCHAR(100),
+DateTimeStamp DATE NOT NULL,
+UserStamp INTEGER NOT NULL,
+RequestDate DATE,
+ConsumerBudgetValue DECIMAL(9),
+Valid BOOLEAN,
+ReasonForIgnoringValidation VARCHAR(max)
+);
+
+CREATE TABLE SANDetReview (
+SANDetReviewID INTEGER NOT NULL,
+Assessment VARCHAR(50),
+Scale VARCHAR(255),
+Item VARCHAR(max),
+Score DECIMAL(9),
+Comments VARCHAR(max),
+YN INTEGER,
+LookupValue VARCHAR(50),
+ScaleID INTEGER NOT NULL,
+QuestionID VARCHAR(15),
+SecID VARCHAR(15),
+AssessID INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE SANOverridingRoles (
+SANOverrideRoleID INTEGER NOT NULL,
+RoleName VARCHAR(255) NOT NULL,
+DateTimeStamp DATE NOT NULL,
+Active BOOLEAN NOT NULL
+);
+
+CREATE TABLE SANReview (
+AssessID INTEGER NOT NULL,
+Assessment VARCHAR(50),
+Review VARCHAR(100),
+NumDaysTilNext INTEGER,
+Score1 DECIMAL(9),
+Score2 DECIMAL(9),
+Rater INTEGER,
+LevelOfNeed INTEGER,
+SystemFactors VARCHAR(50),
+IndividualFactors VARCHAR(50),
+Status VARCHAR(100),
+Risks VARCHAR(50),
+ReviewDate DATE,
+ApprovedBy INTEGER,
+ApproveDate DATE,
+ApproveUser VARCHAR(10),
+StartDate DATE,
+EndDate DATE,
+Comments VARCHAR(max),
+TriggerID INTEGER,
+TriggerPage VARCHAR(20),
+EnrollID INTEGER,
+SanID INTEGER NOT NULL,
+ScreenDesignID INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+UserStamp INTEGER NOT NULL,
+InfoPathFormStatus INTEGER,
+ExpirationDate DATE,
+Expired BOOLEAN
+);
+
+CREATE TABLE SANService (
+SANServiceID INTEGER NOT NULL,
+SANServiceStatus VARCHAR(100),
+SANReviewer VARCHAR(100),
+Recommendation VARCHAR(100),
+RecommendationWorker INTEGER,
+RecommendationDate DATE,
+RecommendationTime DATE,
+Comments2 VARCHAR(2500),
+Comments3 VARCHAR(2500),
+PLANSERVICEID INTEGER,
+SANServiceCopiedFrom INTEGER,
+SANID INTEGER NOT NULL,
+STARTDATE DATE,
+ENDDATE DATE,
+Cost DECIMAL(9),
+VendorID INTEGER,
+UNITCOST DECIMAL(9),
+UNITS DECIMAL(9),
+VServiceID INTEGER,
+COMMENTS VARCHAR(max),
+DATETIMESTAMP DATE NOT NULL,
+UserStamp INTEGER NOT NULL,
+ISComboCodeID INTEGER,
+AuthServiceID INTEGER,
+PayorID INTEGER,
+FundingSource VARCHAR(50),
+UnitsPer DECIMAL(9),
+MaxAmount DECIMAL(9),
+NumberOfPeriods DECIMAL(9),
+UnitsOfMeasure VARCHAR(25),
+GenericLookup1 VARCHAR(100),
+GenericCheckBox1 BOOLEAN,
+GenericCheckBox2 BOOLEAN,
+GenericText1 VARCHAR(max),
+ServiceID INTEGER NOT NULL,
+BaseCost DECIMAL(9),
+UseServiceSchedule BOOLEAN,
+ConsumerLiability DECIMAL(5),
+ProvSelectionMethod VARCHAR(100),
+ProvSelectionDisposition VARCHAR(100),
+ProvSelectionReason VARCHAR(100),
+ProvSelectionReasonOther VARCHAR(max),
+GenericDate DATE,
+Status VARCHAR(100),
+UnitsFractional DECIMAL(9),
+COMMENTS_278 VARCHAR(264),
+AnnualizedUnits DECIMAL(9),
+AnnualizedAmount DECIMAL(9),
+Included VARCHAR(10),
+SANServiceCopies VARCHAR(16),
+ProviderRateType VARCHAR(100),
+InternalProgram VARCHAR(100),
+ConsumerCounty VARCHAR(100),
+ServiceRatio VARCHAR(100)
+);
+
+ALTER TABLE SANService ADD FOREIGN KEY (SANID) REFERENCES SAN(SanID);
+
+ALTER TABLE SANService ADD FOREIGN KEY (SANServiceCopiedFrom) REFERENCES SANService(SANServiceID);
+
+ALTER TABLE SANService ADD FOREIGN KEY (ServiceID) REFERENCES SERVICECODES(SERVICEID);
+
+CREATE TABLE SANValidation (
+SanValidationID INTEGER NOT NULL,
+SanID INTEGER NOT NULL,
+UserID INTEGER,
+UserAction VARCHAR(100),
+Reason VARCHAR(max),
+DateTime DATE,
+Result VARCHAR(250),
+Program VARCHAR(255)
+);
+
+CREATE TABLE SchedulerAlertNotes (
+ID INTEGER NOT NULL,
+PageName VARCHAR(255),
+ChapterName VARCHAR(255),
+ChapterEntityId INTEGER,
+ParentEntityId INTEGER,
+VendorId INTEGER,
+AlertNoteId INTEGER,
+NoteDate DATE,
+FundCode VARCHAR(200),
+NoteType VARCHAR(200),
+USERSTAMP INTEGER,
+DateTimeStamp DATE
+);
+
+CREATE TABLE ScreenCatalog (
+ScreenCatalogID INTEGER NOT NULL,
+CatalogName VARCHAR(255) NOT NULL,
+ControlType VARCHAR(50) NOT NULL,
+Active BOOLEAN,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+ALTER TABLE ScreenCatalog ADD FOREIGN KEY (UserStamp) REFERENCES Users(USERID);
+
+CREATE TABLE ScreenCatalogResponse (
+ScreenCatalogResponseID INTEGER NOT NULL,
+ScreenCatalogID INTEGER NOT NULL,
+Response VARCHAR(890),
+SecondaryValue VARCHAR(15),
+ValueID VARCHAR(15),
+SortOrder INTEGER,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+NeedCodeID INTEGER
+);
+
+ALTER TABLE ScreenCatalogResponse ADD FOREIGN KEY (ScreenCatalogID) REFERENCES ScreenCatalog(ScreenCatalogID);
+
+ALTER TABLE ScreenCatalogResponse ADD FOREIGN KEY (UserStamp) REFERENCES Users(USERID);
+
+CREATE TABLE SCREENCONSTANTS (
+SCREENCONSTANTID INTEGER NOT NULL,
+SCREENCONSTANTNAME VARCHAR(255) NOT NULL,
+VALUE VARCHAR(max),
+Active BOOLEAN NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+ALTER TABLE SCREENCONSTANTS ADD FOREIGN KEY (UserStamp) REFERENCES Users(USERID);
+
+CREATE TABLE SCREENDESIGN (
+SCREENDESIGNID INTEGER NOT NULL,
+SCREENDESIGNNAME VARCHAR(50) NOT NULL,
+SCREENDESIGNHELP VARCHAR(max),
+SCREENDESIGNCONTROLTIP VARCHAR(255),
+ACTIVE INTEGER,
+SCREENTYPE VARCHAR(50),
+SCREENCATEGORY VARCHAR(100),
+COMMENTS VARCHAR(max),
+DATETIMESTAMP DATE NOT NULL,
+TRIGGERSCREEN VARCHAR(50),
+TRIGGEREVENT VARCHAR(50),
+SCREENSELECT INTEGER,
+VIEWNAME VARCHAR(100),
+STATUS VARCHAR(100),
+AppType VARCHAR(5),
+MaxDocNum INTEGER,
+Retired INTEGER,
+Confidential INTEGER,
+UserStamp INTEGER NOT NULL,
+ConfigPackageTypeId INTEGER NOT NULL,
+RequiresSupervisoryApproval BOOLEAN,
+ScreenID VARCHAR(15),
+AllowCheckOutToInfoPath BOOLEAN,
+FundCode VARCHAR(max),
+SecondInstance VARCHAR(10),
+ExpirationType VARCHAR(100),
+ExpirationDays INTEGER
+);
+
+CREATE TABLE SCREENDESIGN (
+EnableSuggestedSrvs BOOLEAN NOT NULL,
+SuggestedSrvsSproc VARCHAR(255),
+ConfirmCopiedResponse VARCHAR(255),
+ExpiredInactiveStatus VARCHAR(255)
+);
+
+CREATE TABLE ScreenDesignConfigPackage (
+ScreenDesignConfigPackageID INTEGER NOT NULL,
+ScreenDesignID INTEGER NOT NULL,
+PackageID INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+AppType VARCHAR(5),
+UserStamp INTEGER NOT NULL,
+Restricted BOOLEAN NOT NULL,
+IsReadOnly BOOLEAN NOT NULL
+);
+
+ALTER TABLE ScreenDesignConfigPackage ADD FOREIGN KEY (PackageID) REFERENCES ConfigPackage(PackageID);
+
+CREATE TABLE SCREENDESIGNCONTROLS (
+SCREENDESIGNCONTROLID INTEGER NOT NULL,
+ControlScreenScale VARCHAR(200),
+Is_Progressbar_Control BOOLEAN,
+ApplicationName VARCHAR(50),
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE SCREENDESIGNPENDING (
+SCREENDESIGNID INTEGER NOT NULL,
+SCREENDESIGNNAME VARCHAR(50) NOT NULL,
+SCREENDESIGNHELP VARCHAR(max),
+SCREENDESIGNCONTROLTIP VARCHAR(255),
+ACTIVE INTEGER,
+SCREENTYPE VARCHAR(50),
+SCREENCATEGORY VARCHAR(100),
+COMMENTS VARCHAR(max),
+DATETIMESTAMP DATE,
+TRIGGERSCREEN VARCHAR(50),
+TRIGGEREVENT VARCHAR(50),
+SCREENSELECT INTEGER,
+VIEWNAME VARCHAR(100),
+STATUS VARCHAR(100),
+AppType VARCHAR(5),
+MaxDocNum INTEGER,
+Retired INTEGER,
+Confidential INTEGER,
+UserStamp INTEGER NOT NULL,
+ConfigPackageTypeId INTEGER NOT NULL,
+RequiresSupervisoryApproval BOOLEAN,
+ScreenID VARCHAR(15),
+AllowCheckOutToInfoPath BOOLEAN,
+FundCode VARCHAR(max),
+SecondInstance VARCHAR(10),
+ExpirationType VARCHAR(100),
+ExpirationDays INTEGER,
+EnableSuggestedSrvs BOOLEAN NOT NULL,
+SuggestedSrvsSproc VARCHAR(255),
+ConfirmCopiedResponse VARCHAR(255),
+ExpiredInactiveStatus VARCHAR(255)
+);
+
+CREATE TABLE ScreenLookupChains (
+ScreenLookupChainsID INTEGER NOT NULL,
+ScreenScaleIDPrimary INTEGER NOT NULL,
+ScreenScaleIDSecondary INTEGER NOT NULL,
+LookupIDPrimary INTEGER NOT NULL,
+LookupIDSecondary INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE ScreenLookupChainsPending (
+ScreenLookupChainsPendingID INTEGER NOT NULL,
+ScreenScaleIDPrimary INTEGER NOT NULL,
+ScreenScaleIDSecondary INTEGER NOT NULL,
+LookupIDPrimary INTEGER NOT NULL,
+LookupIDSecondary INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE SCREENLOOKUPS (
+SCREENSCALEID INTEGER NOT NULL,
+SCREENLOOKUP VARCHAR(890),
+ACTIVE INTEGER,
+SECONDARYVALUE VARCHAR(15),
+SORTORDER INTEGER,
+SCREENLOOKUPID INTEGER NOT NULL,
+DateTimestamp DATE NOT NULL,
+AppType VARCHAR(5),
+UserStamp INTEGER NOT NULL,
+NeedCodeID INTEGER,
+ValueID VARCHAR(15),
+NoneOfTheAbove BOOLEAN
+);
+
+CREATE TABLE SCREENLOOKUPSPENDING (
+SCREENSCALEID INTEGER NOT NULL,
+SCREENLOOKUP VARCHAR(890),
+ACTIVE INTEGER,
+SECONDARYVALUE VARCHAR(15),
+SORTORDER INTEGER,
+SCREENLOOKUPID INTEGER NOT NULL,
+DateTimestamp DATE,
+AppType VARCHAR(5),
+UserStamp INTEGER NOT NULL,
+NeedCodeID INTEGER,
+ValueID VARCHAR(15),
+NoneOfTheAbove BOOLEAN
+);
+
+CREATE TABLE SCREENQUESTIONS (
+SCREENSCALEID INTEGER NOT NULL,
+SCREENDESIGNID INTEGER NOT NULL,
+SCREENSCALE VARCHAR(1000),
+CONTROLSCREENSCALE VARCHAR(50),
+SCREENSORTORDER INTEGER,
+SCREENCOLUMN INTEGER,
+HELPLINE VARCHAR(1000),
+REQUIRED INTEGER,
+HIGHVALUE INTEGER,
+LOWVALUE INTEGER,
+WIDTHSCALE INTEGER,
+HEIGHTSCALE INTEGER,
+NUMBUTTONS INTEGER,
+BEGINLEGEND VARCHAR(max),
+ENDLEGEND VARCHAR(100),
+SECONDARYCODE INTEGER,
+HEADERCOLOR VARCHAR(25),
+FONTCOLOR VARCHAR(25),
+FONTSTYLE VARCHAR(50),
+FONTSIZE VARCHAR(10),
+TEXTALIGNMENT VARCHAR(10),
+LINKVALUE INTEGER,
+HIGHERLOWERLINK VARCHAR(50),
+LINKSCREENSCALEID INTEGER,
+INCLUDEINSCORE INTEGER,
+ACTIVE INTEGER,
+ANSWERSIZE INTEGER
+);
+
+CREATE TABLE SCREENQUESTIONS (
+DATETIMESTAMP DATE NOT NULL,
+QUESTIONID VARCHAR(15),
+DefaultValue VARCHAR(128),
+ReadOnlyState VARCHAR(8),
+AppType VARCHAR(5),
+UserStamp INTEGER NOT NULL,
+CheckedScale DECIMAL(9),
+UnCheckedScale DECIMAL(9),
+WrapControl INTEGER,
+Show INTEGER,
+CheckedScaleNeedCodeID INTEGER,
+UnCheckedScaleNeedCodeID INTEGER,
+ScreenCatalogID INTEGER,
+ExternalSource BOOLEAN,
+DemographicLookupField VARCHAR(255),
+SyncBackToDemographics VARCHAR(20),
+FilterByProgram BOOLEAN,
+PlaceField VARCHAR(30),
+PlaceSection VARCHAR(50),
+PlaceAllowOverride BOOLEAN,
+UsePlacesControl BOOLEAN,
+PreventFutureDate BOOLEAN,
+ShowCharacterCount BOOLEAN,
+EnrollmentLookupField VARCHAR(255),
+SyncBackToEnrollments VARCHAR(20),
+MaxNoOfRecordsAllowed INTEGER,
+InitialRequired VARCHAR(10),
+SignatureTermsTitle VARCHAR(100),
+SignatureTermsRequired VARCHAR(10),
+SignatureTermsType VARCHAR(30),
+MaximumNoOfResponse INTEGER,
+ConfirmCopiedResponse VARCHAR(255)
+);
+
+CREATE TABLE SCREENQUESTIONS (
+ExpiredInactiveStatus VARCHAR(255),
+ApiIntegration INTEGER
+);
+
+CREATE TABLE SCREENQUESTIONSPENDING (
+SCREENSCALEID INTEGER NOT NULL,
+SCREENDESIGNID INTEGER NOT NULL,
+SCREENSCALE VARCHAR(1000),
+CONTROLSCREENSCALE VARCHAR(50),
+SCREENSORTORDER INTEGER,
+SCREENCOLUMN INTEGER,
+HELPLINE VARCHAR(1000),
+REQUIRED INTEGER,
+HIGHVALUE INTEGER,
+LOWVALUE INTEGER,
+WIDTHSCALE INTEGER,
+HEIGHTSCALE INTEGER,
+NUMBUTTONS INTEGER,
+BEGINLEGEND VARCHAR(max),
+ENDLEGEND VARCHAR(100),
+SECONDARYCODE INTEGER,
+HEADERCOLOR VARCHAR(25),
+FONTCOLOR VARCHAR(25),
+FONTSTYLE VARCHAR(50),
+FONTSIZE VARCHAR(10),
+TEXTALIGNMENT VARCHAR(10),
+LINKVALUE INTEGER,
+HIGHERLOWERLINK VARCHAR(50),
+LINKSCREENSCALEID INTEGER,
+INCLUDEINSCORE INTEGER,
+ACTIVE INTEGER,
+ANSWERSIZE INTEGER,
+DATETIMESTAMP DATE,
+QUESTIONID VARCHAR(15),
+DefaultValue VARCHAR(128),
+ReadOnlyState VARCHAR(8),
+AppType VARCHAR(5),
+UserStamp INTEGER NOT NULL,
+CheckedScale DECIMAL(9),
+UnCheckedScale DECIMAL(9),
+WrapControl INTEGER,
+Show INTEGER,
+CheckedScaleNeedCodeID INTEGER,
+UnCheckedScaleNeedCodeID INTEGER,
+ScreenCatalogID INTEGER,
+ExternalSource BOOLEAN,
+DemographicLookupField VARCHAR(255),
+SyncBackToDemographics VARCHAR(20),
+FilterByProgram BOOLEAN,
+PlaceField VARCHAR(30),
+PlaceSection VARCHAR(50),
+PlaceAllowOverride BOOLEAN,
+UsePlacesControl BOOLEAN,
+PreventFutureDate BOOLEAN,
+ShowCharacterCount BOOLEAN,
+EnrollmentLookupField VARCHAR(255),
+SyncBackToEnrollments VARCHAR(20),
+MaxNoOfRecordsAllowed INTEGER,
+InitialRequired VARCHAR(10),
+SignatureTermsTitle VARCHAR(100),
+SignatureTermsRequired VARCHAR(10),
+SignatureTermsType VARCHAR(30),
+MaximumNoOfResponse INTEGER,
+ConfirmCopiedResponse VARCHAR(255),
+ExpiredInactiveStatus VARCHAR(255),
+ApiIntegration INTEGER
+);
+
+CREATE TABLE SCREENSIGNATORY (
+SCREENSCALEID INTEGER NOT NULL,
+SIGNEEROLE VARCHAR(255),
+FIRSTNAMEREQ VARCHAR(15),
+LASTNAMEREQ VARCHAR(15),
+TITLEREQ VARCHAR(15),
+EMAILREQ VARCHAR(15),
+PHONEREQ VARCHAR(15),
+ORGREQ VARCHAR(15),
+SMSAUTHENABLED VARCHAR(15),
+EMAILAUTHENABLED VARCHAR(15),
+CREDENTIALAUTHENABLED VARCHAR(15),
+SCREENSIGNID INTEGER NOT NULL,
+DateTimestamp DATE,
+AppType VARCHAR(5),
+UserStamp INTEGER NOT NULL,
+NOOFSIGNREQ INTEGER
+);
+
+ALTER TABLE SCREENSIGNATORY ADD FOREIGN KEY (UserStamp) REFERENCES Users(USERID);
+
+CREATE TABLE SCREENSIGNATORYPENDING (
+SCREENSCALEID INTEGER NOT NULL,
+SIGNEEROLE VARCHAR(255),
+FIRSTNAMEREQ VARCHAR(15),
+LASTNAMEREQ VARCHAR(15),
+TITLEREQ VARCHAR(15),
+EMAILREQ VARCHAR(15),
+PHONEREQ VARCHAR(15),
+ORGREQ VARCHAR(15),
+SMSAUTHENABLED VARCHAR(15),
+EMAILAUTHENABLED VARCHAR(15),
+CREDENTIALAUTHENABLED VARCHAR(15),
+SCREENSIGNID INTEGER NOT NULL,
+DateTimestamp DATE,
+AppType VARCHAR(5),
+UserStamp INTEGER NOT NULL,
+NOOFSIGNREQ INTEGER
+);
+
+ALTER TABLE SCREENSIGNATORYPENDING ADD FOREIGN KEY (UserStamp) REFERENCES Users(USERID);
+
+CREATE TABLE Section (
+SectionID INTEGER,
+PageControlID INTEGER,
+Label VARCHAR(255),
+SortBy INTEGER,
+FieldControlRepeatDirection INTEGER,
+FieldControlRepeatColumns INTEGER,
+CssClass VARCHAR(50),
+SectionLabelVisible BOOLEAN,
+UNIQUEID VARCHAR(16),
+ORIGINALID VARCHAR(16),
+UserStamp INTEGER,
+DateTimeStamp DATE,
+SectionName VARCHAR(255)
+);
+
+CREATE TABLE SectionMenu (
+SectionMenuID INTEGER NOT NULL,
+MenuID INTEGER NOT NULL,
+SectionID INTEGER NOT NULL,
+UNIQUEID VARCHAR(16) NOT NULL,
+ORIGINALID VARCHAR(16) NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+Visible BOOLEAN NOT NULL
+);
+
+CREATE TABLE SECUREGROUPS (
+GROUPID DECIMAL(9) NOT NULL,
+GROUPNAME VARCHAR(50),
+GROUPSECURITY VARCHAR(50),
+GROUPASSESSMENT VARCHAR(50),
+GROUPPLANREVIEW VARCHAR(50),
+GROUPPROVASSESSMENT VARCHAR(50),
+GROUPWORKERASSESSMENT VARCHAR(50),
+GROUPNOTES VARCHAR(50),
+GROUPINCIDENTS VARCHAR(50),
+DATETIMESTAMP DATE
+);
+
+CREATE TABLE SECURITY (
+SEC_USERID VARCHAR(100),
+SECUREID INTEGER NOT NULL,
+SECLEVEL INTEGER,
+SECVERSION INTEGER,
+USERID INTEGER,
+SECURITYID INTEGER NOT NULL
+);
+
+CREATE TABLE SecurityQuestions (
+SecurityQuestionID INTEGER NOT NULL,
+Question VARCHAR(max),
+SORTORDER INTEGER,
+ACTIVE INTEGER,
+AppType VARCHAR(5),
+TwoPartReadOnly INTEGER,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE ServiceCodeCliaLabCode (
+ServiceCodeCliaLabCodeID INTEGER NOT NULL,
+ServiceID INTEGER NOT NULL,
+LabCode VARCHAR(100),
+StartDate DATE,
+Enddate DATE,
+AppType VARCHAR(5) NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE SERVICECODECOPAY (
+SERVICEID INTEGER NOT NULL,
+COPAYTYPE VARCHAR(50) NOT NULL,
+STARTDATE DATE,
+ENDDATE DATE,
+SERVICECODECOPAYID INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE ServiceCodeCredentials (
+ServiceCodeCredentialID INTEGER NOT NULL,
+ServiceID INTEGER NOT NULL,
+Credential VARCHAR(50) NOT NULL,
+DateTimeStamp DATE NOT NULL,
+AppType VARCHAR(5) NOT NULL,
+Active BOOLEAN NOT NULL,
+UserStamp INTEGER NOT NULL,
+StartDate DATE,
+EndDate DATE
+);
+
+CREATE TABLE ServiceCodeDiagCode (
+ServiceCodeDiagCodeID INTEGER NOT NULL,
+ServiceID INTEGER NOT NULL,
+StartDate DATE,
+Enddate DATE,
+AppType VARCHAR(5) NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+DiagCodesID INTEGER NOT NULL
+);
+
+ALTER TABLE ServiceCodeDiagCode ADD FOREIGN KEY (DiagCodesID) REFERENCES DIAGCODES(DIAGCODESID);
+
+CREATE TABLE ServiceCodeISO (
+ServiceCodeISOID INTEGER NOT NULL,
+ServiceID INTEGER NOT NULL,
+Active BOOLEAN NOT NULL,
+DateTimeStamp DATE NOT NULL,
+AppType VARCHAR(5) NOT NULL,
+CopayAmount DECIMAL(9),
+StartDate DATE,
+EndDate DATE,
+UserStamp INTEGER NOT NULL,
+CopayType VARCHAR(100),
+AllowedAmount DECIMAL(9),
+ISComboCodeID INTEGER NOT NULL,
+GenericText1 VARCHAR(50)
+);
+
+CREATE TABLE ServiceCodeModifier (
+ServiceCodeModifier INTEGER NOT NULL,
+ServiceID INTEGER NOT NULL,
+ModifierCode VARCHAR(100) NOT NULL,
+StartDate DATE,
+Enddate DATE,
+AppType VARCHAR(5) NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE ServiceCodePackages (
+ServiceID INTEGER NOT NULL,
+Package VARCHAR(100),
+DefaultUnits DECIMAL(9),
+DateTimeStamp DATE NOT NULL,
+AppType VARCHAR(5) NOT NULL,
+MaxUnits DECIMAL(9),
+MaxDuration DECIMAL(9),
+ServiceCodePackagesID INTEGER NOT NULL,
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE ServiceCodePlaceService (
+ServiceID INTEGER NOT NULL,
+PlaceOfService VARCHAR(100) NOT NULL,
+DateTimeStamp DATE NOT NULL,
+AppType VARCHAR(5) NOT NULL,
+SERVICECODEPLACESERVICEID INTEGER NOT NULL,
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE ServiceCodeProvSpecialty (
+ServiceCodeProvSpecialtyID INTEGER NOT NULL,
+ServiceID INTEGER NOT NULL,
+SpecialityCode VARCHAR(100) NOT NULL,
+StartDate DATE,
+Enddate DATE,
+AppType VARCHAR(5) NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE ServiceCodeProvType (
+ServiceCodeProvTypeID INTEGER NOT NULL,
+ServiceID INTEGER NOT NULL,
+ProviderType VARCHAR(100),
+StartDate DATE,
+EndDate DATE,
+AppType VARCHAR(5) NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE SERVICECODES (
+SERVICEID INTEGER,
+SERVICECODE VARCHAR(25),
+UNITTYPE VARCHAR(100),
+SERVICE VARCHAR(100),
+SECONDARYCODE VARCHAR(25),
+SERVICECATEGORY VARCHAR(100),
+SERVICETYPE VARCHAR(100),
+INTENSITY VARCHAR(30),
+ACTIVE BOOLEAN,
+LEVELOFNEED INTEGER,
+EFFECTIVEDATE DATE,
+STATECODEA VARCHAR(12),
+STATECODEB VARCHAR(12),
+HIGHAGE VARCHAR(8),
+LOWAGE VARCHAR(8),
+TAXABLE BOOLEAN,
+EXCLUDEFRCHECKS BOOLEAN,
+BILLINGRULE INTEGER,
+ROLLFOWARDMONTHLY BOOLEAN,
+REQUIRENOTE INTEGER,
+DIVIDEBYUNITCALC VARCHAR(5),
+ROUNDRULEUNITCALC VARCHAR(100),
+INVOICEGROUP VARCHAR(50),
+BILLABLE BOOLEAN,
+NOTETYPE VARCHAR(50),
+AUTHREQU BOOLEAN,
+ROUNDDECIMALS INTEGER,
+ALERTATPERCENT INTEGER,
+ALLOWDUPLICATES BOOLEAN,
+MAXUNITSALLOWED INTEGER,
+AUTOPEND BOOLEAN,
+CHECKCOPAY BOOLEAN,
+ALLOWTOEXCEEDMAX BOOLEAN,
+RequiresDiagnosis BOOLEAN,
+ROUNDINGRULE VARCHAR(20),
+ENROLLMENTRULE VARCHAR(20),
+DateTimeStamp DATE,
+APPTYPE VARCHAR(5),
+CheckPOUnitCost BOOLEAN,
+Gender VARCHAR(100),
+EndDate DATE,
+MedicaidCovered BOOLEAN,
+MedicareCovered BOOLEAN,
+InjuryRelated BOOLEAN,
+MultipleSurgeries BOOLEAN,
+NursingFacility BOOLEAN,
+Sterilization BOOLEAN,
+Hysterectomy BOOLEAN,
+ReferralRequired BOOLEAN,
+Abortion BOOLEAN,
+FamilyPlanning BOOLEAN,
+EncounterOnly BOOLEAN,
+ToothNumber VARCHAR(100),
+ToothSurface VARCHAR(100),
+AverageLOS DECIMAL(9),
+OutlierThreshold DECIMAL(9),
+RelativeWeight DECIMAL(9),
+EPSDT BOOLEAN,
+TPLAction BOOLEAN,
+CLIAProvider VARCHAR(1),
+LifeTimeServicesIndicator VARCHAR(1),
+PreCareDays INTEGER,
+PostOpDays INTEGER,
+POSIndicator VARCHAR(1),
+DiagnosisEditType VARCHAR(1),
+Comments VARCHAR(max),
+AddDate DATE,
+UserStamp INTEGER,
+DESCRIPTION VARCHAR(max),
+AuthAllowed BOOLEAN,
+ScreenDesignID INTEGER,
+ServiceCodeAuthType VARCHAR(100),
+IgnoreServiceTypeFilter BOOLEAN,
+TPLServiceCode BOOLEAN,
+RequireGroupNote BOOLEAN,
+AllowPartialUnits BOOLEAN,
+DelayCodeAllowed BOOLEAN,
+LOCExempt BOOLEAN,
+Keywords VARCHAR(max),
+ApplyRateLogic BOOLEAN,
+RateLogicSPROC VARCHAR(max),
+MaxUnitLimit INTEGER,
+UnitLimitFrequency VARCHAR(30),
+MaxAmountLimit DECIMAL(5),
+AmountLimitFrequency VARCHAR(30),
+SpecialClaimProcessing VARCHAR(max),
+AdditionalAttributes VARCHAR(max),
+AllowableDistance INTEGER,
+GenericCurrency1 DECIMAL(9),
+GenericCurrency2 DECIMAL(9),
+GenericCurrency3 DECIMAL(9),
+GenericCurrency4 DECIMAL(9),
+PTPByPassModifiers VARCHAR(250),
+InstitutionalClaimRevenueCode VARCHAR(100)
+);
+
+CREATE TABLE ServiceCodeType (
+ServiceCodeTypeID INTEGER NOT NULL,
+ServiceID INTEGER NOT NULL,
+ServiceTypeCode VARCHAR(100) NOT NULL,
+StartDate DATE,
+Enddate DATE,
+AppType VARCHAR(5) NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+PrimaryYN BOOLEAN
+);
+
+CREATE TABLE ServiceCodeUnitCost (
+ServiceCodeUnitCostID INTEGER NOT NULL,
+ServiceID INTEGER NOT NULL,
+UnitCost DECIMAL(9) NOT NULL,
+StartDate DATE,
+EndDate DATE,
+DateTimeStamp DATE NOT NULL,
+AppType VARCHAR(5) NOT NULL,
+FundCode VARCHAR(25),
+Credential VARCHAR(50),
+RateType VARCHAR(100),
+MaxUnits DECIMAL(9),
+Max1 DECIMAL(9),
+Max2 DECIMAL(9),
+UserStamp INTEGER NOT NULL,
+BaseCost DECIMAL(9),
+ProviderRateType VARCHAR(100),
+InternalProgram VARCHAR(max),
+ConsumerCounty VARCHAR(max),
+ServiceRatio VARCHAR(500)
+);
+
+ALTER TABLE ServiceCodeUnitCost ADD FOREIGN KEY (ServiceID) REFERENCES SERVICECODES(SERVICEID);
+
+ALTER TABLE ServiceCodeUnitCost ADD FOREIGN KEY (UserStamp) REFERENCES Users(USERID);
+
+CREATE TABLE ServicePackageLink (
+ServicePackageLinkID INTEGER NOT NULL,
+LookupCodesMastID INTEGER NOT NULL,
+ServiceID INTEGER NOT NULL,
+ServiceCodeUnitCostID INTEGER,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE SERVICES (
+PO INTEGER,
+MonthNo INTEGER NOT NULL,
+VSERVICEID INTEGER NOT NULL,
+PCOST DECIMAL(9),
+AMOUNT DECIMAL(9),
+UNITS VARCHAR(8),
+CHECKNO VARCHAR(15),
+CHECKDATE DATE,
+DATETIMESTAMP DATE,
+MAXUNITSALLOWED INTEGER,
+FY VARCHAR(4),
+CHECKPRINTED INTEGER,
+SELECTR INTEGER,
+VSELECT INTEGER,
+VDATETIMESTAMP DATE,
+VUSERSTAMP VARCHAR(10),
+VUNITS INTEGER,
+REFUND INTEGER,
+RUNITS INTEGER,
+RAMOUNT DECIMAL(9),
+RDATETIMESTAMP DATE,
+RUSERSTAMP VARCHAR(10),
+IndexCode VARCHAR(10),
+SUBOBJECT VARCHAR(10),
+STRATEGYID DECIMAL(9),
+COPAY DECIMAL(9),
+INVOICENO VARCHAR(12),
+INVOICEDATE DATE,
+MON INTEGER,
+TUE INTEGER,
+WED INTEGER,
+THUR INTEGER,
+FRI INTEGER,
+SAT INTEGER,
+SUN INTEGER,
+EFFDATE DATE,
+ACCEPTED INTEGER,
+DISCOUNT INTEGER,
+DEGREE VARCHAR(50),
+APPTYPE VARCHAR(5),
+EXPORTNO VARCHAR(12),
+UserStamp INTEGER NOT NULL,
+SERVICESID INTEGER NOT NULL
+);
+
+CREATE TABLE SERVICES_REQUEST (
+PO INTEGER,
+VSERVICEID DECIMAL(9) NOT NULL,
+INDEXCODE VARCHAR(10),
+SUBOBJECT VARCHAR(10),
+MAXUNITS INTEGER NOT NULL,
+MAXAMT DECIMAL(9) NOT NULL,
+COST DECIMAL(9) NOT NULL,
+OVERHEAD DECIMAL(9),
+BEGINDATE DATE,
+ENDDATE DATE,
+TERMINATE INTEGER,
+TERMDATE DATE,
+TERMBALANCE DECIMAL(9),
+PAID DECIMAL(9),
+BALANCE DECIMAL(9),
+ORDERED INTEGER,
+FUNDSOURCE VARCHAR(10),
+MAXUNITSMONTH INTEGER,
+DATETIMESTAMP DATE,
+STRATEGYID DECIMAL(9),
+MON INTEGER,
+TUE INTEGER,
+WED INTEGER,
+THUR INTEGER,
+FRI INTEGER,
+SAT INTEGER,
+SUN INTEGER,
+EXPMONAMT DECIMAL(9),
+EXPMONTHUNITS INTEGER,
+APPTYPE VARCHAR(5),
+EXPECTEDTERMDATE DATE,
+PROJAMT VARCHAR(8),
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE SIGNATORYLISTSETUP (
+SIGNEEROLE VARCHAR(255),
+FIRSTNAMEREQ VARCHAR(15),
+LASTNAMEREQ VARCHAR(15),
+TITLEREQ VARCHAR(15),
+EMAILREQ VARCHAR(15),
+PHONEREQ VARCHAR(15),
+ORGREQ VARCHAR(15),
+SMSAUTHENABLED VARCHAR(15),
+EMAILAUTHENABLED VARCHAR(15),
+CREDENTIALAUTHENABLED VARCHAR(15),
+SIGNATORYID INTEGER NOT NULL,
+DateTimestamp DATE,
+AppType VARCHAR(5),
+UserStamp INTEGER NOT NULL,
+Active BOOLEAN
+);
+
+ALTER TABLE SIGNATORYLISTSETUP ADD FOREIGN KEY (UserStamp) REFERENCES Users(USERID);
+
+CREATE TABLE Signature (
+SignatureID INTEGER NOT NULL,
+Signature VARCHAR(max),
+SignatureDate DATE NOT NULL,
+SignatureComments VARCHAR(500),
+SignatureDeclined BOOLEAN NOT NULL,
+SignatureDeclinedReason VARCHAR(255),
+FIRSTNAME VARCHAR(30) NOT NULL,
+LASTNAME VARCHAR(30) NOT NULL,
+TITLE VARCHAR(100),
+ORGANIZATION VARCHAR(100),
+EMAIL VARCHAR(155),
+PHONE VARCHAR(16),
+ContactID INTEGER,
+MemberID INTEGER,
+SystemSignature BOOLEAN NOT NULL,
+Active BOOLEAN NOT NULL,
+SignatureType VARCHAR(50),
+ExpirationDate DATE,
+ImageType VARCHAR(50),
+ImageSize INTEGER,
+UserStamp INTEGER,
+DateTimeStamp DATE NOT NULL,
+AppType VARCHAR(5),
+Initials VARCHAR(30),
+SCREENDESIGNID INTEGER,
+AssessmentID INTEGER,
+RelationID INTEGER,
+Relationship VARCHAR(100),
+CaseNo INTEGER,
+SignatureDateClient DATE,
+ClientTimeZone VARCHAR(150),
+UserMemberId INTEGER
+);
+
+CREATE TABLE SIGNATURESETUP (
+SETUPID INTEGER NOT NULL,
+TERMSTITLE VARCHAR(100),
+TERMS VARCHAR(50),
+SIGNATORYLISTID INTEGER NOT NULL,
+INITIALREQ VARCHAR(15),
+DateTimestamp DATE,
+AppType VARCHAR(5),
+UserStamp INTEGER NOT NULL,
+RequiredTerms BOOLEAN,
+UserMemberId INTEGER
+);
+
+CREATE TABLE SignaturesHSS (
+SignatureID INTEGER NOT NULL,
+Signature VARCHAR(max),
+SignatureDate DATE NOT NULL,
+SignatureComments VARCHAR(500),
+SignatureDeclined BOOLEAN NOT NULL,
+SignatureDeclinedReason VARCHAR(255),
+FIRSTNAME VARCHAR(30) NOT NULL,
+LASTNAME VARCHAR(30) NOT NULL,
+TITLE VARCHAR(100),
+ORGANIZATION VARCHAR(100),
+EMAIL VARCHAR(50),
+PHONE VARCHAR(16),
+ContactID INTEGER,
+MemberID INTEGER,
+ChapterID INTEGER NOT NULL,
+PageID INTEGER NOT NULL,
+CaseNo INTEGER NOT NULL,
+Active BOOLEAN NOT NULL,
+SignatureType VARCHAR(50),
+ExpirationDate DATE,
+ImageType VARCHAR(50),
+ImageSize INTEGER,
+UserStamp INTEGER,
+DateTimeStamp DATE NOT NULL,
+AppType VARCHAR(5),
+Initials VARCHAR(30),
+SignatureDateClient DATE,
+ClientTimeZone VARCHAR(150),
+RelationID INTEGER,
+Relationship VARCHAR(100),
+EntityID INTEGER,
+UserMemberId INTEGER
+);
+
+CREATE TABLE SingleWorkerSessionAttendance (
+SingleWorkerSessionAttendanceID INTEGER NOT NULL,
+GroupSeriesWorkerID INTEGER NOT NULL,
+SessionDate DATE NOT NULL,
+Attendance VARCHAR(100),
+Reason VARCHAR(100),
+Credit INTEGER,
+ExpirationDate DATE,
+Comment VARCHAR(1000),
+DateTimeStamp DATE NOT NULL,
+UserStamp INTEGER NOT NULL
+);
+
+ALTER TABLE SingleWorkerSessionAttendance ADD FOREIGN KEY (UserStamp) REFERENCES Users(USERID);
+
+CREATE TABLE SITE (
+FUNDCODE VARCHAR(25),
+FIPSCODE VARCHAR(4),
+FUNDSOURCE VARCHAR(25),
+CITYCOUNTY VARCHAR(100),
+CONTACTNAME VARCHAR(35),
+CONTACTTITLE VARCHAR(50),
+CONTACTPHONE VARCHAR(16),
+STREET VARCHAR(100),
+CITY VARCHAR(30),
+STATE VARCHAR(100),
+ZIP VARCHAR(10),
+CURRFYEAR INTEGER,
+BEGINNINGPO INTEGER,
+GLACCOUNTCODE VARCHAR(15),
+GLACCOUNTCODE2 VARCHAR(15),
+MESSAGEFORPOS VARCHAR(175),
+MESSAGEFORINVOICES VARCHAR(175),
+ORGANIZATIONNAME VARCHAR(75),
+PAYMENTTERMS1 VARCHAR(175),
+BILLTOSTREET VARCHAR(100),
+BILLTOCITY VARCHAR(30),
+BILLTOSTATE VARCHAR(100),
+BILLTOZIP VARCHAR(11),
+BILLCONTACTNAME VARCHAR(50),
+BILLCONTACTTITLE VARCHAR(50),
+BILLCONTACTPHONE VARCHAR(16),
+VENDORINVOICESUBMITSTATE VARCHAR(100),
+VENDORACCEPTANCESTATEMT VARCHAR(255),
+POSIG1 VARCHAR(100),
+POSIG2 VARCHAR(100),
+POSIG3 VARCHAR(100),
+INVSIG1 VARCHAR(100),
+INVSIG2 VARCHAR(100),
+POVSTATE1 VARCHAR(255),
+POVSTATE2 VARCHAR(255),
+ATTACHDIR VARCHAR(255),
+PRGDROPDOWN INTEGER,
+FINANCEAPPROVAL INTEGER,
+WriteOffPayerID DECIMAL(9),
+DateTimeStamp DATE,
+AppType VARCHAR(5),
+ResourceDropDown INTEGER,
+SITEID INTEGER,
+UserStamp INTEGER
+);
+
+CREATE TABLE SITEBUDGET (
+FUNDCODE VARCHAR(25),
+FY INTEGER NOT NULL,
+EFFECTIVEDATE DATE NOT NULL,
+CURRENTBUDGET INTEGER,
+TYPEOFBUDGET VARCHAR(15),
+MEDICAID DECIMAL(9) NOT NULL,
+LOCALMEDICAIDMATCH DECIMAL(9) NOT NULL,
+MANDATED DECIMAL(9) NOT NULL,
+NONMANDATED DECIMAL(9) NOT NULL,
+MEDICAIDPERCENT VARCHAR(8) NOT NULL,
+LOCALMEDICAIDPERCENT VARCHAR(8) NOT NULL,
+STATEBUDGET DECIMAL(9) NOT NULL,
+LOCALMATCH DECIMAL(9) NOT NULL,
+TOTALBUDGET DECIMAL(9),
+STATEPERCENT VARCHAR(8) NOT NULL,
+LOCALPERCENT VARCHAR(8) NOT NULL,
+DateTimeStamp DATE NOT NULL,
+AppType VARCHAR(5),
+SITEBUDGETID INTEGER NOT NULL,
+SITEID INTEGER,
+UserStamp INTEGER NOT NULL
+);
+
+ALTER TABLE SITEBUDGET ADD FOREIGN KEY (SITEID) REFERENCES SITE(SITEID);
+
+CREATE TABLE SITEFORMS (
+FUNDCODE VARCHAR(25),
+DEMOGRAPHICS1 INTEGER,
+OPENCLOSE1 INTEGER,
+GOALS1 INTEGER,
+SCHEDULE INTEGER,
+FINANCIAL1 INTEGER,
+PAYMENTS1 INTEGER,
+JUVCOURT1 INTEGER,
+EDUCATION1 INTEGER,
+ASSESSMENT1 INTEGER,
+DIAGNOSES INTEGER,
+SATISFACTION INTEGER,
+RELATIONS INTEGER,
+TICKLERS INTEGER,
+PO INTEGER,
+ENROLLMENT1 INTEGER,
+MEDICATIONS INTEGER,
+FAPT INTEGER,
+PLANS INTEGER,
+SCHEDULER INTEGER,
+SERVICES INTEGER,
+PROVIDERS INTEGER,
+POVERSION INTEGER,
+INVOICEVERSION INTEGER,
+CTAB1 INTEGER,
+CTAB2 INTEGER,
+CHECKVERSION INTEGER,
+SVCPLANVERSION INTEGER,
+PROFILEVERSION INTEGER,
+VEVALVERSION INTEGER,
+CONSUMERINFOVERSION INTEGER,
+MERGEDIRECTORY VARCHAR(50),
+PRGDROPDOWN INTEGER,
+EXTERNALURL VARCHAR(100),
+DateTimeStamp DATE,
+AppType VARCHAR(5),
+ResourceDropDown INTEGER,
+SITEFORMID INTEGER,
+SITEID INTEGER,
+UserStamp INTEGER,
+EnrollmentUpdate INTEGER,
+ManualAdjWarningDays INTEGER,
+AutoPopulateDiagnoses VARCHAR(100),
+AuthUtilFiscalEndDateRequired BOOLEAN,
+AuthUtilFutureAdjustUnits BOOLEAN,
+RequireAuthApproval BOOLEAN,
+InquiryParticipantSolution VARCHAR(100),
+DisablePlannedServiceDateLogic BOOLEAN,
+AllegationRequiredBeforeInquiryPush BOOLEAN,
+ActivePSProviderRotation BOOLEAN,
+RequirePeopleSearch VARCHAR(100),
+LockSubPagesOnInqComplete VARCHAR(max),
+UpdateStatusInSubPagesInqStComplete BOOLEAN,
+PeopleSearchMessageLocation VARCHAR(100),
+AllegationsReqAllegedPerpetrator VARCHAR(max),
+AllegPerpetratorsNeedAlleg BOOLEAN,
+ReferralDispositionsToClose VARCHAR(max),
+ReferralDaysToClose INTEGER,
+EVVActivityClaimRollup BOOLEAN,
+ReqPeopleSearchParticipantTypes VARCHAR(max)
+);
+
+ALTER TABLE SITEFORMS ADD FOREIGN KEY (SITEID) REFERENCES SITE(SITEID);
+
+CREATE TABLE SITESTATE (
+FUNDCODE VARCHAR(25),
+WARRANTREGSTATE1 VARCHAR(255),
+WARRANTREGSTATE2 VARCHAR(255),
+WARRANTREGSTATE3 VARCHAR(255),
+WARRANTREGSIG1 VARCHAR(175),
+WARRANTREGSIG2 VARCHAR(175),
+DateTimeStamp DATE NOT NULL,
+AppType VARCHAR(5),
+SITESTATEID INTEGER NOT NULL,
+SITEID INTEGER,
+UserStamp INTEGER NOT NULL
+);
+
+ALTER TABLE SITESTATE ADD FOREIGN KEY (SITEID) REFERENCES SITE(SITEID);
+
+CREATE TABLE SITETEXT (
+FUNDCODE VARCHAR(25),
+TEXTID VARCHAR(10) NOT NULL,
+TEXTDESC VARCHAR(max),
+DateTimeStamp DATE NOT NULL,
+AppType VARCHAR(5),
+SITETEXTID INTEGER NOT NULL,
+SITEID INTEGER,
+UserStamp INTEGER NOT NULL
+);
+
+ALTER TABLE SITETEXT ADD FOREIGN KEY (SITEID) REFERENCES SITE(SITEID);
+
+CREATE TABLE SlidingFee (
+SlidingFeeID DECIMAL(9) NOT NULL,
+CoPayID DECIMAL(9),
+VServiceID DECIMAL(9),
+Fee VARCHAR(8),
+Active INTEGER,
+DateTimeStamp DATE,
+AppType VARCHAR(5),
+AmountFormat VARCHAR(16),
+ServiceID INTEGER NOT NULL,
+VendorID DECIMAL(9),
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE SlidingFeeScale (
+SlidingFeeScaleID DECIMAL(9) NOT NULL,
+CoPayRateID DECIMAL(9),
+ServiceID INTEGER NOT NULL,
+LowIncome VARCHAR(8),
+HighIncome VARCHAR(8),
+NumberInFamily INTEGER,
+Fee VARCHAR(8),
+FeeStartDate DATE,
+FeeEndDate DATE,
+Active INTEGER,
+DateTimeStamp DATE,
+AppType VARCHAR(5),
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE SplitPay (
+SplitPayID DECIMAL(9) NOT NULL,
+CoPayID DECIMAL(9),
+InsuranceID INTEGER NOT NULL,
+PayPercent VARCHAR(8),
+DateTimeStamp DATE,
+AppType VARCHAR(5),
+UserStamp INTEGER NOT NULL
+);
+
+ALTER TABLE SplitPay ADD FOREIGN KEY (InsuranceID) REFERENCES INSURANCE(InsuranceID);
+
+CREATE TABLE SSRS_DefaultParameter (
+ID INTEGER NOT NULL,
+ReportParameterID INTEGER NOT NULL,
+ReportID INTEGER NOT NULL,
+MemberID INTEGER NOT NULL
+);
+
+CREATE TABLE SSRS_HarmonyDashboardReports (
+ReportID INTEGER NOT NULL,
+ReportName VARCHAR(50) NOT NULL,
+ReportDESC VARCHAR(500) NOT NULL
+);
+
+CREATE TABLE SSRS_ReportParameter (
+ReportParameterID INTEGER NOT NULL,
+ReportParameterName VARCHAR(50) NOT NULL,
+ReportParameterValue VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE StandardPhrase (
+PhraseID DECIMAL(9) NOT NULL,
+Phrase VARCHAR(1024) NOT NULL,
+Category VARCHAR(50),
+Active INTEGER,
+DateTimeStamp DATE,
+AppType VARCHAR(5),
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE StandardPhraseOwners (
+PhraseID DECIMAL(9) NOT NULL,
+MemberID DECIMAL(9) NOT NULL,
+DATETIMESTAMP DATE,
+APPTYPE VARCHAR(5),
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE StandardReasonCode (
+StandardReasonID INTEGER NOT NULL,
+StandardID INTEGER NOT NULL,
+ReasonNotMetID INTEGER,
+FundCode VARCHAR(max) NOT NULL,
+Active BOOLEAN NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE Standards (
+StandardID INTEGER NOT NULL,
+StandardCode VARCHAR(10),
+StandardType VARCHAR(100),
+StandardDescription VARCHAR(max),
+Active BOOLEAN,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE STARSFieldsDatabaseIDs (
+STARSFieldsMappingID INTEGER NOT NULL,
+FieldName VARCHAR(200) NOT NULL,
+InputOption VARCHAR(200) NOT NULL,
+STARSDatabaseID INTEGER NOT NULL,
+ParentDatabaseID INTEGER
+);
+
+CREATE TABLE STATES (
+STATE VARCHAR(100),
+NAME VARCHAR(50) NOT NULL,
+StatesID INTEGER NOT NULL,
+DATETIMESTAMP DATE NOT NULL,
+AppType VARCHAR(5),
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE Strength (
+StrengthID INTEGER NOT NULL,
+PlanID INTEGER,
+StrengthCodeID INTEGER NOT NULL,
+Strength VARCHAR(255),
+Comments VARCHAR(max),
+DateTimeStamp DATE NOT NULL,
+UserStamp INTEGER NOT NULL
+);
+
+ALTER TABLE Strength ADD FOREIGN KEY (StrengthCodeID) REFERENCES StrengthCode(StrengthCodeID);
+
+CREATE TABLE StrengthCode (
+StrengthCodeID INTEGER NOT NULL,
+Strength VARCHAR(255) NOT NULL,
+DomainArea VARCHAR(25),
+RequiresNamePrefix BOOLEAN NOT NULL,
+Active BOOLEAN NOT NULL,
+DateTimeStamp DATE NOT NULL,
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE SubObjectCode (
+SubObjectCodeID INTEGER NOT NULL,
+SubObject VARCHAR(10) NOT NULL,
+SubObjectDescription VARCHAR(100),
+SecondaryCode VARCHAR(100),
+AccountCode VARCHAR(100),
+Active BOOLEAN NOT NULL,
+DateTimestamp DATE NOT NULL,
+UserStamp INTEGER NOT NULL,
+PercentToApply DECIMAL(9),
+ContractType VARCHAR(100),
+CheckCat VARCHAR(30),
+SOCode VARCHAR(30),
+GLCode VARCHAR(10),
+BatchAgencyID VARCHAR(30),
+LineNumber VARCHAR(30),
+IncludeInPV BOOLEAN NOT NULL
+);
+
+CREATE TABLE SubObjectCodeLineNumber (
+SubObjectCodeLineNumberID INTEGER NOT NULL,
+FundCode VARCHAR(30) NOT NULL,
+IndexCodeID INTEGER NOT NULL,
+SubObjectCodeID INTEGER NOT NULL,
+AgencyCode VARCHAR(30) NOT NULL,
+Organization VARCHAR(30) NOT NULL,
+SubObjectCode VARCHAR(30) NOT NULL,
+CheckCategory VARCHAR(30) NOT NULL,
+GLCode VARCHAR(30),
+AccountCode VARCHAR(30) NOT NULL,
+LineNumber VARCHAR(30) NOT NULL,
+AccountingTemplate VARCHAR(6)
+);
+
+CREATE TABLE SUPERVISORS (
+SUPERVISORSID INTEGER NOT NULL,
+SUPERVISOR INTEGER NOT NULL,
+MEMBERID INTEGER NOT NULL,
+PRIMARYSUPER BOOLEAN NOT NULL,
+DATETIMESTAMP DATE NOT NULL,
+AppTYpe VARCHAR(5),
+StartDate DATE NOT NULL,
+EndDate DATE,
+UserStamp INTEGER NOT NULL,
+Active BOOLEAN NOT NULL
+);
+
+CREATE TABLE Sweep (
+SweepID INTEGER NOT NULL,
+Type VARCHAR(100) NOT NULL,
+AppType VARCHAR(5) NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE SystemNotificationAcknowledgements (
+SystemNotificationAcknowledgementID INTEGER NOT NULL,
+NotificationID INTEGER NOT NULL,
+RecipientID INTEGER NOT NULL,
+acknowledgement INTEGER,
+ACTIVE INTEGER,
+AppType VARCHAR(5),
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+UserID INTEGER
+);
+
+CREATE TABLE SystemNotificationRecipients (
+SystemNotificationRecipientsID INTEGER NOT NULL,
+Role VARCHAR(100),
+NotificationId INTEGER,
+Group VARCHAR(100),
+ACTIVE INTEGER,
+AppType VARCHAR(5),
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE SystemNotifications (
+NotificationID INTEGER NOT NULL,
+Priority VARCHAR(50),
+Startdate DATE,
+Enddate DATE,
+NotificationInterval VARCHAR(50),
+SubjectLine VARCHAR(100),
+NotificationContent VARCHAR(250),
+NotificationGroups VARCHAR(max),
+ExpirationDate DATE,
+Active BOOLEAN NOT NULL,
+UserStamp INTEGER,
+DateTimeStamp DATE NOT NULL,
+AppType VARCHAR(5)
+);
+
+CREATE TABLE SystemSetup (
+AppTitle VARCHAR(50),
+EmailFrom VARCHAR(100),
+RemainOnScreen INTEGER,
+QryConDefaultPath VARCHAR(255),
+PwdChangeOption INTEGER,
+ConsumerDefaultSSN VARCHAR(11),
+DateTimeStamp DATE,
+AppType VARCHAR(5),
+AddConsumerBtn INTEGER,
+AllowDuplicateConsumerSSN INTEGER,
+AllowDuplicateVendorNumber VARCHAR(6),
+ApplyDOBInSearch INTEGER,
+ApplySSNInSearch INTEGER,
+ShowSearchExternalBtn INTEGER,
+FromOCRefDate BOOLEAN,
+AllowLookupPackage BOOLEAN,
+AllowConsumerAddressValidation BOOLEAN,
+ConsumerAddressDSN VARCHAR(32),
+ClientName VARCHAR(50),
+ShowEligSearchBtn1 BOOLEAN,
+ShowEligSearchBtn2 BOOLEAN,
+UserStamp INTEGER,
+ICNum DECIMAL(9),
+SystemSetupID INTEGER,
+ValidateSIN BOOLEAN,
+RequireEnrollmentsCheckout BOOLEAN,
+RequireInquiryCheckout BOOLEAN,
+RequireClaimCheckout BOOLEAN,
+InfragisticsDB VARCHAR(128),
+AllowMyAttendanceWalkIn INTEGER,
+MyAttendanceUseMasterProgram INTEGER,
+MyAttendanceMasterProgram INTEGER,
+AdHocDB VARCHAR(50),
+DefaultWaitListDisposition VARCHAR(100),
+DefaultEnrollDisposition VARCHAR(100),
+DefaultDenyDisposition VARCHAR(100),
+Timer BOOLEAN,
+ParticipantAutoRemoval BOOLEAN,
+AllowUserViewEnrollments BOOLEAN,
+AllowUserViewInquiry BOOLEAN,
+EnrollmentCheckoutOverrideOption VARCHAR(50),
+InquiryCheckoutOverrideOption VARCHAR(50),
+837PTemplate VARCHAR(50),
+ProrateByUnits BOOLEAN,
+ShowNavigationWarningMessage BOOLEAN,
+WorkerSyncToPeople BOOLEAN,
+UnlinkDuplicatedInquiry VARCHAR(50),
+ActivateAPSCaseRule BOOLEAN,
+ValidateSSN BOOLEAN,
+HipaaVersion VARCHAR(25),
+ElectronicFileQueue BOOLEAN,
+ActivateModificationEventLogging BOOLEAN,
+ActivateViewEventLogging BOOLEAN,
+Debug BOOLEAN,
+TimezoneOffset INTEGER,
+EnableSSNMasking BOOLEAN,
+ActivateAppealsAndClosureLogic BOOLEAN,
+AppealProcessDaysCompleted INTEGER,
+ActivateCAPProcess BOOLEAN,
+APDaysCompletedAfterCompletedCAP INTEGER,
+WorkerProviderSyncToPeople BOOLEAN,
+DisableUserAfterXDays INTEGER,
+EnableCassValidator BOOLEAN,
+EmailPrimarySupervisor BOOLEAN,
+ActivateNotesReadLogic BOOLEAN,
+FIPSCode INTEGER,
+RequireWaitlistCheckout BOOLEAN,
+AllowUserViewWaitlist BOOLEAN,
+WaitlistCheckoutOverrideOption VARCHAR(50),
+SaveScrollPosition BOOLEAN,
+DeactivateReqFldLogicDraftAssess BOOLEAN,
+MedAdminTimeSpan INTEGER,
+HtmlSanitizerTags VARCHAR(max),
+ExpiredWorkerProviderRecords BOOLEAN,
+ICNum835 DECIMAL(9),
+CouplePeopleParticipantConfig VARCHAR(max),
+HaPIInquiryRequiredFields VARCHAR(max),
+HaPIAssessmentRequiredFields VARCHAR(max),
+EnableClientPeopleSearch BOOLEAN,
+ScreenType VARCHAR(50),
+RequireAssessmentCheckOut VARCHAR(100),
+AllowUserViewCheckOutAssessment BOOLEAN,
+AssessmentCheckOutOverrideOption VARCHAR(50)
+);
+
+CREATE TABLE TASK (
+TaskID INTEGER NOT NULL,
+Type VARCHAR(20),
+WordMergeID INTEGER NOT NULL,
+NoteType VARCHAR(50),
+NoteStatus VARCHAR(50),
+RoutingEntity VARCHAR(20),
+FundCode VARCHAR(10),
+DateTimeStamp DATE NOT NULL,
+CreatedBy VARCHAR(100),
+CompleteDate DATE,
+OpenID INTEGER,
+EnrollID INTEGER
+);
+
+CREATE TABLE TaskScheduleLog (
+TaskScheduleLogID INTEGER NOT NULL,
+LastRunDate DATE,
+Status VARCHAR(10),
+TaskName VARCHAR(30),
+UserStamp INTEGER
+);
+
+CREATE TABLE TBLUSERSNEW (
+TXTUSERID VARCHAR(50) NOT NULL,
+ID INTEGER,
+TXTUSERAUTH VARCHAR(8),
+TXTPWD VARCHAR(10),
+TXTLOGGEDON VARCHAR(10),
+ACCESS_R VARCHAR(10),
+CONSUMERAUTH INTEGER,
+SERVICESAUTH INTEGER,
+PROVIDERAUTH INTEGER,
+MAINTENANCEAUTH INTEGER,
+SCHEDULERAUTH INTEGER,
+PLANAUTH INTEGER,
+FIPSAUTH VARCHAR(3),
+UTILITIESAUTH INTEGER,
+DAILYACTAUTH INTEGER,
+REPORTSAUTH INTEGER,
+EDUCAUTH INTEGER,
+DIAGAUTH INTEGER,
+OPENCLOSEAUTH INTEGER,
+TICKLERAUTH INTEGER,
+SATREVIEW INTEGER,
+ASSESSAUTH INTEGER,
+PAYAUTH INTEGER,
+TEAMMEMBERAUTH INTEGER,
+TEAMDATEAUTH INTEGER,
+TEAMCALAUTH INTEGER,
+CHECKAUTH INTEGER,
+PRECHECKAUTH INTEGER,
+NOTESAUTH INTEGER,
+MEDSAUTH INTEGER,
+MEMBERID INTEGER,
+SUPERVISOR INTEGER,
+VENDORID INTEGER,
+ACCESSLEVEL INTEGER
+);
+
+CREATE TABLE TEAMMEMBERS (
+TEAM VARCHAR(15) NOT NULL,
+MEMBERID DECIMAL(9) NOT NULL
+);
+
+CREATE TABLE TEAMS (
+TEAM VARCHAR(15) NOT NULL,
+CHAIR VARCHAR(25),
+LOCATION VARCHAR(50),
+BUDGETPERCENT INTEGER,
+TEAMTYPE VARCHAR(10),
+SELECTR INTEGER,
+FUNDCODE VARCHAR(25),
+DATETIMESTAMP DATE,
+TIME VARCHAR(50),
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE TedsExportLogs (
+TedsExportId INTEGER NOT NULL,
+TransactionType VARCHAR(50) NOT NULL,
+RecordType VARCHAR(50) NOT NULL,
+ExportDateTime DATE NOT NULL,
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE TedsExportLogsDetails (
+TedsExportDetailsId INTEGER NOT NULL,
+AssessmentId INTEGER NOT NULL,
+CaseNo INTEGER NOT NULL,
+ProviderId INTEGER NOT NULL,
+TedsExportId INTEGER NOT NULL
+);
+
+ALTER TABLE TedsExportLogsDetails ADD FOREIGN KEY (TedsExportId) REFERENCES TedsExportLogs(TedsExportId);
+
+CREATE TABLE Tickler (
+TicklerID INTEGER NOT NULL,
+TriggerEventID INTEGER,
+DestinationEntityID INTEGER NOT NULL,
+AssignTicklerToRole INTEGER,
+AssignTicklerToWorker INTEGER,
+DestinationChapterName VARCHAR(255) NOT NULL,
+DestinationPageName VARCHAR(255) NOT NULL,
+DestinationURL VARCHAR(255),
+Priority INTEGER NOT NULL,
+TicklerToCall INTEGER,
+Comments VARCHAR(max),
+UserStamp INTEGER NOT NULL,
+ReviewType VARCHAR(100),
+DateDue DATE,
+DateCompleted DATE,
+DateTimeStamp DATE NOT NULL,
+AlertDaysBeforeDue INTEGER,
+AppType VARCHAR(5) NOT NULL,
+DateCreated DATE,
+Status INTEGER,
+DisplayName VARCHAR(250),
+DestinationType INTEGER NOT NULL,
+CreatedByUserStamp VARCHAR(100) NOT NULL,
+SortOrder INTEGER NOT NULL,
+UseParentEntityID BOOLEAN,
+TicklerSetupID INTEGER,
+RunInSilence BOOLEAN,
+ApprovalName INTEGER,
+ApprovalDate DATE,
+CancelPermission VARCHAR(100),
+AllowReassignmentBy VARCHAR(100),
+AllowCancelingBy VARCHAR(100),
+AllowEditingBy VARCHAR(100),
+AllowAddingAnotherBy VARCHAR(100),
+IgnoreNumDaysTilNext BOOLEAN NOT NULL,
+CheckForExistingRecord BOOLEAN NOT NULL,
+AllowManualCompletion BOOLEAN NOT NULL,
+AllowReassignToMe BOOLEAN,
+EmailSubject VARCHAR(100),
+EmailMessage VARCHAR(5000),
+ValidationWFWID INTEGER,
+ValidationMessage VARCHAR(500)
+);
+
+CREATE TABLE TicklerSetup (
+TicklerSetupID INTEGER NOT NULL,
+TriggerEventTypeID INTEGER NOT NULL,
+ReviewType VARCHAR(100),
+NumDaysTilNext INTEGER NOT NULL,
+SortOrder INTEGER NOT NULL,
+DestinationChapterName VARCHAR(255) NOT NULL,
+DestinationPageName VARCHAR(255) NOT NULL,
+DestinationURL VARCHAR(255),
+HelpLine VARCHAR(500),
+AlertDaysBeforeDue INTEGER,
+Priority INTEGER NOT NULL,
+TicklerToCall INTEGER,
+AssignTicklerToRole INTEGER,
+AssignTicklerToWorker VARCHAR(50),
+CalculateDueDateBasedOn VARCHAR(50),
+AppType VARCHAR(5),
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+DisplayName VARCHAR(250),
+DestinationType INTEGER NOT NULL,
+UseParentEntityID BOOLEAN,
+RunInSilence BOOLEAN,
+DELETED BOOLEAN NOT NULL,
+DisplayNameTopText VARCHAR(250),
+DisplayNameBottomText VARCHAR(250),
+AllowReassignmentBy VARCHAR(100),
+AllowCancelingBy VARCHAR(100),
+AllowEditingBy VARCHAR(100),
+AllowAddingAnotherBy VARCHAR(100),
+CalculateDueTimeBasedOn VARCHAR(50),
+IgnoreNumDaysTilNext BOOLEAN NOT NULL,
+CheckForExistingRecord BOOLEAN NOT NULL,
+AllowManualCompletion BOOLEAN NOT NULL,
+DueDateCalculatedBasedOn VARCHAR(100) NOT NULL,
+AllowReassignToMe BOOLEAN,
+EmailSubject VARCHAR(100),
+EmailMessage VARCHAR(5000),
+ValidationWFWID INTEGER,
+ValidationMessage VARCHAR(500),
+AttachICSFile BOOLEAN
+);
+
+CREATE TABLE TicklerSetupRule (
+TicklerSetupRuleID INTEGER NOT NULL,
+TriggerEventTypeID INTEGER NOT NULL,
+ClientSideControlID VARCHAR(255) NOT NULL,
+Operator VARCHAR(25) NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+AppType VARCHAR(5) NOT NULL,
+OnFieldChange BOOLEAN NOT NULL
+);
+
+CREATE TABLE TicklerSetupValue (
+TicklerSetupValueID INTEGER NOT NULL,
+TicklerSetupRuleID INTEGER NOT NULL,
+ValueToMatch VARCHAR(128) NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+AppType VARCHAR(5) NOT NULL
+);
+
+CREATE TABLE TieredCopay (
+TieredCopayId DECIMAL(9) NOT NULL,
+CopayId DECIMAL(9),
+CopayAmount VARCHAR(8),
+VisitSTARTDATE DATE,
+VisitENDDATE DATE,
+DATETIMESTAMP DATE,
+apptype VARCHAR(5),
+AmountFormat VARCHAR(16),
+BeginVisit INTEGER,
+EndVisit INTEGER,
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE TIMESETUP (
+TEAM VARCHAR(15) NOT NULL,
+TIME DATE NOT NULL
+);
+
+CREATE TABLE TrackDisposition (
+TrackDispositionID INTEGER NOT NULL,
+Disposition VARCHAR(100) NOT NULL,
+DispositionDate DATE NOT NULL,
+DateTimeStamp DATE NOT NULL,
+UserStamp INTEGER NOT NULL,
+EndDate DATE,
+Comments VARCHAR(255),
+ChapterName VARCHAR(100) NOT NULL,
+ChapterEntityID INTEGER NOT NULL,
+PageName VARCHAR(100) NOT NULL,
+EntityID INTEGER NOT NULL,
+Status VARCHAR(100)
+);
+
+CREATE TABLE TrackTickler (
+TrackTicklerID INTEGER NOT NULL,
+ReviewID DECIMAL(9) NOT NULL,
+Type VARCHAR(10) NOT NULL,
+ReassignedBy DECIMAL(9) NOT NULL,
+ReassignedTo DECIMAL(9) NOT NULL,
+UserStamp VARCHAR(10) NOT NULL,
+DateTimeStamp DATE NOT NULL,
+AppType VARCHAR(5) NOT NULL
+);
+
+CREATE TABLE TRAININGATTENDANCE (
+TRAININGATTENDID DECIMAL(9) NOT NULL,
+TRAININGSCHEDULEID DECIMAL(9),
+MEMBERID DECIMAL(9),
+ATTENDED INTEGER,
+GRADE VARCHAR(50),
+HOURS VARCHAR(8)
+);
+
+CREATE TABLE TRAININGCLASSES (
+TRAININGCLASSID DECIMAL(9) NOT NULL,
+FUNDCODE VARCHAR(25),
+CATEGORY VARCHAR(50),
+NAME VARCHAR(50),
+HOURS VARCHAR(8),
+CREDITS VARCHAR(8),
+DESCRIPTION VARCHAR(max),
+ACTIVE INTEGER,
+DATETIMESTAMP DATE,
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE TRAININGSCHEDULE (
+TRAININGSCHEDULEID DECIMAL(9) NOT NULL,
+TRAININGCLASSID DECIMAL(9),
+TRAININGDATE DATE,
+STARTTIME DATE,
+ENDTIME DATE,
+TRAINER VARCHAR(50),
+LOCATION VARCHAR(50),
+COMMENTS VARCHAR(max),
+DATETIMESTAMP DATE,
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE TRANSACTIONS (
+TRANSID DECIMAL(9) NOT NULL,
+ACTID DECIMAL(9),
+PAYERBILLDATE DATE,
+PAYERNUM DECIMAL(9),
+PAYERID DECIMAL(9),
+PAYERBILLED DECIMAL(9),
+PAYERPAID DECIMAL(9),
+PAYDATE DATE,
+PAYERWRITEOFF DECIMAL(9),
+TRANSCOMMENTS VARCHAR(max),
+DATETIMESTAMP DATE,
+TYPETRANS VARCHAR(10),
+BILLTYPE VARCHAR(50),
+PAIDBY VARCHAR(50),
+UNITCOST DECIMAL(9),
+USERPAYENTRY VARCHAR(10),
+DATETIMEPAYENTRY DATE,
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE TriggerEvent (
+TriggerEventID INTEGER NOT NULL,
+TriggerEventTypeID INTEGER NOT NULL,
+EntityID INTEGER NOT NULL,
+ChapterName VARCHAR(255) NOT NULL,
+PageName VARCHAR(255) NOT NULL,
+ChapterEntityID INTEGER NOT NULL,
+CreateDate DATE NOT NULL,
+FundCode VARCHAR(25),
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+AppType VARCHAR(5) NOT NULL
+);
+
+CREATE TABLE TriggerEventDetail (
+TriggerEventDetailID INTEGER NOT NULL,
+TriggerEventID INTEGER NOT NULL,
+ClientSideControlID VARCHAR(255) NOT NULL,
+NewValue VARCHAR(255) NOT NULL,
+OldValue VARCHAR(255) NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+AppType VARCHAR(5) NOT NULL
+);
+
+CREATE TABLE TriggerEventType (
+TriggerEventTypeID INTEGER NOT NULL,
+Name VARCHAR(255) NOT NULL,
+Label VARCHAR(255) NOT NULL,
+ChapterName VARCHAR(255) NOT NULL,
+PageName VARCHAR(255) NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+AppType VARCHAR(5) NOT NULL,
+Active BOOLEAN NOT NULL,
+StartDate DATE,
+EndDate DATE,
+HelpLine VARCHAR(500),
+EventType VARCHAR(50),
+ScreenDesignID INTEGER,
+TriggerWizard4Import VARCHAR(100)
+);
+
+CREATE TABLE TriggerEventTypeFundCode (
+TriggerEventTypeFundCodeID INTEGER NOT NULL,
+TriggerEventTypeID INTEGER NOT NULL,
+FundCode VARCHAR(25) NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+AppType VARCHAR(5) NOT NULL
+);
+
+CREATE TABLE TriggerEventTypeVendor (
+TriggerEventTypeVendorID INTEGER NOT NULL,
+VENDORID INTEGER NOT NULL,
+TriggerEventTypeID INTEGER NOT NULL,
+DateTimestamp DATE NOT NULL,
+UserStamp INTEGER NOT NULL,
+AppType VARCHAR(5)
+);
+
+ALTER TABLE TriggerEventTypeVendor ADD FOREIGN KEY (VENDORID) REFERENCES Vendors(VendorID);
+
+CREATE TABLE TriggerValidationTables (
+ID INTEGER NOT NULL,
+PageName VARCHAR(255),
+PrimaryTable VARCHAR(255),
+SecondaryTable VARCHAR(255),
+Active BOOLEAN,
+AppType VARCHAR(5) NOT NULL,
+USERSTAMP INTEGER,
+DateTimeStamp DATE,
+ChapterName VARCHAR(100),
+IsScheduler BOOLEAN
+);
+
+CREATE TABLE ULDLFolderDeleteConfig (
+ULDLFolderDeleteConfigID INTEGER NOT NULL,
+KeepDate DATE,
+DaysNo INTEGER,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE UNIT_SUPERVISOR (
+UNIT VARCHAR(50) NOT NULL,
+MEMBERID DECIMAL(9) NOT NULL
+);
+
+CREATE TABLE UploadDownloadFilesLog (
+UploadDownloadFileLogID INTEGER NOT NULL,
+FileName VARCHAR(500) NOT NULL,
+Action VARCHAR(50) NOT NULL,
+UserID INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+ALTER TABLE UploadDownloadFilesLog ADD FOREIGN KEY (UserID) REFERENCES Users(USERID);
+
+CREATE TABLE UserControl (
+UserControlID INTEGER NOT NULL,
+ControlDescription VARCHAR(2000) NOT NULL,
+ControlFileName VARCHAR(255) NOT NULL,
+DateTimeStamp DATE NOT NULL,
+AppType VARCHAR(5) NOT NULL,
+UserStamp INTEGER NOT NULL,
+UNIQUEID VARCHAR(16) NOT NULL,
+ORIGINALID VARCHAR(16) NOT NULL
+);
+
+CREATE TABLE UserFundCode (
+FUNDCODE VARCHAR(25),
+UserFundCodeID INTEGER NOT NULL,
+UserID INTEGER
+);
+
+CREATE TABLE UserLog (
+PWD VARCHAR(50),
+WORKSTATION VARCHAR(64),
+WINDOWSUSER VARCHAR(64),
+APPTYPE VARCHAR(5),
+USERID INTEGER NOT NULL,
+USERLOGINID INTEGER NOT NULL,
+LOGIN DATE NOT NULL,
+LOGOUT DATE,
+LOGOUTSOURCE VARCHAR(25),
+SESSIONID VARCHAR(25),
+USERSTAMP INTEGER NOT NULL,
+DATETIMESTAMP DATE NOT NULL
+);
+
+CREATE TABLE UserRandomText (
+UserRandomTextID INTEGER NOT NULL,
+UserID INTEGER NOT NULL,
+AppDataRandomText VARCHAR(1000) NOT NULL,
+PassRandomText VARCHAR(1000) NOT NULL,
+Userstamp INTEGER,
+Datetimestamp DATE NOT NULL
+);
+
+ALTER TABLE UserRandomText ADD FOREIGN KEY (UserID) REFERENCES Users(USERID);
+
+CREATE TABLE UserRole (
+UserRoleID INTEGER NOT NULL,
+UserID INTEGER NOT NULL,
+RoleID INTEGER NOT NULL,
+StartDate DATE,
+EndDate DATE,
+Active BOOLEAN NOT NULL,
+Userstamp INTEGER,
+Datetimestamp DATE NOT NULL,
+DefaultRole BOOLEAN NOT NULL
+);
+
+CREATE TABLE Users (
+USERID INTEGER,
+TXTUSERID VARCHAR(100),
+ID INTEGER,
+TXTUSERAUTH INTEGER,
+TXTPWD VARCHAR(50),
+TXTLOGGEDON VARCHAR(10),
+ACCESS_R VARCHAR(10),
+CONSUMERAUTH INTEGER,
+SERVICESAUTH INTEGER,
+PROVIDERAUTH INTEGER,
+MAINTENANCEAUTH INTEGER,
+SCHEDULERAUTH INTEGER,
+PLANAUTH INTEGER,
+FIPSAUTH VARCHAR(25),
+UTILITIESAUTH INTEGER,
+DAILYACTAUTH INTEGER,
+REPORTSAUTH INTEGER,
+EDUCAUTH INTEGER,
+DIAGAUTH INTEGER,
+OPENCLOSEAUTH INTEGER,
+TICKLERAUTH INTEGER,
+SATREVIEW INTEGER,
+ASSESSAUTH INTEGER,
+PAYAUTH INTEGER,
+TEAMMEMBERAUTH INTEGER,
+TEAMDATEAUTH INTEGER,
+TEAMCALAUTH INTEGER,
+CHECKAUTH INTEGER,
+PRECHECKAUTH INTEGER,
+NOTESAUTH INTEGER,
+MEDSAUTH INTEGER,
+MEMBERID INTEGER,
+SUPERVISOR DECIMAL(9),
+VENDORID INTEGER,
+LIMITVIEWTO VARCHAR(50),
+PWD_DTS DATE,
+PWD_USED INTEGER,
+ACTIVE INTEGER,
+SECUREGROUP VARCHAR(35),
+SUPERPRIV INTEGER,
+APPROVEAUTH INTEGER,
+CRVIEWER VARCHAR(100),
+FINANCEAPPROVE INTEGER,
+TwoPartHarmony INTEGER,
+APPTYPE VARCHAR(5),
+AttemptNum INTEGER,
+ChangePwd INTEGER,
+DATETIMESTAMP DATE,
+ExpiresOn DATE,
+PwdLastChanged DATE,
+StartDate DATE,
+EndDate DATE,
+UserStamp INTEGER,
+PasswordHash VARCHAR(64),
+PasswordDate DATE,
+LockedOut BOOLEAN,
+Logins INTEGER,
+FailedLogins INTEGER,
+SaveReminderInMins INTEGER,
+InterRAIAccept DATE,
+Salt VARCHAR(64),
+UserAccess VARCHAR(100),
+ForgotPasswordCodeRequestCount INTEGER,
+IsPwdUpgradedToSHA256 BOOLEAN,
+LockoutDateTimeStamp DATE,
+AdminLockout BOOLEAN
+);
+
+CREATE TABLE UserSecurityQuestions (
+UserSecurityQuestionsID INTEGER NOT NULL,
+UserID INTEGER NOT NULL,
+QuestionLookupCodesMastID INTEGER NOT NULL,
+Answer VARCHAR(max),
+DateTimeStamp DATE NOT NULL,
+UserStamp INTEGER NOT NULL,
+Salt VARCHAR(64),
+IsAnsUpgradedToSHA256 BOOLEAN
+);
+
+ALTER TABLE UserSecurityQuestions ADD FOREIGN KEY (UserID) REFERENCES Users(USERID);
+
+ALTER TABLE UserSecurityQuestions ADD FOREIGN KEY (UserStamp) REFERENCES Users(USERID);
+
+CREATE TABLE VendFundCodeIdentifier (
+VendFundCodeIdentifierID INTEGER NOT NULL,
+VendFundCodeID INTEGER NOT NULL,
+Type VARCHAR(100),
+Category VARCHAR(100),
+StartDate DATE NOT NULL,
+EndDate DATE,
+Active BOOLEAN NOT NULL,
+Identifier VARCHAR(20),
+Comment VARCHAR(500),
+DateTimestamp DATE NOT NULL,
+UserStamp INTEGER NOT NULL,
+FiscalYear INTEGER,
+LinkedID INTEGER,
+Status VARCHAR(100),
+GenericLookup1 VARCHAR(100),
+GenericLookup2 VARCHAR(100),
+GenericLookup3 VARCHAR(100),
+GenericText1 VARCHAR(500),
+GenericText2 VARCHAR(500),
+GenericText3 VARCHAR(500)
+);
+
+CREATE TABLE VENDFUNDCODES (
+VENDFUNDID INTEGER NOT NULL,
+VENDORID INTEGER,
+FUNDCODE VARCHAR(25),
+STATUS VARCHAR(100),
+STATUSDATE DATE,
+OPENDATE DATE,
+CLOSEDATE DATE,
+DATETIMESTAMP DATE NOT NULL,
+ALLOWPAYMENTS INTEGER,
+ALLOWNEWPOS INTEGER,
+VDISPOSITION VARCHAR(100),
+APPTYPE VARCHAR(5),
+VDispositionDate DATE,
+MaxDays INTEGER,
+SITEID INTEGER,
+UserStamp INTEGER NOT NULL,
+DispositionReason VARCHAR(100),
+GenericText VARCHAR(100),
+ProgramStatus VARCHAR(100),
+ProgramID VARCHAR(max)
+);
+
+ALTER TABLE VENDFUNDCODES ADD FOREIGN KEY (SITEID) REFERENCES SITE(SITEID);
+
+CREATE TABLE VENDORACCREDITATION (
+VACCREDITATIONID INTEGER NOT NULL,
+VENDORID INTEGER,
+ACCREDITATION VARCHAR(50),
+STARTDATE DATE,
+ENDDATE DATE,
+COMMENTS VARCHAR(250),
+DATETIMESTAMP DATE NOT NULL,
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE VendorAdjustmentRules (
+VendorAdjRuleID DECIMAL(9) NOT NULL,
+RuleName VARCHAR(50),
+RuleDescription VARCHAR(100),
+AdjustmentCode VARCHAR(10),
+AdjustmentGroup VARCHAR(10),
+AdjustmentReason VARCHAR(100),
+Active INTEGER,
+DateTimeStamp DATE,
+AppType VARCHAR(5),
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE VendorAppeal (
+VendorAppealID INTEGER NOT NULL,
+VendorID INTEGER NOT NULL,
+VendorFundID INTEGER,
+AppealType VARCHAR(100) NOT NULL,
+AppealNumber VARCHAR(50),
+Decision VARCHAR(100),
+DecisionType VARCHAR(100),
+DecisionDate DATE,
+Description VARCHAR(200),
+AppealDate DATE,
+MemberID INTEGER,
+Comment VARCHAR(max),
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+GenericText1 VARCHAR(100),
+GenericText2 VARCHAR(100),
+GenericDate1 DATE,
+GenericDate2 DATE
+);
+
+ALTER TABLE VendorAppeal ADD FOREIGN KEY (UserStamp) REFERENCES Users(USERID);
+
+ALTER TABLE VendorAppeal ADD FOREIGN KEY (VendorID) REFERENCES Vendors(VendorID);
+
+ALTER TABLE VendorAppeal ADD FOREIGN KEY (VendorFundID) REFERENCES VENDFUNDCODES(VENDFUNDID);
+
+ALTER TABLE VendorAppeal ADD FOREIGN KEY (MemberID) REFERENCES WORKERS(MEMBERID);
+
+CREATE TABLE VendorCAPS (
+CAPID INTEGER NOT NULL,
+VendorID INTEGER NOT NULL,
+CAPNumber VARCHAR(50),
+CAPType VARCHAR(200),
+CAPDate DATE,
+ContactedDate DATE,
+Status VARCHAR(100),
+Alerts INTEGER,
+MemberID1 INTEGER,
+MemberID2 INTEGER,
+MemberID3 INTEGER,
+FacilityID INTEGER,
+Score1 VARCHAR(50),
+Score2 VARCHAR(50),
+Score3 VARCHAR(50),
+Discrepancies DECIMAL(9),
+GenericLookup1 VARCHAR(100),
+GenericLookup2 VARCHAR(100),
+GenericLookup3 VARCHAR(100),
+GenericLookup4 VARCHAR(100),
+GenericText1 VARCHAR(500),
+GenericText2 VARCHAR(500),
+GenericText3 VARCHAR(500),
+GenericDate1 DATE,
+GenericDate2 DATE,
+GenericDate3 DATE,
+GenericMultiSelect1 VARCHAR(max),
+GenericMultiSelect2 VARCHAR(max),
+GenericCheckBox1 BOOLEAN,
+GenericCheckBox2 BOOLEAN,
+DateTimeStamp DATE NOT NULL,
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE VendorCAPSItems (
+ItemID INTEGER NOT NULL,
+CAPID INTEGER NOT NULL,
+ItemNumber VARCHAR(50),
+Source VARCHAR(200),
+Category VARCHAR(200),
+Type VARCHAR(200),
+EmployeeInvolved VARCHAR(500),
+StandardID INTEGER,
+Reason VARCHAR(max),
+Status VARCHAR(100),
+Description VARCHAR(max),
+DiscrepancyAmount DECIMAL(9),
+DueDate DATE,
+CompletionDate DATE,
+Alert BOOLEAN,
+MemberID INTEGER,
+CARequired VARCHAR(max),
+CompletionDetails VARCHAR(max),
+GenericLookup1 VARCHAR(100),
+GenericLookup2 VARCHAR(100),
+GenericLookup3 VARCHAR(100),
+GenericLookup4 VARCHAR(100),
+GenericLookup5 VARCHAR(100),
+GenericText1 VARCHAR(max),
+GenericText2 VARCHAR(max),
+GenericText3 VARCHAR(500),
+GenericDate1 DATE,
+GenericDate2 DATE,
+GenericDate3 DATE,
+GenericMultiSelect1 VARCHAR(max),
+GenericMultiSelect2 VARCHAR(max),
+GenericCheckBox1 BOOLEAN,
+GenericCheckBox2 BOOLEAN,
+DateTimeStamp DATE NOT NULL,
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE VENDORCATEGORIES (
+VCATEGORYID INTEGER NOT NULL,
+VENDORID INTEGER NOT NULL,
+VCATEGORY VARCHAR(100),
+DATETIMESTAMP DATE NOT NULL,
+APPTYPE VARCHAR(5),
+EndDate DATE,
+StartDate DATE,
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE VendorContracts (
+VendorContractID INTEGER NOT NULL,
+VendFundID INTEGER,
+ContractType VARCHAR(100),
+ContractStatus VARCHAR(100),
+StartDate DATE,
+EndDate DATE,
+ContractAmount VARCHAR(8),
+ServiceTypes VARCHAR(255),
+Description VARCHAR(max),
+GenericText1 VARCHAR(max),
+DateTimeStamp DATE NOT NULL,
+AppType VARCHAR(5) NOT NULL,
+UserStamp INTEGER NOT NULL,
+PayorID INTEGER,
+ContractNo VARCHAR(50),
+FiscalYear INTEGER,
+VendorID INTEGER NOT NULL,
+ParentContractNo VARCHAR(50),
+Source VARCHAR(100)
+);
+
+ALTER TABLE VendorContracts ADD FOREIGN KEY (PayorID) REFERENCES Payors(PayorID);
+
+ALTER TABLE VendorContracts ADD FOREIGN KEY (VendorID) REFERENCES Vendors(VendorID);
+
+CREATE TABLE VendorContractServices (
+VendorContractID INTEGER NOT NULL,
+ServiceID INTEGER,
+Comments VARCHAR(max),
+DateTimeStamp DATE NOT NULL,
+AppType VARCHAR(5) NOT NULL,
+UserStamp INTEGER NOT NULL,
+VendorContractServiceID INTEGER NOT NULL,
+MaxUnitsAllowed INTEGER,
+VServiceID INTEGER,
+MaxAmountAllowed DECIMAL(9),
+GenericCurrency1 DECIMAL(9),
+GenericCurrency2 DECIMAL(9),
+GenericText1 VARCHAR(100),
+GenericText2 VARCHAR(100),
+GenericLookup1 VARCHAR(100),
+GenericLookup2 VARCHAR(100)
+);
+
+CREATE TABLE VENDORDETREVIEW (
+VENDORDETREVIEWID INTEGER NOT NULL,
+VASSESSID INTEGER NOT NULL,
+SCALE VARCHAR(255),
+ITEM VARCHAR(max),
+SCORE DECIMAL(9),
+COMMENTS VARCHAR(max),
+YN INTEGER,
+LOOKUPVALUE VARCHAR(50),
+SCALEID DECIMAL(9) NOT NULL,
+APPTYPE VARCHAR(5),
+DateTimestamp DATE NOT NULL,
+UserStamp INTEGER NOT NULL,
+QuestionID VARCHAR(15),
+SecID VARCHAR(500)
+);
+
+CREATE TABLE VendorFacilityBed (
+VENDORFACILITYBEDID INTEGER NOT NULL,
+FACILITYID INTEGER,
+BEDNUMBER VARCHAR(25) NOT NULL,
+TYPE VARCHAR(100),
+CATEGORY VARCHAR(100),
+STARTDATE DATE NOT NULL,
+ENDDATE DATE,
+ACTIVE BOOLEAN NOT NULL,
+GENDER VARCHAR(100),
+COMMENTS VARCHAR(2000),
+GENERICDROPDOWN1 VARCHAR(100),
+GENERICDROPDOWN2 VARCHAR(100),
+GENERICDATE1 DATE,
+GENERICDATE2 DATE,
+GENERICTEXT1 VARCHAR(1000),
+GENERICTEXT2 VARCHAR(1000),
+USERSTAMP INTEGER NOT NULL,
+DATETIMESTAMP DATE NOT NULL,
+Room VARCHAR(500)
+);
+
+ALTER TABLE VendorFacilityBed ADD FOREIGN KEY (FACILITYID) REFERENCES FACILITIES(FACILITYID);
+
+CREATE TABLE VendorFee (
+VendorFeeID INTEGER NOT NULL,
+VendorID INTEGER NOT NULL,
+VendorFundID INTEGER,
+FeeNumber VARCHAR(50),
+FeeType VARCHAR(100) NOT NULL,
+FeeSubType VARCHAR(100),
+Description VARCHAR(200),
+Status VARCHAR(100),
+Reason VARCHAR(100),
+PaymentPlan VARCHAR(100),
+Terms VARCHAR(max),
+StartDate DATE,
+EndDate DATE,
+Comment VARCHAR(max),
+FeeAmount VARCHAR(8),
+BalanceDue VARCHAR(8),
+DateTimeStamp DATE NOT NULL,
+UserStamp INTEGER NOT NULL
+);
+
+ALTER TABLE VendorFee ADD FOREIGN KEY (UserStamp) REFERENCES Users(USERID);
+
+ALTER TABLE VendorFee ADD FOREIGN KEY (VendorFundID) REFERENCES VENDFUNDCODES(VENDFUNDID);
+
+ALTER TABLE VendorFee ADD FOREIGN KEY (VendorID) REFERENCES Vendors(VendorID);
+
+CREATE TABLE VendorFeePayment (
+VendorFeePaymentID INTEGER NOT NULL,
+VendorFeeID INTEGER NOT NULL,
+PaymentID VARCHAR(50),
+PaymentDate DATE,
+PaymentType VARCHAR(100),
+PaymentAmount VARCHAR(8) NOT NULL,
+Comment VARCHAR(max),
+DateTimeStamp DATE NOT NULL,
+UserStamp INTEGER NOT NULL
+);
+
+ALTER TABLE VendorFeePayment ADD FOREIGN KEY (UserStamp) REFERENCES Users(USERID);
+
+ALTER TABLE VendorFeePayment ADD FOREIGN KEY (VendorFeeID) REFERENCES VendorFee(VendorFeeID);
+
+CREATE TABLE VendorGroup (
+VendorGroupID INTEGER NOT NULL,
+VendorID INTEGER NOT NULL,
+GroupName VARCHAR(50) NOT NULL,
+GroupType VARCHAR(100),
+StartDate DATE,
+EndDate DATE,
+StartTime DATE,
+EndTime DATE,
+Location VARCHAR(100),
+Comments VARCHAR(max),
+Active BOOLEAN NOT NULL,
+DateTimestamp DATE NOT NULL,
+UserStamp INTEGER NOT NULL,
+Domain VARCHAR(100),
+Risk VARCHAR(100),
+Strategy VARCHAR(100),
+GenericLookup1 VARCHAR(100),
+GenericLookup2 VARCHAR(100),
+GenericLookup3 VARCHAR(100),
+GenericLookup4 VARCHAR(100),
+MemberID INTEGER,
+VServiceID INTEGER,
+FacilityID INTEGER,
+ContactType VARCHAR(100),
+PlaceOfService VARCHAR(100),
+SessionCapacity INTEGER,
+GroupNumber VARCHAR(1000),
+GroupNameAbbreviation VARCHAR(500),
+FundCode VARCHAR(25),
+NumberAttended DECIMAL(9),
+NumberCompleted DECIMAL(9),
+Agency INTEGER,
+InternalProgram INTEGER,
+SessionWorker2 INTEGER,
+SessionWorker3 INTEGER,
+GenericNumber1 DECIMAL(9),
+GenericNumber2 DECIMAL(9),
+GenericNumber3 DECIMAL(9),
+Comment2 VARCHAR(max),
+GenericMultiSelect VARCHAR(max),
+MemberType VARCHAR(100),
+WorkerProfessionalExperience VARCHAR(45)
+);
+
+ALTER TABLE VendorGroup ADD FOREIGN KEY (FacilityID) REFERENCES FACILITIES(FACILITYID);
+
+ALTER TABLE VendorGroup ADD FOREIGN KEY (VendorID) REFERENCES Vendors(VendorID);
+
+ALTER TABLE VendorGroup ADD FOREIGN KEY (VServiceID) REFERENCES VENDORSERVICES(VSERVICEID);
+
+ALTER TABLE VendorGroup ADD FOREIGN KEY (MemberID) REFERENCES WORKERS(MEMBERID);
+
+CREATE TABLE VENDORLEAVE (
+VENDORID INTEGER NOT NULL,
+LEAVESTARTDATE DATE,
+LEAVEENDDATE DATE,
+LEAVEDAYS VARCHAR(8),
+DATETIMESTAMP DATE,
+UserStamp INTEGER NOT NULL,
+Comments VARCHAR(500),
+VLEAVEID INTEGER NOT NULL
+);
+
+CREATE TABLE VendorLinkedRelships (
+VendorLinkedRelshipID INTEGER NOT NULL,
+VendorID INTEGER NOT NULL,
+LinkedVendorID INTEGER NOT NULL,
+Relationship VARCHAR(100) NOT NULL,
+Startdate DATE NOT NULL,
+Enddate DATE,
+Generic VARCHAR(max),
+UserID INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE VENDORREVIEW (
+VASSESSID INTEGER NOT NULL,
+VENDORID INTEGER NOT NULL,
+REVIEW VARCHAR(100),
+RATER DECIMAL(9),
+COMMENTS VARCHAR(max),
+SYSTEMFACTORS VARCHAR(50),
+INDIVIDUALFACTORS VARCHAR(50),
+STATUS VARCHAR(100),
+RISKS VARCHAR(50),
+FUNDCODE VARCHAR(25),
+REVIEWDATE DATE,
+DATETIMESTAMP DATE NOT NULL,
+PROGRAM DECIMAL(9),
+APPROVEDBY DECIMAL(9),
+APPROVEDATE DATE,
+APPROVEUSER VARCHAR(100),
+STARTDATE DATE,
+ENDDATE DATE,
+TRIGGERID DECIMAL(9),
+TRIGGERPAGE VARCHAR(20),
+APPTYPE VARCHAR(5),
+Site VARCHAR(100),
+ScreenDesignID INTEGER NOT NULL,
+UserStamp INTEGER NOT NULL,
+VNoteID INTEGER,
+ExpirationDate DATE,
+Expired BOOLEAN,
+GenericMax VARCHAR(max),
+GenericMax2 VARCHAR(max),
+GenericWorker1 INTEGER,
+GenericWorker2 INTEGER,
+GenericDropDown1 VARCHAR(100),
+GenericDropDown2 VARCHAR(100)
+);
+
+CREATE TABLE Vendors (
+VendorID INTEGER,
+VendorNO VARCHAR(50),
+VPUBLIC BOOLEAN,
+TAXID VARCHAR(15),
+CONTACTNAME VARCHAR(100),
+CURRVCONTRACT BOOLEAN,
+DATECONTRACT DATE,
+CONTRACT VARCHAR(15),
+FOSTERPARENT BOOLEAN,
+SECID VARCHAR(15),
+NOTES VARCHAR(175),
+MAILTONAME VARCHAR(75),
+MAILTOCONTACT VARCHAR(50),
+ACTIVE BOOLEAN,
+SAMEMAILTOAS INTEGER,
+DATETIMESTAMP DATE,
+INOUTCOMMUNITY BOOLEAN,
+MEDICAIDAPP BOOLEAN,
+MONITOR1 INTEGER,
+MONITOR2 INTEGER,
+MONITOR3 INTEGER,
+DIVISION VARCHAR(100),
+TYPEVENDOR VARCHAR(50),
+UNIT VARCHAR(50),
+OFFICE VARCHAR(50),
+DISTRICT VARCHAR(25),
+LOCATION VARCHAR(100),
+APPTYPE VARCHAR(5),
+GENERICTEXT1 VARCHAR(35),
+GENERICTEXT2 VARCHAR(100),
+GENERICDROPDOWN1 VARCHAR(100),
+GENERICDROPDOWN2 VARCHAR(100),
+GENERICDATE1 DATE,
+GENERICDATE2 DATE,
+External BOOLEAN,
+Exclude BOOLEAN,
+UserStamp INTEGER,
+AGENCY VARCHAR(250),
+SHORTNAME VARCHAR(25),
+EXTENSION VARCHAR(7),
+WEBSITE VARCHAR(500),
+EMAIL VARCHAR(100),
+COUNTRY VARCHAR(25),
+Gender VARCHAR(100),
+LevelOfCare VARCHAR(100),
+HighAge VARCHAR(8),
+LowAge VARCHAR(8),
+Region VARCHAR(100),
+County VARCHAR(100),
+LinkMailTo BOOLEAN,
+PERMITNO VARCHAR(20),
+PERMITDATE DATE,
+NUMLICENSEDFOR INTEGER,
+PROVIDERTYPE VARCHAR(100),
+HOWREGULATED VARCHAR(100),
+EXEMPT BOOLEAN,
+FICA BOOLEAN,
+GARNISHMENT BOOLEAN,
+GARNSTART DATE,
+GARNEND DATE,
+GARNAMOUNT DECIMAL(9),
+GARNPERCENT VARCHAR(8),
+GARNTOTAL DECIMAL(9),
+INVOICETYPE VARCHAR(100),
+GARNISHERID INTEGER,
+SETTING VARCHAR(100),
+PROMPTPAYDAYS INTEGER,
+PROMPTPAYPERCENT VARCHAR(8),
+AllowAuthOverlap BOOLEAN,
+AllowEnrollOverlap BOOLEAN,
+AllowPlacementOverlap BOOLEAN,
+Location2 VARCHAR(100),
+uploaddirectory VARCHAR(100),
+downloaddirectory VARCHAR(100),
+MailingSameAsContact BOOLEAN,
+GenericCurrency1 VARCHAR(8),
+NPI VARCHAR(25),
+AllowEnrollFacilityOverlap BOOLEAN,
+YearIncorporated DECIMAL(9),
+IRSStatus VARCHAR(100),
+Funder VARCHAR(max),
+HighPriority INTEGER,
+LowPriority INTEGER,
+ParentVendorID INTEGER,
+AllowRecurringEnrollOverlap BOOLEAN,
+DocumentRouting VARCHAR(100),
+MasterSanctionLevel VARCHAR(100),
+SHIPAgencyID VARCHAR(6),
+PSAID INTEGER,
+DocumentPrefix VARCHAR(50),
+IsAAA BOOLEAN,
+IsAgency BOOLEAN,
+AgencyIsProvider BOOLEAN,
+PresumptivelyInstitutional BOOLEAN,
+PlansRequireValidations BOOLEAN,
+FiscalRegion VARCHAR(100),
+IndividualProvider BOOLEAN,
+InRotation BOOLEAN,
+AdditionalAttributes VARCHAR(max),
+Monitor4 INTEGER,
+LicensedForRule VARCHAR(100),
+OnlineProvAppDivision VARCHAR(max),
+WorkersVisible VARCHAR(100),
+VisibleConsumers VARCHAR(200)
+);
+
+CREATE TABLE VendorSanction (
+VendorSanctionID INTEGER NOT NULL,
+VendorID INTEGER NOT NULL,
+VendorFundID INTEGER,
+SanctionType VARCHAR(100) NOT NULL,
+SanctionNumber VARCHAR(50),
+Status VARCHAR(100),
+StartDate DATE,
+EndDate DATE,
+Description VARCHAR(200),
+SanctionDate DATE,
+MemberID INTEGER,
+Alert BOOLEAN,
+Reason VARCHAR(100),
+Terms VARCHAR(max),
+Grounds VARCHAR(max),
+Comment VARCHAR(max),
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+PublishToWebsite BOOLEAN,
+WebsiteComment VARCHAR(max),
+PreventNewConsumer BOOLEAN
+);
+
+ALTER TABLE VendorSanction ADD FOREIGN KEY (UserStamp) REFERENCES Users(USERID);
+
+ALTER TABLE VendorSanction ADD FOREIGN KEY (VendorID) REFERENCES Vendors(VendorID);
+
+ALTER TABLE VendorSanction ADD FOREIGN KEY (VendorFundID) REFERENCES VENDFUNDCODES(VENDFUNDID);
+
+ALTER TABLE VendorSanction ADD FOREIGN KEY (MemberID) REFERENCES WORKERS(MEMBERID);
+
+CREATE TABLE VendorSanctionAppeal (
+VendorSanctionAppealID INTEGER NOT NULL,
+VendorSanctionID INTEGER NOT NULL,
+VendorAppealID INTEGER NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+ALTER TABLE VendorSanctionAppeal ADD FOREIGN KEY (UserStamp) REFERENCES Users(USERID);
+
+ALTER TABLE VendorSanctionAppeal ADD FOREIGN KEY (VendorAppealID) REFERENCES VendorAppeal(VendorAppealID);
+
+CREATE TABLE VENDORSERVICES (
+VSERVICEID INTEGER,
+VENDORID INTEGER,
+ACTIVEDATE DATE,
+SERVICEID INTEGER,
+COST DECIMAL(9),
+VSERVICE VARCHAR(25),
+ACTIVE BOOLEAN,
+COMMENTS VARCHAR(max),
+DATETIMESTAMP DATE,
+DEGREE VARCHAR(10),
+SVCENDDATE DATE,
+BILLABLE BOOLEAN,
+REQUIREPREAUTH BOOLEAN,
+StartAge VARCHAR(8),
+EndAge VARCHAR(8),
+APPTYPE VARCHAR(5),
+UserStamp INTEGER,
+AuthAllowed BOOLEAN,
+AbsenteeRate DECIMAL(9),
+AllowDuplicates BOOLEAN,
+ServiceFee VARCHAR(max),
+Notes VARCHAR(max),
+ProviderConditionApply BOOLEAN,
+ProviderServiceAreaApply INTEGER,
+DisplayOnReferral BOOLEAN,
+Phone VARCHAR(16),
+email VARCHAR(50),
+Website VARCHAR(50),
+GenericText1 VARCHAR(max),
+GenericText2 VARCHAR(max),
+RequireCredential BOOLEAN,
+BaseCost DECIMAL(9),
+AdditionalAttributes VARCHAR(max),
+ServiceTaxonomy VARCHAR(50),
+ServiceBillingID VARCHAR(50),
+FundCode VARCHAR(25),
+ProviderRateType VARCHAR(100),
+InternalProgram VARCHAR(max),
+ConsumerCounty VARCHAR(max),
+ServiceRatio VARCHAR(500),
+GenericText3 VARCHAR(500),
+GenericText4 VARCHAR(500),
+GenericText5 VARCHAR(500),
+GenericText6 VARCHAR(500),
+GenericText7 VARCHAR(500)
+);
+
+CREATE TABLE VendorSpecialty (
+VendorSpecialtyID INTEGER NOT NULL,
+VendorID INTEGER NOT NULL,
+Specialty VARCHAR(100),
+StartDate DATE,
+EndDate DATE,
+UserStamp INTEGER,
+DateTimeStamp DATE NOT NULL,
+AppType VARCHAR(5)
+);
+
+CREATE TABLE VENDORSWORKERS (
+VWID INTEGER NOT NULL,
+VENDORID INTEGER NOT NULL,
+MEMBERID INTEGER NOT NULL,
+ACTIVE BOOLEAN NOT NULL,
+DATETIMESTAMP DATE NOT NULL,
+ReportingUnit VARCHAR(100),
+AppType VARCHAR(5),
+EndDate DATE,
+StartDate DATE,
+generictext1 VARCHAR(100),
+genericdate1 DATE,
+genericdate2 DATE,
+genericdate3 DATE,
+genericdate4 DATE,
+UserStamp INTEGER NOT NULL,
+upload BOOLEAN,
+download BOOLEAN,
+PrimaryProvider BOOLEAN NOT NULL,
+ExcludeAPSInvestigator BOOLEAN NOT NULL,
+ExcludeAPSScreener BOOLEAN NOT NULL,
+ExcludeAPSIntakeWorker BOOLEAN NOT NULL
+);
+
+ALTER TABLE VENDORSWORKERS ADD FOREIGN KEY (VENDORID) REFERENCES Vendors(VendorID);
+
+CREATE TABLE VENDORTAXINFO (
+VENDORTAXINFOID INTEGER NOT NULL,
+VENDORID INTEGER NOT NULL,
+PERMITNO VARCHAR(20),
+PERMITDATE DATE,
+NUMLICENSEDFOR INTEGER,
+PROVIDERTYPE VARCHAR(100),
+HOWREGULATED VARCHAR(100),
+EXEMPT INTEGER,
+FICA INTEGER,
+GARNISHMENT INTEGER,
+GARNSTART DATE,
+GARNEND DATE,
+GARNAMOUNT DECIMAL(9),
+GARNPERCENT VARCHAR(8),
+GARNTOTAL DECIMAL(9),
+INVOICETYPE VARCHAR(10),
+DATETIMESTAMP DATE NOT NULL,
+GARNISHERID DECIMAL(9),
+SETTING VARCHAR(100),
+LOCATION VARCHAR(50),
+PROMPTPAYDAYS INTEGER,
+PROMPTPAYPERCENT VARCHAR(8),
+LICMINAGE DECIMAL(5),
+LICMAXAGE DECIMAL(5),
+APPTYPE VARCHAR(5),
+ALLOWAUTHOVERLAP INTEGER,
+ALLOWENROLLOVERLAP INTEGER,
+ALLOWPLACEMENTOVERLAP INTEGER,
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE VendorTaxWithholding (
+VendTaxWithHoldID DECIMAL(9) NOT NULL,
+VendorID DECIMAL(9),
+VendorNo DECIMAL(9),
+TaxExempt VARCHAR(10),
+TaxThreshold DECIMAL(9),
+TaxPercentage DECIMAL(9),
+StartDate DATE,
+EndDate DATE,
+UserStamp VARCHAR(10),
+DateTimeStamp DATE,
+AppType VARCHAR(5)
+);
+
+CREATE TABLE Version (
+AppType VARCHAR(5) NOT NULL,
+VersionNumber VARCHAR(10) NOT NULL,
+GroupVersion VARCHAR(10),
+DateTimeStamp DATE NOT NULL,
+DELTAVERSION VARCHAR(10),
+Metadata VARCHAR(20),
+Build VARCHAR(20)
+);
+
+CREATE TABLE VersionScriptLog (
+VersionScriptLogID INTEGER NOT NULL,
+ScriptName VARCHAR(260) NOT NULL,
+ScriptType VARCHAR(50) NOT NULL,
+ScriptHash VARCHAR(256),
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE Voucher (
+VoucherID INTEGER NOT NULL,
+DocumentNumber INTEGER NOT NULL,
+TransactionNumber INTEGER,
+AccountCodeSegment1 VARCHAR(100),
+AccountCodeSegment2 VARCHAR(100),
+VendorID INTEGER NOT NULL,
+DocumentAmount VARCHAR(8) NOT NULL,
+PaymentVoucherNumber VARCHAR(16),
+RemittedAmount VARCHAR(8),
+PaymentDate DATE,
+CheckNo VARCHAR(16),
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+VendorSecID INTEGER,
+AccountCodeSegment3 VARCHAR(100),
+AccountCodeSegment4 VARCHAR(100),
+AccountCodeSegment5 VARCHAR(100),
+PaymentVoucherDate DATE,
+MemberID INTEGER,
+PayorID INTEGER,
+PVLogID INTEGER,
+DeptID VARCHAR(50),
+Region VARCHAR(50),
+Deleted BOOLEAN NOT NULL
+);
+
+ALTER TABLE Voucher ADD FOREIGN KEY (PVLogID) REFERENCES PVLog(PVLogID);
+
+CREATE TABLE VoucherDetail (
+VoucherDetailID INTEGER NOT NULL,
+VoucherID INTEGER NOT NULL,
+LineNumber INTEGER NOT NULL,
+ReportOrder INTEGER,
+IndexCode VARCHAR(100),
+IndexDescription VARCHAR(100),
+SubObjectCode VARCHAR(100),
+SubObjectDescription VARCHAR(100),
+SecIndexCode VARCHAR(100),
+SecSubObjectCode VARCHAR(100),
+ReportingCategory VARCHAR(100),
+LineAmount VARCHAR(8) NOT NULL,
+LineAction VARCHAR(100),
+UntaxedLineAmount VARCHAR(8),
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+FundOrder VARCHAR(100),
+GLAccountCodeSegment1 VARCHAR(100),
+GLAccountCodeSegment2 VARCHAR(100),
+GLAccountCodeSegment3 VARCHAR(100),
+GLAccountCodeSegment4 VARCHAR(100),
+GLAccountCodeSegment5 VARCHAR(100),
+VendorContractNo VARCHAR(50),
+VendorInvoiceNumber VARCHAR(30),
+GLAccountCodeSegment6 VARCHAR(100),
+VendorID INTEGER,
+PaymentDate DATE,
+CheckNo VARCHAR(50),
+RemittedAmount DECIMAL(9),
+Deleted BOOLEAN NOT NULL
+);
+
+ALTER TABLE VoucherDetail ADD FOREIGN KEY (VoucherID) REFERENCES Voucher(VoucherID);
+
+CREATE TABLE WORDMERGEDOCFUNDCODES (
+MERGEID INTEGER NOT NULL,
+FUNDCODE VARCHAR(25),
+WORDMERGEDOCFUNDCODEID INTEGER NOT NULL,
+SITEID INTEGER,
+DATETIMESTAMP DATE NOT NULL,
+AppType VARCHAR(5),
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE WORDMERGEDOCS (
+MERGEID INTEGER NOT NULL,
+MERGEDOCDESC VARCHAR(50),
+CATEGORY VARCHAR(100),
+DOCNAME VARCHAR(max),
+SQLM VARCHAR(max),
+ACTIVE INTEGER,
+DATETIMESTAMP DATE NOT NULL,
+QTYPE VARCHAR(15),
+SORTORDER INTEGER,
+SQLDESC VARCHAR(255),
+TRIGGERSCREEN VARCHAR(50),
+TRIGGEREVENT VARCHAR(50),
+FILETYPE VARCHAR(20),
+STATUS VARCHAR(100),
+AppType VARCHAR(5),
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE WordMergeQuery (
+WordMergeQueryID INTEGER NOT NULL,
+MergeType VARCHAR(100) NOT NULL,
+MergeCategory VARCHAR(100) NOT NULL,
+QueryName VARCHAR(100) NOT NULL,
+SqlQuery VARCHAR(max) NOT NULL,
+Description VARCHAR(1000),
+IsCustom BOOLEAN NOT NULL,
+IsActive BOOLEAN NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+ALTER TABLE WordMergeQuery ADD FOREIGN KEY (UserStamp) REFERENCES Users(USERID);
+
+CREATE TABLE WordMergeTemplate (
+WordMergeTemplateID INTEGER NOT NULL,
+WordMergeQueryID INTEGER,
+TemplateName VARCHAR(100) NOT NULL,
+FileName VARCHAR(100),
+Description VARCHAR(1000),
+FileBytes VARCHAR(max),
+IsActive BOOLEAN NOT NULL,
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL,
+LockTemplate BOOLEAN,
+AttachToNotes VARCHAR(10),
+AttachToNoteAs VARCHAR(10) NOT NULL
+);
+
+CREATE TABLE WORKERDEGREES (
+WDEGREEID DECIMAL(9) NOT NULL,
+DEGREE VARCHAR(50),
+MEMBERID INTEGER NOT NULL,
+COMMENTS VARCHAR(max),
+DATETIMESTAMP DATE,
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE WorkerDetReview (
+WorkerDetReviewID INTEGER NOT NULL,
+WAssessID INTEGER NOT NULL,
+Scale VARCHAR(255),
+Item VARCHAR(max),
+Score DECIMAL(9),
+Comments VARCHAR(max),
+YN INTEGER,
+LookupValue VARCHAR(50),
+ScaleID DECIMAL(9) NOT NULL,
+AppType VARCHAR(50),
+DateTimeStamp DATE NOT NULL,
+UserStamp INTEGER NOT NULL,
+QuestionID VARCHAR(15),
+SecID VARCHAR(500)
+);
+
+CREATE TABLE WORKERLANGUAGES (
+WLANGUAGEID INTEGER NOT NULL,
+LANGUAGE VARCHAR(100),
+MEMBERID INTEGER NOT NULL,
+DATETIMESTAMP DATE,
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE WORKERLICENSES (
+WLICENSEID INTEGER NOT NULL,
+LICENSE VARCHAR(100),
+MEMBERID INTEGER NOT NULL,
+LICENSENUM VARCHAR(20),
+COMMENTS VARCHAR(max),
+DATETIMESTAMP DATE NOT NULL,
+STARTDATE DATE,
+STOPDATE DATE,
+APPTYPE VARCHAR(5),
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE WorkerPosition (
+WorkerPositionID INTEGER NOT NULL,
+MemberID INTEGER NOT NULL,
+Position VARCHAR(100) NOT NULL,
+PositionStartDate DATE NOT NULL,
+PositionEndDate DATE,
+VWID INTEGER,
+PositionComments VARCHAR(500),
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+ALTER TABLE WorkerPosition ADD FOREIGN KEY (UserStamp) REFERENCES Users(USERID);
+
+ALTER TABLE WorkerPosition ADD FOREIGN KEY (VWID) REFERENCES VENDORSWORKERS(VWID);
+
+ALTER TABLE WorkerPosition ADD FOREIGN KEY (MemberID) REFERENCES WORKERS(MEMBERID);
+
+CREATE TABLE WORKERPRIVILEGES (
+WPRIVILEGEID DECIMAL(9) NOT NULL,
+PRIVILEGEAREA VARCHAR(100),
+MEMBERID INTEGER NOT NULL,
+STARTDATE DATE,
+ENDDATE DATE,
+DATETIMESTAMP DATE,
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE WorkerReview (
+WAssessID INTEGER NOT NULL,
+MemberID INTEGER NOT NULL,
+Review VARCHAR(100),
+Rater INTEGER,
+Status VARCHAR(100),
+Fundcode VARCHAR(25),
+Reviewdate DATE,
+ApprovedBy INTEGER,
+ApprovedDate DATE,
+ApprovedUser VARCHAR(100),
+Expired BOOLEAN,
+ExpirationDate DATE,
+ScreenDesignID INTEGER NOT NULL,
+AppType VARCHAR(5),
+UserStamp INTEGER NOT NULL,
+DateTimeStamp DATE NOT NULL
+);
+
+CREATE TABLE WORKERS (
+MEMBERID INTEGER NOT NULL,
+STARTDATE DATE,
+ENDDATE DATE,
+STAFFID VARCHAR(30),
+COMMENTS VARCHAR(max),
+DATETIMESTAMP DATE NOT NULL,
+ACTIVE BOOLEAN NOT NULL,
+HIGHESTDEGREE VARCHAR(100),
+UNIT VARCHAR(100),
+OFFICE VARCHAR(100),
+EXCLUDE BOOLEAN NOT NULL,
+LICENSE VARCHAR(100),
+GENERICTEXT1 VARCHAR(35),
+GENERICTEXT2 VARCHAR(35),
+GENERICTEXT3 VARCHAR(35),
+GENERICDROPDOWN1 VARCHAR(100),
+GENERICDROPDOWN2 VARCHAR(100),
+GENERICDROPDOWN3 VARCHAR(100),
+GENERICDATE1 DATE,
+GENERICDATE2 DATE,
+GENERICDATE3 DATE,
+RELATIONSHIP VARCHAR(50),
+APPTYPE VARCHAR(5),
+Rater DECIMAL(9),
+GenericDate4 DATE,
+UserStamp INTEGER NOT NULL,
+CONTACTID INTEGER NOT NULL,
+Identifier VARCHAR(15),
+IRContact BOOLEAN,
+Salutation VARCHAR(100),
+APSWorkerType VARCHAR(max),
+APSRegion VARCHAR(max),
+DesignatedZipCode VARCHAR(max),
+DesignatedCounty VARCHAR(max),
+SHIPCounselorID INTEGER,
+SHIPCounselorCounty VARCHAR(100),
+SHIPCounselorZip VARCHAR(10),
+SHIPCounselorFIPSCode VARCHAR(5),
+WorkerDisability VARCHAR(300)
+);
+
+CREATE TABLE WORKERSPECIALTIES (
+WSPECIALTYID DECIMAL(9) NOT NULL,
+SPECIALTY VARCHAR(100),
+MEMBERID INTEGER NOT NULL,
+COMMENTS VARCHAR(max),
+DATETIMESTAMP DATE,
+UserStamp INTEGER NOT NULL
+);
+
+CREATE TABLE WorkflowLog (
+WorkflowLogID INTEGER NOT NULL,
+Type VARCHAR(10),
+Source VARCHAR(50),
+Name VARCHAR(100),
+Message VARCHAR(200),
+CaseNo INTEGER,
+Date DATE NOT NULL
+);
+
+CREATE TABLE ZIPCODES (
+ZIPCODE VARCHAR(10) NOT NULL,
+CITY VARCHAR(30),
+STATE VARCHAR(100),
+AREACODE VARCHAR(3)
+);
+

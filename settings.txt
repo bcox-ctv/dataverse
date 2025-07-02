@@ -1,0 +1,4 @@
+[database]
+server=
+database=
+integrated_security=yes

@@ -1,0 +1,459 @@
+{
+    "meta": {
+      "disclaimer": "Do not rely on openFDA to make decisions regarding medical care. While we make every effort to ensure that data is accurate, you should assume all results are unvalidated. We may limit or otherwise restrict your access to the API in line with our Terms of Service.",
+      "terms": "https://open.fda.gov/terms/",
+      "license": "https://open.fda.gov/license/",
+      "last_updated": "2025-05-06",
+      "results": {
+        "skip": 0,
+        "limit": 10,
+        "total": 132775
+      }
+    },
+    "results": [
+      {
+        "product_ndc": "10237-262",
+        "generic_name": "SODIUM FLUORIDE",
+        "labeler_name": "Church & Dwight Co., Inc.",
+        "brand_name": "Therabreath Overnight Chamomile Mint",
+        "active_ingredients": [
+          {
+            "name": "SODIUM FLUORIDE",
+            "strength": "5 mg/10mL"
+          }
+        ],
+        "finished": true,
+        "packaging": [
+          {
+            "package_ndc": "10237-262-16",
+            "description": "473 mL in 1 BOTTLE, PLASTIC (10237-262-16)",
+            "marketing_start_date": "20240122",
+            "sample": false
+          }
+        ],
+        "listing_expiration_date": "20251231",
+        "openfda": {
+          "manufacturer_name": [
+            "Church & Dwight Co., Inc."
+          ],
+          "rxcui": [
+            "240698"
+          ],
+          "spl_set_id": [
+            "cc0c533c-145e-4877-b421-1baf3a3a572e"
+          ],
+          "is_original_packager": [
+            true
+          ],
+          "unii": [
+            "8ZYQ1474W7"
+          ]
+        },
+        "marketing_category": "OTC MONOGRAPH DRUG",
+        "dosage_form": "RINSE",
+        "spl_id": "275f9198-5475-5602-e063-6394a90acaf0",
+        "product_type": "HUMAN OTC DRUG",
+        "route": [
+          "ORAL"
+        ],
+        "marketing_start_date": "20240122",
+        "product_id": "10237-262_275f9198-5475-5602-e063-6394a90acaf0",
+        "application_number": "M022",
+        "brand_name_base": "Therabreath Overnight Chamomile Mint"
+      },
+      {
+        "product_ndc": "10237-477",
+        "generic_name": "ZINC ACETATE ANHYDROUS, ECHINACEA ANGUSTIFOLIA, and ZINC GLUCONATE",
+        "labeler_name": "CHURCH & DWIGHT CO., INC.",
+        "brand_name": "Zicam Cold Remedy Rapidmelts with Echinacea",
+        "brand_name_suffix": "Cold Remedy Rapidmelts with Echinacea",
+        "active_ingredients": [
+          {
+            "name": "ECHINACEA ANGUSTIFOLIA WHOLE",
+            "strength": "5 [hp_X]/1"
+          },
+          {
+            "name": "ZINC ACETATE ANHYDROUS",
+            "strength": "2 [hp_X]/1"
+          },
+          {
+            "name": "ZINC GLUCONATE",
+            "strength": "1 [hp_X]/1"
+          }
+        ],
+        "finished": true,
+        "packaging": [
+          {
+            "package_ndc": "10237-477-25",
+            "description": "1 BOTTLE, PLASTIC in 1 CARTON (10237-477-25)  / 25 TABLET in 1 BOTTLE, PLASTIC",
+            "marketing_start_date": "20220826",
+            "sample": false
+          }
+        ],
+        "listing_expiration_date": "20251231",
+        "openfda": {
+          "manufacturer_name": [
+            "CHURCH & DWIGHT CO., INC."
+          ],
+          "spl_set_id": [
+            "62426728-9b69-4b20-ab8f-ed2c606d56b6"
+          ],
+          "is_original_packager": [
+            true
+          ],
+          "unii": [
+            "VB06AV5US8",
+            "H2ZEY72PME",
+            "U6WSN5SQ1Z"
+          ]
+        },
+        "marketing_category": "UNAPPROVED HOMEOPATHIC",
+        "dosage_form": "TABLET",
+        "spl_id": "331b27a5-2ad5-4baf-a96f-be048afb5e1d",
+        "product_type": "HUMAN OTC DRUG",
+        "route": [
+          "ORAL"
+        ],
+        "marketing_start_date": "20220826",
+        "product_id": "10237-477_331b27a5-2ad5-4baf-a96f-be048afb5e1d",
+        "brand_name_base": "Zicam",
+        "pharm_class": [
+          "Copper Absorption Inhibitor [EPC]",
+          "Copper Absorption Inhibitor [EPC]",
+          "Decreased Copper Ion Absorption [PE]",
+          "Decreased Copper Ion Absorption [PE]"
+        ]
+      },
+      {
+        "product_ndc": "68554-0163",
+        "generic_name": "Carfilzomib",
+        "labeler_name": "HETERO LABS LIMITED",
+        "active_ingredients": [
+          {
+            "name": "CARFILZOMIB",
+            "strength": "1 kg/kg"
+          }
+        ],
+        "finished": false,
+        "packaging": [
+          {
+            "package_ndc": "68554-0163-1",
+            "description": "1 kg in 1 DRUM (68554-0163-1)",
+            "marketing_start_date": "09-SEP-19"
+          }
+        ],
+        "listing_expiration_date": "20251231",
+        "openfda": {},
+        "marketing_category": "BULK INGREDIENT",
+        "dosage_form": "POWDER",
+        "spl_id": "153fdf2c-f383-d7e6-e063-6294a90a37c1",
+        "product_type": "BULK INGREDIENT",
+        "marketing_start_date": "20190909",
+        "product_id": "68554-0163_153fdf2c-f383-d7e6-e063-6294a90a37c1",
+        "brand_name_base": null
+      },
+      {
+        "product_ndc": "69132-001",
+        "generic_name": "ACYCLOVIR",
+        "labeler_name": "Hubei Yitai Pharmaceutical Co., Ltd",
+        "active_ingredients": [
+          {
+            "name": "ACYCLOVIR",
+            "strength": "1 kg/kg"
+          }
+        ],
+        "finished": false,
+        "packaging": [
+          {
+            "package_ndc": "69132-001-00",
+            "description": "25 kg in 1 DRUM (69132-001-00)",
+            "marketing_start_date": "30-JUL-14"
+          }
+        ],
+        "listing_expiration_date": "20261231",
+        "openfda": {},
+        "marketing_category": "BULK INGREDIENT",
+        "dosage_form": "POWDER",
+        "spl_id": "328d0b4b-883f-2208-e063-6394a90a994f",
+        "product_type": "BULK INGREDIENT",
+        "marketing_start_date": "20140730",
+        "product_id": "69132-001_328d0b4b-883f-2208-e063-6394a90a994f",
+        "brand_name_base": null
+      },
+      {
+        "product_ndc": "70277-503",
+        "generic_name": "PEMIGATINIB",
+        "labeler_name": "Lonza Tampa LLC",
+        "active_ingredients": [
+          {
+            "name": "PEMIGATINIB",
+            "strength": "13.5 mg/1"
+          }
+        ],
+        "finished": false,
+        "packaging": [
+          {
+            "package_ndc": "70277-503-02",
+            "description": "14 TABLET in 1 BOTTLE (70277-503-02)",
+            "marketing_start_date": "20-APR-20"
+          }
+        ],
+        "listing_expiration_date": "20251231",
+        "openfda": {},
+        "marketing_category": "DRUG FOR FURTHER PROCESSING",
+        "dosage_form": "TABLET",
+        "spl_id": "25b7bad8-d862-59ff-e063-6294a90a534c",
+        "product_type": "HUMAN PRESCRIPTION DRUG",
+        "marketing_start_date": "20200420",
+        "product_id": "70277-503_25b7bad8-d862-59ff-e063-6294a90a534c",
+        "brand_name_base": null
+      },
+      {
+        "product_ndc": "71042-009",
+        "generic_name": "Olive Extract, Calendula, Melaleuca",
+        "labeler_name": "OrganiCare Nature's Science, LLC",
+        "active_ingredients": [
+          {
+            "name": "CALENDULA OFFICINALIS FLOWERING TOP",
+            "strength": "3 [hp_X]/14g"
+          },
+          {
+            "name": "MELALEUCA CAJUPUTI LEAF OIL",
+            "strength": "3 [hp_X]/14g"
+          },
+          {
+            "name": "OLEA EUROPAEA FRUIT VOLATILE OIL",
+            "strength": "2 [hp_X]/14g"
+          }
+        ],
+        "finished": false,
+        "packaging": [
+          {
+            "package_ndc": "71042-009-14",
+            "description": "14 g in 1 TUBE (71042-009-14)",
+            "marketing_start_date": "20-DEC-17"
+          }
+        ],
+        "listing_expiration_date": "20261231",
+        "openfda": {},
+        "marketing_category": "DRUG FOR FURTHER PROCESSING",
+        "dosage_form": "OINTMENT",
+        "spl_id": "2b5fb635-9f88-8d44-e063-6394a90a1f59",
+        "product_type": "HUMAN OTC DRUG",
+        "marketing_start_date": "20171220",
+        "product_id": "71042-009_2b5fb635-9f88-8d44-e063-6394a90a1f59",
+        "brand_name_base": null
+      },
+      {
+        "product_ndc": "71124-0012",
+        "generic_name": "Emicizumab",
+        "labeler_name": "SAMSUNG BIOLOGICS Co., Ltd.",
+        "active_ingredients": [
+          {
+            "name": "EMICIZUMAB",
+            "strength": "150 mg/1"
+          }
+        ],
+        "finished": false,
+        "packaging": [
+          {
+            "package_ndc": "71124-0012-0",
+            "description": "1 SOLUTION in 1 VIAL, SINGLE-USE (71124-0012-0)",
+            "marketing_start_date": "16-AUG-18"
+          }
+        ],
+        "listing_expiration_date": "20251231",
+        "openfda": {},
+        "marketing_category": "DRUG FOR FURTHER PROCESSING",
+        "dosage_form": "SOLUTION",
+        "spl_id": "d5fd3e7e-8d4b-6cb5-e053-2a95a90aa3f8",
+        "product_type": "DRUG FOR FURTHER PROCESSING",
+        "marketing_start_date": "20180816",
+        "product_id": "71124-0012_d5fd3e7e-8d4b-6cb5-e053-2a95a90aa3f8",
+        "brand_name_base": null
+      },
+      {
+        "product_ndc": "69766-077",
+        "generic_name": "Nitazoxanide",
+        "labeler_name": "MSN Life Sciences Private Limited",
+        "active_ingredients": [
+          {
+            "name": "NITAZOXANIDE",
+            "strength": "1 kg/kg"
+          }
+        ],
+        "finished": false,
+        "packaging": [
+          {
+            "package_ndc": "69766-077-01",
+            "description": "50 kg in 1 DRUM (69766-077-01)",
+            "marketing_start_date": "31-JAN-20"
+          }
+        ],
+        "listing_expiration_date": "20251231",
+        "openfda": {},
+        "marketing_category": "BULK INGREDIENT",
+        "dosage_form": "POWDER",
+        "spl_id": "0c3b096e-b370-a0e7-e063-6394a90aabd3",
+        "product_type": "BULK INGREDIENT",
+        "marketing_start_date": "20200131",
+        "product_id": "69766-077_0c3b096e-b370-a0e7-e063-6394a90aabd3",
+        "brand_name_base": null
+      },
+      {
+        "product_ndc": "76354-525",
+        "generic_name": "ZINC OXIDE, TITANIUM DIOXIDE, HOMOSALATE, OCTISALATE, OCTOCRYLENE",
+        "labeler_name": "e.l.f. Cosmetics, Inc.",
+        "brand_name": "e.l.f Camo Semi-Matte CC Cream SPF 30 Deep 540 N",
+        "active_ingredients": [
+          {
+            "name": "HOMOSALATE",
+            "strength": "50 mg/g"
+          },
+          {
+            "name": "OCTISALATE",
+            "strength": "45 mg/g"
+          },
+          {
+            "name": "OCTOCRYLENE",
+            "strength": "30 mg/g"
+          },
+          {
+            "name": "TITANIUM DIOXIDE",
+            "strength": "60 mg/g"
+          },
+          {
+            "name": "ZINC OXIDE",
+            "strength": "63 mg/g"
+          }
+        ],
+        "finished": true,
+        "packaging": [
+          {
+            "package_ndc": "76354-525-01",
+            "description": "1 TUBE in 1 CARTON (76354-525-01)  / 30 g in 1 TUBE",
+            "marketing_start_date": "20240215",
+            "sample": false
+          }
+        ],
+        "listing_expiration_date": "20251231",
+        "openfda": {
+          "manufacturer_name": [
+            "e.l.f. Cosmetics, Inc."
+          ],
+          "spl_set_id": [
+            "6a86e5fd-6736-45e0-aa7d-d268fdaed4f8"
+          ],
+          "is_original_packager": [
+            true
+          ],
+          "unii": [
+            "V06SV4M95S",
+            "4X49Y0596W",
+            "5A68WGF6WM",
+            "15FIX9V2JP",
+            "SOI2LOH54Z"
+          ]
+        },
+        "marketing_category": "OTC MONOGRAPH DRUG",
+        "dosage_form": "CREAM",
+        "spl_id": "26425e85-45b1-2047-e063-6394a90aed96",
+        "product_type": "HUMAN OTC DRUG",
+        "route": [
+          "TOPICAL"
+        ],
+        "marketing_start_date": "20240215",
+        "product_id": "76354-525_26425e85-45b1-2047-e063-6394a90aed96",
+        "application_number": "M020",
+        "brand_name_base": "e.l.f Camo Semi-Matte CC Cream SPF 30 Deep 540 N",
+        "pharm_class": [
+          "Copper Absorption Inhibitor [EPC]",
+          "Decreased Copper Ion Absorption [PE]"
+        ]
+      },
+      {
+        "product_ndc": "0573-2161",
+        "generic_name": "chlorpheniramine maleate, ibuprofen, and phenylephrine hydrochloride",
+        "labeler_name": "Haleon US Holdings LLC",
+        "brand_name": "Advil Allergy and Congestion Relief",
+        "active_ingredients": [
+          {
+            "name": "CHLORPHENIRAMINE MALEATE",
+            "strength": "4 mg/1"
+          },
+          {
+            "name": "IBUPROFEN",
+            "strength": "200 mg/1"
+          },
+          {
+            "name": "PHENYLEPHRINE HYDROCHLORIDE",
+            "strength": "10 mg/1"
+          }
+        ],
+        "finished": true,
+        "packaging": [
+          {
+            "package_ndc": "0573-2161-03",
+            "description": "2 BLISTER PACK in 1 CARTON (0573-2161-03)  / 10 TABLET, COATED in 1 BLISTER PACK",
+            "marketing_start_date": "20191001",
+            "sample": false
+          }
+        ],
+        "listing_expiration_date": "20261231",
+        "openfda": {
+          "manufacturer_name": [
+            "Haleon US Holdings LLC"
+          ],
+          "rxcui": [
+            "1310503"
+          ],
+          "spl_set_id": [
+            "a6cc97d8-252a-4527-a470-6d9e356342fd"
+          ],
+          "is_original_packager": [
+            true
+          ],
+          "nui": [
+            "N0000000160",
+            "M0001335",
+            "N0000175722"
+          ],
+          "pharm_class_moa": [
+            "Cyclooxygenase Inhibitors [MoA]"
+          ],
+          "pharm_class_cs": [
+            "Anti-Inflammatory Agents, Non-Steroidal [CS]"
+          ],
+          "pharm_class_epc": [
+            "Nonsteroidal Anti-inflammatory Drug [EPC]"
+          ],
+          "unii": [
+            "V1Q0O9OJ9Z",
+            "WK2XYI10QM",
+            "04JA59TNSJ"
+          ]
+        },
+        "marketing_category": "NDA",
+        "dosage_form": "TABLET, COATED",
+        "spl_id": "ac233de1-41cf-4ef0-a7b4-30f395c88c1a",
+        "product_type": "HUMAN OTC DRUG",
+        "route": [
+          "ORAL"
+        ],
+        "marketing_start_date": "20120723",
+        "product_id": "0573-2161_ac233de1-41cf-4ef0-a7b4-30f395c88c1a",
+        "application_number": "NDA022113",
+        "brand_name_base": "Advil Allergy and Congestion Relief",
+        "pharm_class": [
+          "Adrenergic alpha1-Agonists [MoA]",
+          "Anti-Inflammatory Agents",
+          "Non-Steroidal [CS]",
+          "Cyclooxygenase Inhibitors [MoA]",
+          "Histamine H1 Receptor Antagonists [MoA]",
+          "Histamine-1 Receptor Antagonist [EPC]",
+          "Nonsteroidal Anti-inflammatory Drug [EPC]",
+          "alpha-1 Adrenergic Agonist [EPC]"
+        ]
+      }
+    ]
+  }

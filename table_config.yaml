@@ -1,0 +1,36 @@
+# Configuration for test data generation
+vendors:
+  record_count: 50  # Default number of records to generate
+  company_types:
+    - LLC
+    - Inc.
+    - Corporation
+    - Ltd
+    - Partners
+    - Associates
+  healthcare_words:
+    - Health
+    - Medical
+    - Care
+    - Wellness
+    - Healthcare
+    - Providers
+  defaults:
+    active_probability: 0.75  # 75% chance of being active
+    contract_date_range:
+      start: -5y  # 5 years ago
+      end: today
+    user_stamp: 1  # Default admin user ID
+    allow_auth_overlap: false
+
+addresses:
+  types:
+    - Business
+    - Mailing
+    - Billing
+  categories:
+    - Physical
+    - Postal
+  defaults:
+    secondary_address_probability: 0.3  # 30% chance of having a second address line
+    primary_address_required: true
