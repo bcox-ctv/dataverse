@@ -163,6 +163,22 @@ def main():
             num_vendorsworkers = create_sample_vendorsworkers(conn)  # Create worker assignments for vendors
             print(f"✓ Created {num_vendorsworkers} vendor-worker relationships")
             
+            print("\nPopulating Chapter table...")
+            cursor.execute("SELECT USERID FROM Users")
+            user_ids = [row[0] for row in cursor.fetchall()]
+            cursor.execute("SELECT GroupID FROM [Group]")
+            group_ids = [row[0] for row in cursor.fetchall()]
+            from tables.chapter_data import create_sample_chapter
+            num_chapters = create_sample_chapter(conn, user_ids, group_ids, 5)
+            print(f"✓ Created {num_chapters} Chapter records")
+
+            print("\nPopulating PageType table...")
+            cursor.execute("SELECT USERID FROM Users")
+            user_ids = [row[0] for row in cursor.fetchall()]
+            from tables.pagetype_data import create_sample_pagetype
+            num_pagetype = create_sample_pagetype(conn, user_ids, 5)
+            print(f"✓ Created {num_pagetype} PageType records")
+
             print("\nPopulating Page table...")
             # Get valid ChapterIDs
             cursor.execute("SELECT ChapterID FROM Chapter")
