@@ -1,4 +1,4 @@
 database:
-  server:
-  database:
-  integrated_security: true
+  server: dchlaserfichedev.c4duyq4m6ai2.us-east-1.rds.amazonaws.com
+  database: map_sandbox
+  integrated_security: True
