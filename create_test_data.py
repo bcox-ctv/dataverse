@@ -79,7 +79,7 @@ def delete_populated_tables(conn):
         'Chapter',   # Chapter is referenced by Page
         'Vendors',
         'Users',
-        'Group',  # Added Group here (should be deleted last, after Users)
+        '[Group]',  # Added Group here (should be deleted last, after Users)
     ]
     for table in tables:
         try:
