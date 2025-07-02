@@ -76,6 +76,7 @@ def delete_populated_tables(conn):
         'Vendors',
         'Users',
         'HISPhone',  # Added HISPhone table
+        'Page',  # Added Page table
     ]
     for table in tables:
         try:
@@ -163,9 +164,25 @@ def main():
             print("\nPopulating HISPhone table...")
             cursor.execute("SELECT USERID FROM Users")
             user_ids = [row[0] for row in cursor.fetchall()]
+            cursor.execute("SELECT PageID FROM Page")
+            page_ids = [row[0] for row in cursor.fetchall()]
             from tables.hisphone_data import create_sample_hisphone
-            num_hisphones = create_sample_hisphone(conn, user_ids, 20)
+            num_hisphones = create_sample_hisphone(conn, user_ids, page_ids, 20)
             print(f"✓ Created {num_hisphones} HISPhone records")
+            
+            print("\nPopulating Page table...")
+            # Get valid ChapterIDs
+            cursor.execute("SELECT ChapterID FROM Chapter")
+            chapter_ids = [row[0] for row in cursor.fetchall()]
+            # Get valid PageTypeIDs
+            cursor.execute("SELECT PageTypeID FROM PageType")
+            pagetype_ids = [row[0] for row in cursor.fetchall()]
+            # Get valid User IDs
+            cursor.execute("SELECT USERID FROM Users")
+            user_ids = [row[0] for row in cursor.fetchall()]
+            from tables.page_data import create_sample_page
+            num_pages = create_sample_page(conn, chapter_ids, pagetype_ids, user_ids, 10)
+            print(f"✓ Created {num_pages} Page records")
             
             conn.commit()
             print("All sample data created successfully")
