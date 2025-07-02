@@ -163,15 +163,6 @@ def main():
             num_vendorsworkers = create_sample_vendorsworkers(conn)  # Create worker assignments for vendors
             print(f"✓ Created {num_vendorsworkers} vendor-worker relationships")
             
-            print("\nPopulating HISPhone table...")
-            cursor.execute("SELECT USERID FROM Users")
-            user_ids = [row[0] for row in cursor.fetchall()]
-            cursor.execute("SELECT PageID FROM Page")
-            page_ids = [row[0] for row in cursor.fetchall()]
-            from tables.hisphone_data import create_sample_hisphone
-            num_hisphones = create_sample_hisphone(conn, user_ids, page_ids, 20)
-            print(f"✓ Created {num_hisphones} HISPhone records")
-            
             print("\nPopulating Page table...")
             # Get valid ChapterIDs
             cursor.execute("SELECT ChapterID FROM Chapter")
@@ -185,6 +176,15 @@ def main():
             from tables.page_data import create_sample_page
             num_pages = create_sample_page(conn, chapter_ids, pagetype_ids, user_ids, 10)
             print(f"✓ Created {num_pages} Page records")
+            
+            print("\nPopulating HISPhone table...")
+            cursor.execute("SELECT USERID FROM Users")
+            user_ids = [row[0] for row in cursor.fetchall()]
+            cursor.execute("SELECT PageID FROM Page")
+            page_ids = [row[0] for row in cursor.fetchall()]
+            from tables.hisphone_data import create_sample_hisphone
+            num_hisphones = create_sample_hisphone(conn, user_ids, page_ids, 20)
+            print(f"✓ Created {num_hisphones} HISPhone records")
             
             conn.commit()
             print("All sample data created successfully")
