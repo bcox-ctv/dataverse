@@ -20,6 +20,7 @@ def create_sample_hisphone(conn, user_ids, page_ids, n=20):
         page_name = fake.slug()[:255]  # Generate a random page name
         page_entity_id = random.randint(1, 10000)  # Generate a random PageEntityID (NOT NULL)
         chapter_name = fake.word().capitalize()[:255]  # Generate a random ChapterName (NOT NULL)
+        chapter_entity_id = random.randint(1, 10000)  # Generate a random ChapterEntityID (NOT NULL)
         cursor.execute('''
             INSERT INTO HISPhone (
                 [Primary],
@@ -29,8 +30,9 @@ def create_sample_hisphone(conn, user_ids, page_ids, n=20):
                 DateTimeStamp,
                 PageName,
                 PageEntityID,
-                ChapterName
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                ChapterName,
+                ChapterEntityID
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', (
             1,  # Primary (BIT, always 1 for sample)
             phone_number,
@@ -39,7 +41,8 @@ def create_sample_hisphone(conn, user_ids, page_ids, n=20):
             now,
             page_name,
             page_entity_id,
-            chapter_name
+            chapter_name,
+            chapter_entity_id
         ))
         count += 1
     conn.commit()
