@@ -222,21 +222,11 @@ def main():
 
             # --- NOTES integration ---
             print("\nPopulating NOTES table...")
-            # Get required fields from Page table for NOTES
-            cursor.execute("SELECT PageName, ChapterName, ChapterEntityID, EntityID FROM Page")
-            page_rows = cursor.fetchall()
-            page_names = [row[0] for row in page_rows]
-            chapter_names = [row[1] for row in page_rows]
-            chapter_entity_ids = [row[2] for row in page_rows]
-            entity_ids = [row[3] for row in page_rows]
             from tables.notes_data import create_sample_notes
             num_notes = create_sample_notes(
                 conn,
                 user_ids,
-                chapter_names,
-                chapter_entity_ids,
-                page_names,
-                entity_ids,
+                vendor_ids,
                 20
             )
             print(f"✓ Created {num_notes} NOTES records")
