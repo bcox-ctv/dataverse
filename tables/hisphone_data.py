@@ -2,12 +2,14 @@ from datetime import datetime, timedelta
 import random
 from faker import Faker
 
-def create_sample_hisphone(conn, user_ids, page_ids, n=20):
+def create_sample_hisphone(conn, user_ids, vendor_ids, n=20, chapter_name="Providers", page_name="Provider"):
     """
     Create sample HISPhone records. Only NOT NULL fields are populated.
     user_ids: list of valid User IDs for the UserStamp FK.
-    page_ids: list of valid PageIDs for the Page FK.
+    vendor_ids: list of valid VendorIDs for ChapterEntityID and PageEntityID.
     n: number of records to create.
+    chapter_name: value for ChapterName (default 'Providers')
+    page_name: value for PageName (default 'Provider')
     """
     fake = Faker()
     cursor = conn.cursor()
@@ -15,12 +17,8 @@ def create_sample_hisphone(conn, user_ids, page_ids, n=20):
     count = 0
     for _ in range(n):
         user_id = random.choice(user_ids)
-        page_id = random.choice(page_ids)
+        vendor_id = random.choice(vendor_ids)
         phone_number = fake.numerify('##########')
-        page_name = fake.slug()[:255]  # Generate a random page name
-        page_entity_id = random.randint(1, 10000)  # Generate a random PageEntityID (NOT NULL)
-        chapter_name = fake.word().capitalize()[:255]  # Generate a random ChapterName (NOT NULL)
-        chapter_entity_id = random.randint(1, 10000)  # Generate a random ChapterEntityID (NOT NULL)
         cursor.execute('''
             INSERT INTO HISPhone (
                 [Primary],
@@ -40,9 +38,9 @@ def create_sample_hisphone(conn, user_ids, page_ids, n=20):
             user_id,
             now,
             page_name,
-            page_entity_id,
+            vendor_id,  # PageEntityID
             chapter_name,
-            chapter_entity_id
+            vendor_id   # ChapterEntityID
         ))
         count += 1
     conn.commit()

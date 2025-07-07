@@ -206,18 +206,29 @@ def main():
             print("\nPopulating HISPhone table...")
             cursor.execute("SELECT USERID FROM Users")
             user_ids = [row[0] for row in cursor.fetchall()]
-            cursor.execute("SELECT PageID, PageName, ChapterName, ChapterEntityID, EntityID FROM Page")
-            page_rows = cursor.fetchall()
-            page_names = [row[1] for row in page_rows]
-            chapter_names = [row[2] for row in page_rows]
-            chapter_entity_ids = [row[3] for row in page_rows]
-            entity_ids = [row[4] for row in page_rows]
+            cursor.execute("SELECT VendorID FROM Vendors")
+            vendor_ids = [row[0] for row in cursor.fetchall()]
+            # For HISPhone: ChapterName='Providers', PageName='Provider', ChapterEntityID/PageEntityID=VendorID
             from tables.hisphone_data import create_sample_hisphone
-            num_hisphones = create_sample_hisphone(conn, user_ids, [row[0] for row in page_rows], 20)
+            num_hisphones = create_sample_hisphone(
+                conn,
+                user_ids,
+                vendor_ids,  # Pass vendor_ids for entity IDs
+                20,
+                chapter_name="Providers",
+                page_name="Provider"
+            )
             print(f"✓ Created {num_hisphones} HISPhone records")
 
             # --- NOTES integration ---
             print("\nPopulating NOTES table...")
+            # Get required fields from Page table for NOTES
+            cursor.execute("SELECT PageName, ChapterName, ChapterEntityID, EntityID FROM Page")
+            page_rows = cursor.fetchall()
+            page_names = [row[0] for row in page_rows]
+            chapter_names = [row[1] for row in page_rows]
+            chapter_entity_ids = [row[2] for row in page_rows]
+            entity_ids = [row[3] for row in page_rows]
             from tables.notes_data import create_sample_notes
             num_notes = create_sample_notes(
                 conn,
