@@ -67,19 +67,21 @@ def delete_populated_tables(conn):
         'VENDORSWORKERS',
         'RELATEREVIEW',
         'ContactIdentifier',
-        'ContactAddress',  # ContractAddress is a child of Contact
+        'ContactAddress',
+        'NotesDocuments',
+        'NOTES',  # Add NOTES after NotesDocuments
         'Demographics',
         'HISPeople',
         'WORKERS',
         'Contact',
         'HISAddress',
-        'HISPhone',  # HISPhone references Page
-        'Page',      # Page references Chapter, PageType, Users
-        'PageType',  # PageType is referenced by Page
-        'Chapter',   # Chapter is referenced by Page
+        'HISPhone',
+        'Page',
+        'PageType',
+        'Chapter',
         'Vendors',
         'Users',
-        '[Group]',  # Added Group here (should be deleted last, after Users)
+        '[Group]',
     ]
     for table in tables:
         try:
@@ -204,12 +206,40 @@ def main():
             print("\nPopulating HISPhone table...")
             cursor.execute("SELECT USERID FROM Users")
             user_ids = [row[0] for row in cursor.fetchall()]
-            cursor.execute("SELECT PageID FROM Page")
-            page_ids = [row[0] for row in cursor.fetchall()]
+            cursor.execute("SELECT PageID, PageName, ChapterName, ChapterEntityID, EntityID FROM Page")
+            page_rows = cursor.fetchall()
+            page_names = [row[1] for row in page_rows]
+            chapter_names = [row[2] for row in page_rows]
+            chapter_entity_ids = [row[3] for row in page_rows]
+            entity_ids = [row[4] for row in page_rows]
             from tables.hisphone_data import create_sample_hisphone
-            num_hisphones = create_sample_hisphone(conn, user_ids, page_ids, 20)
+            num_hisphones = create_sample_hisphone(conn, user_ids, [row[0] for row in page_rows], 20)
             print(f"✓ Created {num_hisphones} HISPhone records")
-            
+
+            # --- NOTES integration ---
+            print("\nPopulating NOTES table...")
+            from tables.notes_data import create_sample_notes
+            num_notes = create_sample_notes(
+                conn,
+                user_ids,
+                chapter_names,
+                chapter_entity_ids,
+                page_names,
+                entity_ids,
+                20
+            )
+            print(f"✓ Created {num_notes} NOTES records")
+
+            # --- NotesDocuments integration ---
+            print("\nPopulating NotesDocuments table...")
+            cursor.execute("SELECT NoteID FROM NOTES")
+            note_ids = [row[0] for row in cursor.fetchall()]
+            cursor.execute("SELECT USERID FROM Users")
+            user_ids = [row[0] for row in cursor.fetchall()]
+            from tables.notesdocuments_data import create_sample_notesdocuments
+            num_notesdocs = create_sample_notesdocuments(conn, note_ids, user_ids, 10)
+            print(f"✓ Created {num_notesdocs} NotesDocuments records")
+
             conn.commit()
             print("All sample data created successfully")
             
