@@ -242,6 +242,15 @@ def main():
             num_notesdocs = create_sample_notesdocuments(conn, note_ids, user_ids, 10)
             print(f"✓ Created {num_notesdocs} NotesDocuments records")
 
+            print("\nPopulating MEDICATIONREVIEW table...")
+            cursor.execute("SELECT CASENO FROM Demographics")
+            demographics_ids = [row[0] for row in cursor.fetchall()]
+            cursor.execute("SELECT USERID FROM Users")
+            user_ids = [row[0] for row in cursor.fetchall()]
+            from tables.medicationreview_data import create_sample_medicationreview
+            num_medreviews = create_sample_medicationreview(conn, demographics_ids, user_ids, 20)
+            print(f"✓ Created {num_medreviews} MEDICATIONREVIEW records")
+
             conn.commit()
             print("All sample data created successfully")
             
