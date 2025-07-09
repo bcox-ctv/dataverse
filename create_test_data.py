@@ -69,7 +69,8 @@ def delete_populated_tables(conn):
         'ContactIdentifier',
         'ContactAddress',
         'NotesDocuments',
-        'NOTES',  # Add NOTES after NotesDocuments
+        'NOTES',
+        'MEDICATIONREVIEW',  # <-- Add here, before Demographics if it references Demographics
         'Demographics',
         'HISPeople',
         'WORKERS',
