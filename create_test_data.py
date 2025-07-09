@@ -68,9 +68,10 @@ def delete_populated_tables(conn):
         'RELATEREVIEW',
         'ContactIdentifier',
         'ContactAddress',
+        'ContactName',  # Add here before Contact
         'NotesDocuments',
         'NOTES',
-        'MEDICATIONREVIEW',  # Add here before Demographics
+        'MEDICATIONREVIEW',
         'Demographics',
         'HISPeople',
         'WORKERS',
@@ -247,6 +248,12 @@ def main():
             from tables.medicationreview_data import create_sample_medicationreview
             num_medreviews = create_sample_medicationreview(conn, user_ids, vendor_ids, 20)
             print(f"✓ Created {num_medreviews} MEDICATIONREVIEW records")
+
+            # --- ContactName integration ---
+            print("\nPopulating ContactName table...")
+            from tables.contactname_data import create_sample_contactname
+            num_contactnames = create_sample_contactname(conn, contact_ids, user_ids, 20)
+            print(f"✓ Created {num_contactnames} ContactName records")
 
             conn.commit()
             print("All sample data created successfully")
