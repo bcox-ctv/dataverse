@@ -71,10 +71,13 @@ def delete_populated_tables(conn):
         'ContactName',
         'ContactPhone',
         'ContactEmail',
-        'NOTESRECIPIENTS',  # Add here before NotesDocuments
+        'NOTESRECIPIENTS',
         'NotesDocuments',
         'NOTES',
         'MEDICATIONREVIEW',
+        'WorkerPosition',
+        'SERVICECODES',
+        'ServiceCodeType',  # Add here after SERVICECODES
         'Demographics',
         'HISPeople',
         'WORKERS',
@@ -275,6 +278,28 @@ def main():
             from tables.notesrecipients_data import create_sample_notesrecipients
             num_notesrecipients = create_sample_notesrecipients(conn, user_ids, 20)
             print(f"✓ Created {num_notesrecipients} NOTESRECIPIENTS records")
+
+            # --- WorkerPosition integration ---
+            print("\nPopulating WorkerPosition table...")
+            cursor.execute("SELECT MEMBERID FROM WORKERS")
+            member_ids = [row[0] for row in cursor.fetchall()]
+            from tables.workerposition_data import create_sample_workerposition
+            num_workerpositions = create_sample_workerposition(conn, member_ids, user_ids, 20)
+            print(f"✓ Created {num_workerpositions} WorkerPosition records")
+
+            # --- SERVICECODES integration ---
+            print("\nPopulating SERVICECODES table...")
+            from tables.servicecodes_data import create_sample_servicecodes
+            num_servicecodes = create_sample_servicecodes(conn, user_ids, 20)
+            print(f"✓ Created {num_servicecodes} SERVICECODES records")
+
+            # --- ServiceCodeType integration ---
+            print("\nPopulating ServiceCodeType table...")
+            cursor.execute("SELECT SERVICEID FROM SERVICECODES")
+            service_ids = [row[0] for row in cursor.fetchall()]
+            from tables.servicecodetype_data import create_sample_servicecodetype
+            num_servicecodetype = create_sample_servicecodetype(conn, service_ids, user_ids, 20)
+            print(f"✓ Created {num_servicecodetype} ServiceCodeType records")
 
             conn.commit()
             print("All sample data created successfully")
