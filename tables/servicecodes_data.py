@@ -21,6 +21,7 @@ def create_sample_servicecodes(conn, user_ids, n=20):
         authallowed = 1
         ignoreservicetypefilter = 1
         requiregroupnote = 1
+        allowpartialunits = 1
         user_id = random.choice(user_ids)
         cursor.execute('''
             INSERT INTO SERVICECODES (
@@ -33,8 +34,9 @@ def create_sample_servicecodes(conn, user_ids, n=20):
                 UserStamp,
                 AuthAllowed,
                 IgnoreServiceTypeFilter,
-                RequireGroupNote
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                RequireGroupNote,
+                AllowPartialUnits
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', (
             servicecode,
             unittype,
@@ -45,7 +47,8 @@ def create_sample_servicecodes(conn, user_ids, n=20):
             user_id,
             authallowed,
             ignoreservicetypefilter,
-            requiregroupnote
+            requiregroupnote,
+            allowpartialunits
         ))
         count += 1
     conn.commit()
