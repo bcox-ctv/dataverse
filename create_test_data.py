@@ -70,7 +70,8 @@ def delete_populated_tables(conn):
         'ContactAddress',
         'ContactName',
         'ContactPhone',
-        'ContactEmail',  # Add here before Contact
+        'ContactEmail',
+        'NOTESRECIPIENTS',  # Add here before NotesDocuments
         'NotesDocuments',
         'NOTES',
         'MEDICATIONREVIEW',
@@ -268,6 +269,12 @@ def main():
             from tables.contactemail_data import create_sample_contactemail
             num_contactemails = create_sample_contactemail(conn, contact_ids, user_ids, 20)
             print(f"✓ Created {num_contactemails} ContactEmail records")
+
+            # --- NOTESRECIPIENTS integration ---
+            print("\nPopulating NOTESRECIPIENTS table...")
+            from tables.notesrecipients_data import create_sample_notesrecipients
+            num_notesrecipients = create_sample_notesrecipients(conn, user_ids, 20)
+            print(f"✓ Created {num_notesrecipients} NOTESRECIPIENTS records")
 
             conn.commit()
             print("All sample data created successfully")
