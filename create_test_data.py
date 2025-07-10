@@ -69,7 +69,8 @@ def delete_populated_tables(conn):
         'ContactIdentifier',
         'ContactAddress',
         'ContactName',
-        'ContactPhone',  # Add here before Contact
+        'ContactPhone',
+        'ContactEmail',  # Add here before Contact
         'NotesDocuments',
         'NOTES',
         'MEDICATIONREVIEW',
@@ -261,6 +262,12 @@ def main():
             from tables.contactphone_data import create_sample_contactphone
             num_contactphones = create_sample_contactphone(conn, contact_ids, user_ids, 20)
             print(f"✓ Created {num_contactphones} ContactPhone records")
+
+            # --- ContactEmail integration ---
+            print("\nPopulating ContactEmail table...")
+            from tables.contactemail_data import create_sample_contactemail
+            num_contactemails = create_sample_contactemail(conn, contact_ids, user_ids, 20)
+            print(f"✓ Created {num_contactemails} ContactEmail records")
 
             conn.commit()
             print("All sample data created successfully")
