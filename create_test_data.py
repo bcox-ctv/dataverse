@@ -13,6 +13,7 @@ from tables.hispeople_data import create_sample_hispeople
 from tables.relatereview_data import create_sample_relatereview
 from tables.vendorsworkers_data import create_sample_vendorsworkers
 from tables.contactaddress_data import create_sample_contactaddress
+from tables.supervisors_data import create_sample_supervisors
 import argparse
 
 def load_settings():
@@ -81,6 +82,7 @@ def delete_populated_tables(conn):
         'Demographics',
         'HISPeople',
         'WORKERS',
+        'SUPERVISORS',  # Added SUPERVISORS after WORKERS
         'Contact',
         'HISAddress',
         'HISPhone',
@@ -300,6 +302,15 @@ def main():
             from tables.servicecodetype_data import create_sample_servicecodetype
             num_servicecodetype = create_sample_servicecodetype(conn, service_ids, user_ids, 20)
             print(f"✓ Created {num_servicecodetype} ServiceCodeType records")
+
+            # --- SUPERVISORS integration ---
+            print("\nPopulating SUPERVISORS table...")
+            cursor.execute("SELECT MEMBERID FROM WORKERS")
+            member_ids = [row[0] for row in cursor.fetchall()]
+            cursor.execute("SELECT USERID FROM Users")
+            user_ids = [row[0] for row in cursor.fetchall()]
+            num_supervisors = create_sample_supervisors(conn, member_ids, user_ids, 10)
+            print(f"✓ Created {num_supervisors} SUPERVISORS records")
 
             conn.commit()
             print("All sample data created successfully")
