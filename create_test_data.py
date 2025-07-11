@@ -14,6 +14,7 @@ from tables.relatereview_data import create_sample_relatereview
 from tables.vendorsworkers_data import create_sample_vendorsworkers
 from tables.contactaddress_data import create_sample_contactaddress
 from tables.supervisors_data import create_sample_supervisors
+from tables.task_data import create_sample_task
 import argparse
 
 def load_settings():
@@ -78,11 +79,12 @@ def delete_populated_tables(conn):
         'MEDICATIONREVIEW',
         'WorkerPosition',
         'SERVICECODES',
-        'ServiceCodeType',  # Add here after SERVICECODES
+        'ServiceCodeType',
         'Demographics',
         'HISPeople',
         'WORKERS',
-        'SUPERVISORS',  # Added SUPERVISORS after WORKERS
+        'SUPERVISORS',
+        'TASK',  # Added TASK after SUPERVISORS
         'Contact',
         'HISAddress',
         'HISPhone',
@@ -311,6 +313,13 @@ def main():
             user_ids = [row[0] for row in cursor.fetchall()]
             num_supervisors = create_sample_supervisors(conn, member_ids, user_ids, 10)
             print(f"✓ Created {num_supervisors} SUPERVISORS records")
+
+            # --- TASK integration ---
+            print("\nPopulating TASK table...")
+            cursor.execute("SELECT MERGEID FROM WORDMERGEDOCS")
+            wordmerge_ids = [row[0] for row in cursor.fetchall()]
+            num_tasks = create_sample_task(conn, wordmerge_ids, 10)
+            print(f"✓ Created {num_tasks} TASK records")
 
             conn.commit()
             print("All sample data created successfully")
