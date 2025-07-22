@@ -36,7 +36,7 @@ def create_sample_contactphone(conn, contact_ids, user_ids, n=20):
         base_phone = fake.numerify(text='###-###-####')
         if random.random() < 0.3:
             ext = fake.numerify(text='x####')
-            phone_number = f"{base_phone} {ext}"
+            phone_number = f"{base_phone}"
         else:
             phone_number = base_phone
         phone_valid = random.choice([0, 1])
@@ -50,12 +50,13 @@ def create_sample_contactphone(conn, contact_ids, user_ids, n=20):
                 PrimaryYN,
                 ContactType,
                 PhoneType,
-                PhoneNumber,
+                Phone,
                 PhoneValid,
                 PhoneCallable,
                 StartDate,
                 UserStamp,
-                DateTimeStamp
+                DateTimeStamp,
+                Extension
             ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', (
             contact_id,
@@ -68,7 +69,8 @@ def create_sample_contactphone(conn, contact_ids, user_ids, n=20):
             phone_callable,
             start_date,
             user_id,
-            now
+            now,
+            ext
         ))
         count += 1
     conn.commit()
