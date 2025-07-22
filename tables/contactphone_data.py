@@ -35,10 +35,10 @@ def create_sample_contactphone(conn, contact_ids, user_ids, n=20):
         # Generate a valid phone number, sometimes with extension
         base_phone = fake.numerify(text='###-###-####')
         if random.random() < 0.3:
-            ext = fake.numerify(text='x####')
-            phone_number = f"{base_phone}"
+            ext = fake.numerify(text='####')
         else:
-            phone_number = base_phone
+            ext = None
+        phone_number = base_phone
         phone_valid = random.choice([0, 1])
         phone_callable = random.choice([0, 1])
         # Generate a start date in the past (up to 5 years ago)
