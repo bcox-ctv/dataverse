@@ -19,7 +19,19 @@ def create_sample_contactphone(conn, contact_ids, user_ids, n=20):
         active = 1
         primaryyn = 1
         contact_type = fake.word().capitalize()[:100]
-        phone_type = fake.word().capitalize()[:100]
+        phone_type = random.choice([
+            'Home',
+            'Fax',
+            'Message',
+            'Cell',
+            'Pager',
+            'Work',
+            'Modem',
+            'TTY/TDD',
+            'Voice',
+            'Voice/Fax',
+            'Voice/TTY/TDD'
+        ])
         cursor.execute('''
             INSERT INTO ContactPhone (
                 ContactID,
