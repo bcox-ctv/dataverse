@@ -57,7 +57,7 @@ def create_sample_contactphone(conn, contact_ids, user_ids, n=20):
                 UserStamp,
                 DateTimeStamp,
                 Extension
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', (
             contact_id,
             active,
