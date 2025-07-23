@@ -116,6 +116,10 @@ def main():
                 delete_populated_tables(conn)
                 print("✓ All relevant tables cleared.")
                 
+            print("\nPopulating Contact table...")
+            num_contacts = create_sample_contacts(conn, 200)  # Create 200 contact records
+            print(f"✓ Created {num_contacts} contact records")
+
             print("\nPopulating Workers table...")
             num_workers = create_sample_workers(conn, 50)  # Create 50 worker records
             print(f"✓ Created {num_workers} worker records")
@@ -125,28 +129,20 @@ def main():
             worker_ids = [row[0] for row in cursor.fetchall()]
             num_users = create_sample_users(conn, worker_ids, 10)  # Create 10 users referencing WORKERS
             print(f"✓ Created {num_users} user records")
+
             print("\nPopulating Vendors table...")
             num_vendors = create_sample_vendors(conn)
             print(f"✓ Created {num_vendors} vendor records")
-            
+
             print("\nPopulating HISAddress table with vendor addresses...")
             cursor = conn.cursor()
             cursor.execute("SELECT VendorID FROM Vendors")
             vendor_ids = [row[0] for row in cursor.fetchall()]
-            
             total_addresses = 0
             for vendor_id in vendor_ids:
                 addr_count = create_sample_addresses(conn, vendor_id, 1)  # 1 is the default UserStamp
                 total_addresses += addr_count
             print(f"✓ Created {total_addresses} address records")
-            
-            print("\nPopulating Contact table...")
-            num_contacts = create_sample_contacts(conn, 200)  # Create 200 contact records
-            print(f"✓ Created {num_contacts} contact records")
-
-            print("\nPopulating Workers table...")
-            num_workers = create_sample_workers(conn, 50)  # Create 50 worker records
-            print(f"✓ Created {num_workers} worker records")
 
             print("\nPopulating HISPeople table...")
             num_hispeople = create_sample_hispeople(conn, 50)  # Create 50 HISPeople records
