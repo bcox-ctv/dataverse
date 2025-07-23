@@ -125,6 +125,7 @@ def main():
             print(f"✓ Created {num_workers} worker records")
 
             print("\nPopulating Users table...")
+            cursor = conn.cursor()
             cursor.execute("SELECT MEMBERID FROM WORKERS")
             worker_ids = [row[0] for row in cursor.fetchall()]
             num_users = create_sample_users(conn, worker_ids, 10)  # Create 10 users referencing WORKERS
@@ -135,7 +136,6 @@ def main():
             print(f"✓ Created {num_vendors} vendor records")
 
             print("\nPopulating HISAddress table with vendor addresses...")
-            cursor = conn.cursor()
             cursor.execute("SELECT VendorID FROM Vendors")
             vendor_ids = [row[0] for row in cursor.fetchall()]
             total_addresses = 0
