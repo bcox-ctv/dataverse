@@ -13,31 +13,19 @@ def generate_password_hash(password, salt=None):
     password_hash = hashlib.sha256(hash_input.encode()).hexdigest()
     return password_hash, salt
 
-def create_sample_users(conn, num_users=10):
-    """Create sample user records.
-    
-    Args:
-        conn: Database connection
-        num_users: Number of users to create
-    
-    Returns:
-        Number of users created
-    """
+def create_sample_users(conn, worker_ids, num_users=10):
+    """Create sample user records, each referencing a valid WORKERS ID."""
     cursor = conn.cursor()
     count = 0
-    
     for _ in range(num_users):
-        # Generate a username (required)
         username = fake.user_name()
         password = fake.password()
         password_hash, salt = generate_password_hash(password)
-        
-        # Set up auth levels (0-3 range for different authorizations)
         auth_level = random.randint(0, 3)
-        
+        worker_id = random.choice(worker_ids) if worker_ids else random.randint(1000, 9999)
         cursor.execute('''
             INSERT INTO Users (
-                TXTUSERID,         -- Required
+                TXTUSERID,
                 ID,
                 TXTUSERAUTH,
                 TXTPWD,
@@ -52,12 +40,12 @@ def create_sample_users(conn, num_users=10):
                 APPTYPE,
                 AttemptNum,
                 ChangePwd,
-                DATETIMESTAMP,     -- Required
+                DATETIMESTAMP,
                 ExpiresOn,
                 PwdLastChanged,
-                StartDate,         -- Required
+                StartDate,
                 EndDate,
-                UserStamp,         -- Required
+                UserStamp,
                 PasswordHash,
                 PasswordDate,
                 LockedOut,
@@ -66,47 +54,46 @@ def create_sample_users(conn, num_users=10):
                 SaveReminderInMins,
                 Salt,
                 UserAccess,
-                ForgotPasswordCodeRequestCount,  -- Required
+                ForgotPasswordCodeRequestCount,
                 IsPwdUpgradedToSHA256,
                 LockoutDateTimeStamp,
                 AdminLockout
             ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', (
-            username,           # TXTUSERID
-            random.randint(1000, 9999),  # ID
-            auth_level,        # TXTUSERAUTH
-            None,              # TXTPWD (using hash instead)
-            str(auth_level),   # ACCESSR
-            auth_level,        # CONSUMERAUTH
-            auth_level,        # SERVICESAUTH
-            auth_level,        # PROVIDERAUTH
-            auth_level,        # MAINTENANCEAUTH
-            auth_level,        # SCHEDULERAUTH
-            auth_level,        # PLANAUTH
-            None,             # FIPSAUTH
-            'WEB',            # APPTYPE
-            0,                # AttemptNum
-            0,                # ChangePwd
-            datetime.now(),    # DATETIMESTAMP
-            datetime.now() + timedelta(days=90),  # ExpiresOn
-            datetime.now(),    # PwdLastChanged
-            datetime.now(),    # StartDate
-            None,             # EndDate
-            1,                # UserStamp
-            password_hash,    # PasswordHash
-            datetime.now(),    # PasswordDate
-            False,            # LockedOut
-            0,                # Logins
-            0,                # FailedLogins
-            15,               # SaveReminderInMins
-            salt,             # Salt
-            'STANDARD',       # UserAccess
-            0,                # ForgotPasswordCodeRequestCount
-            True,             # IsPwdUpgradedToSHA256
-            None,             # LockoutDateTimeStamp
-            False             # AdminLockout
+            username,
+            worker_id,
+            auth_level,
+            None,
+            str(auth_level),
+            auth_level,
+            auth_level,
+            auth_level,
+            auth_level,
+            auth_level,
+            auth_level,
+            None,
+            'WEB',
+            0,
+            0,
+            datetime.now(),
+            datetime.now() + timedelta(days=90),
+            datetime.now(),
+            datetime.now(),
+            None,
+            1,
+            password_hash,
+            datetime.now(),
+            False,
+            0,
+            0,
+            15,
+            salt,
+            'STANDARD',
+            0,
+            True,
+            None,
+            False
         ))
         count += 1
-        
     conn.commit()
     return count

@@ -116,8 +116,14 @@ def main():
                 delete_populated_tables(conn)
                 print("✓ All relevant tables cleared.")
                 
+            print("\nPopulating Workers table...")
+            num_workers = create_sample_workers(conn, 50)  # Create 50 worker records
+            print(f"✓ Created {num_workers} worker records")
+
             print("\nPopulating Users table...")
-            num_users = create_sample_users(conn, 10)  # Create 10 users
+            cursor.execute("SELECT MEMBERID FROM WORKERS")
+            worker_ids = [row[0] for row in cursor.fetchall()]
+            num_users = create_sample_users(conn, worker_ids, 10)  # Create 10 users referencing WORKERS
             print(f"✓ Created {num_users} user records")
             print("\nPopulating Vendors table...")
             num_vendors = create_sample_vendors(conn)
