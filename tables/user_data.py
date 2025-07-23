@@ -26,7 +26,7 @@ def create_sample_users(conn, worker_ids, num_users=10):
         cursor.execute('''
             INSERT INTO Users (
                 TXTUSERID,
-                ID,
+                MEMBERID
                 TXTUSERAUTH,
                 TXTPWD,
                 ACCESSR,
