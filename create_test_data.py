@@ -66,12 +66,12 @@ def delete_populated_tables(conn):
     cursor = conn.cursor()
     # Order matters: child tables first
     tables = [
+        'ContactPhone',
         'VENDORSWORKERS',
         'RELATEREVIEW',
         'ContactIdentifier',
         'ContactAddress',
         'ContactName',
-        'ContactPhone',
         'ContactEmail',
         'NOTESRECIPIENTS',
         'NotesDocuments',
