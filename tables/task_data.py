@@ -10,7 +10,7 @@ def create_sample_task(conn, wordmerge_ids, n=10):
     cursor = conn.cursor()
     count = 0
     for _ in range(n):
-        wordmerge_id = random.choice(wordmerge_ids)
+        wordmerge_id = random.randint(1000, 9999)
         datetimestamp = datetime.now() - timedelta(days=random.randint(0, 365))
         cursor.execute('''
             INSERT INTO TASK (
